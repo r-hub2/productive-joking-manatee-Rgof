@@ -11,7 +11,7 @@
 #' @param  Range  =c(-Inf, Inf) limits of possible observations, if any, for chi-square tests
 #' @param  B   =5000  number of simulation runs
 #' @param  minexpcount =5 minimal expected bin count required
-#' @param  ChiUsePhat =FALSE, if TRUE param is estimated parameters in chi square tests
+#' @param  ChiUsePhat =TRUE, if TRUE param is estimated parameter, otherwise minimum chi square method is used.
 #' @param  maxProcessors =1, number of processors to use in parallel processing. If missing single processor is used.
 #' @param  doMethods Methods to include in tests
 #' @return A list with vectors of test statistics and p.values
@@ -19,7 +19,7 @@
 gof_test_cont <- function(x, pnull,  rnull, w=function(x) -99, phat=function(x) -99, 
                           TS, TSextra=NA, nbins=c(50, 10), rate=0, 
                           Range=c(-Inf, Inf), B=5000,  minexpcount=5.0, 
-                          ChiUsePhat=FALSE, maxProcessors=1, doMethods="all") {
+                          ChiUsePhat=TRUE, maxProcessors=1, doMethods="all") {
   # Are weights present?
   WithWeights = TRUE
   if(length(formals(w))==1 & w(x[1])==-99) WithWeights = FALSE

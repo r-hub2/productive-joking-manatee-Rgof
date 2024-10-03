@@ -10,7 +10,7 @@
 #' @param  rate =0 rate of Poisson if sample size is random, 0 if sample size is fixed
 #' @param  B   =5000  number of simulation runs
 #' @param  minexpcount =5 minimal expected bin count required
-#' @param  ChiUsePhat = TRUE, should chi square use minimum chi square method?
+#' @param  ChiUsePhat = TRUE, if TRUE param is estimated parameter, otherwise minimum chi square method is used.
 #' @param  maxProcessors =1, number of processors to use in parallel processing. If missing single processor is used.
 #' @param  doMethods Methods to include in tests
 #' @return A numeric matrix of test statistics and p.values

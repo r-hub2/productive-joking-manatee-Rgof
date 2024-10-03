@@ -15,7 +15,7 @@
 #' @param  rate =0 rate of Poisson if sample size is random, 0 if sample size is fixed
 #' @param  maxProcessors maximum of number of processors to use, 1 if no parallel processing is needed or number of cores-1 if missing
 #' @param  minexpcount =5 minimal expected bin count required
-#' @param  ChiUsePhat = TRUE, should chi square use minimum chi square method?
+#' @param  ChiUsePhat = TRUE, if TRUE param is estimated parameter, otherwise minimum chi square method is used.
 #' @return A numeric matrix of power values.
 #' @export 
 #' @examples

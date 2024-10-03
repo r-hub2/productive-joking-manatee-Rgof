@@ -57,7 +57,7 @@ gof_power(
 
 \item{minexpcount}{=5 minimal expected bin count required}
 
-\item{ChiUsePhat}{= TRUE, should chi square use minimum chi square method?}
+\item{ChiUsePhat}{= TRUE, if TRUE param is estimated parameter, otherwise minimum chi square method is used.}
 }
 \value{
 A numeric matrix of power values.

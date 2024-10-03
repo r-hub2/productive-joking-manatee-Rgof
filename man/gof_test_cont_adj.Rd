@@ -17,7 +17,7 @@ gof_test_cont_adj(
   Range = c(-Inf, Inf),
   B = c(5000, 1000),
   minexpcount = 5,
-  ChiUsePhat = FALSE,
+  ChiUsePhat = TRUE,
   doMethods = c("W", "ZC", "AD", "ES-s-P")
 )
 }
@@ -46,7 +46,7 @@ gof_test_cont_adj(
 
 \item{minexpcount}{=5 minimal expected bin count required}
 
-\item{ChiUsePhat}{=FALSE, if TRUE param is estimated parameters in chi square tests}
+\item{ChiUsePhat}{=TRUE, if TRUE param is estimated parameter, otherwise minimum chi square method is used.}
 
 \item{doMethods}{Methods to include in tests}
 }

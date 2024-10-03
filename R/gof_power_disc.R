@@ -13,7 +13,7 @@
 #' @param  rate  rate of Poisson if sample size is random
 #' @param  maxProcessors maximum of number of processors to use, 1 if no parallel processing is needed or number of cores-1 if missing
 #' @param  minexpcount =5 minimal number of expected counts in each bin for chi square tests
-#' @param  ChiUsePhat = TRUE, should chi square use minimum chi square method?
+#' @param  ChiUsePhat = TRUE, if TRUE param is estimated parameter, otherwise minimum chi square method is used.
 #' @return A numeric matrix of power values.
 
 gof_power_disc=function(pnull, rnull, vals, ralt, param_alt, phat=function(x) -99, 

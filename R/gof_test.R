@@ -12,7 +12,7 @@
 #' @param  Range  =c(-Inf, Inf) limits of possible observations, if any, for chi-square tests
 #' @param  B   =5000  number of simulation runs
 #' @param  minexpcount =5 minimal expected bin count required
-#' @param  ChiUsePhat = TRUE, should chi square use minimum chi square method?
+#' @param  ChiUsePhat = TRUE, if TRUE param is estimated parameter, otherwise minimum chi square method is used.
 #' @param  maxProcessors =1, number of processors to use in parallel processing. 
 #' @param  doMethods Methods to include in tests
 #' @return A list with vectors of test statistics and p.values

@@ -11,14 +11,14 @@
 #' @param  Range  =c(-Inf, Inf) limits of possible observations, if any, for chi-square tests
 #' @param  B   =c(5000,1000)  number of simulation runs for p values and for p value distribution
 #' @param  minexpcount =5 minimal expected bin count required
-#' @param  ChiUsePhat =FALSE, if TRUE param is estimated parameters in chi square tests
+#' @param  ChiUsePhat =TRUE, if TRUE param is estimated parameter, otherwise minimum chi square method is used.
 #' @param  doMethods Methods to include in tests
 #' @return None
 
 
 gof_test_cont_adj=function(x, pnull, rnull, w=function(x) -99, phat=function(x) 0, 
        TS, TSextra=NA, nbins=c(50,10), rate=0, Range=c(-Inf,Inf), 
-       B=c(5000, 1000), minexpcount=5, ChiUsePhat=FALSE, 
+       B=c(5000, 1000), minexpcount=5, ChiUsePhat=TRUE, 
        doMethods=c("W", "ZC", "AD", "ES-s-P")) {
  # Are weights present?
   WithWeights = TRUE

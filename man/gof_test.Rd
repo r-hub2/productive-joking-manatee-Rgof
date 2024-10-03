@@ -50,7 +50,7 @@ gof_test(
 
 \item{minexpcount}{=5 minimal expected bin count required}
 
-\item{ChiUsePhat}{= TRUE, should chi square use minimum chi square method?}
+\item{ChiUsePhat}{= TRUE, if TRUE param is estimated parameter, otherwise minimum chi square method is used.}
 
 \item{maxProcessors}{=1, number of processors to use in parallel processing.}
 

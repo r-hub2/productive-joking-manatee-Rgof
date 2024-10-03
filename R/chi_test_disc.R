@@ -5,7 +5,7 @@
 #' @param  nbins =c(50, 10) number of bins for chi-square tests
 #' @param  rate =0, rate of Poisson if sample size is random
 #' @param  minexpcount =5 minimal expected bin count required
-#' @param  ChiUsePhat = TRUE, should chi square use minimum chi square method?
+#' @param  ChiUsePhat = TRUE, if TRUE param is estimated parameter, otherwise minimum chi square method is used.
 #' @param  allbins set of bins to use
 #' @return A numeric matrix of test statistics, degrees of freedom and p.values
 
