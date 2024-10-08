@@ -1,5 +1,4 @@
 #include <Rcpp.h>
-
 using namespace Rcpp;
 
 //' run gof tests for continuous data

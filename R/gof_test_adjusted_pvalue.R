@@ -66,7 +66,7 @@ gof_test_adjusted_pvalue <- function(x, vals= NA, pnull, rnull,
    }
    else {
      check.functions(pnull, rnull, vals=vals, phat=phat, x=x)
-     if(missing(doMethods)) doMethods=c("Wassp1", "W", "AD", "s-P")
+     if(missing(doMethods)) doMethods=c("W", "AD", "s-P")
      if(missing(TS))
      out = gof_test_disc_adj(x, pnull, rnull, vals, phat, TSextra=TSextra, nbins=nbins, 
                    rate=rate, B=B, minexpcount=minexpcount, ChiUsePhat=ChiUsePhat,

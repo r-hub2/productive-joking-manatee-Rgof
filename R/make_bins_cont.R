@@ -12,7 +12,7 @@
 make_bins_cont = function(x, pnull, qnull=NA, phat=function(x) -99, 
                           DataBased=FALSE, nbins=c(50,10), 
                           minexpcount=5, Range=c(-99999, 99999)) {
-
+                          
   n = length(x)
   res = formals(pnull)
   param = phat(x)
@@ -44,7 +44,7 @@ make_bins_cont = function(x, pnull, qnull=NA, phat=function(x) -99,
         }
       }
       if(i==k-1) {
-        if((E)[k-2]<(E)[k]) {
+        if(E[k-2]<E[k]) {
           E = c(E[1:(k-3)], E[k-2]+E[k-1], E[k])
           bins=bins[-(k-1)]
         }

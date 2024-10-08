@@ -21,7 +21,7 @@ rnull = function() table(c(0:20, rbinom(1000, 20, 0.5)))-1
 ## -----------------------------------------------------------------------------
 x = rnull()
 # Basic Test
-gof_test(x, vals, pnull, rnull, B=1000, doMethod = "all")
+gof_test(x, vals, pnull, rnull, B=1000)
 #Test with adjusted overall p value
 gof_test_adjusted_pvalue(x, vals, pnull, rnull, B=c(1000, 500))
 
@@ -36,7 +36,7 @@ gof_test_adjusted_pvalue(x, vals, pnull, rnull, B=c(1000, 500))
 ## ----r1, eval=FALSE-----------------------------------------------------------
 #  rnull = function() table(c(0:20, rbinom(rpois(1, 650), 20, 0.5)))-1
 #  x = rnull()
-#  gof_test(x, vals, pnull, rnull, rate=650, B=1000, doMethod = "all")$p.value
+#  gof_test(x, vals, pnull, rnull, rate=650, B=1000)$p.value
 
 ## -----------------------------------------------------------------------------
 vals=0:20
@@ -46,17 +46,17 @@ phat = function(x) sum(0:20*x)/sum(x)/20
 
 ## ----ed1----------------------------------------------------------------------
 x = table(c(0:20, rbinom(1000, 20, 0.5)))-1  
-gof_test(x, vals, pnull, rnull, phat=phat, B=1000, doMethod = "all")$p.value
+gof_test(x, vals, pnull, rnull, phat=phat, B=1000)$p.value
 
 ## ----d3-----------------------------------------------------------------------
 x = table(c(0:20, rbinom(1000, 20, 0.55)))-1 
 # p is not 0.5, but data is still from a binomial distribution with n=20
-gof_test(x, vals, pnull, rnull, phat=phat, B=1000, doMethod = "all")$p.value
+gof_test(x, vals, pnull, rnull, phat=phat, B=1000)$p.value
 
 ## -----------------------------------------------------------------------------
 x = table(c(rep(0:20, 5), rbinom(1000-21*5, 20, 0.53))) 
 # data has to many small and large values to be from a binomial
-gof_test(x, vals, pnull, rnull, phat=phat, B=1000, doMethod = "all")$p.value
+gof_test(x, vals, pnull, rnull, phat=phat, B=1000)$p.value
 
 ## -----------------------------------------------------------------------------
 rnull = function() {
@@ -73,23 +73,23 @@ pnull = function() {
    pexp(bins, 1)/pexp(2, 1)
 }
   
-gof_test(x, vals, pnull, rnull, doMethod = "all")$p.value
+gof_test(x, vals, pnull, rnull)$p.value
 
 ## -----------------------------------------------------------------------------
 pnull = function(x) pnorm(x)
 rnull = function()  rnorm(1000)
-TSextra = list(qnull=function(x) qnorm(x))
+TSextra = list(qnull=function(x) qnorm(x)) #optional quantile function used by chi square tests and Wassp1 test.
 
 ## -----------------------------------------------------------------------------
 x = rnorm(1000)
 #Basic Tests
-gof_test(x, NA, pnull, rnull, B=1000, TSextra=TSextra, doMethod = "all")$p.value
+gof_test(x, NA, pnull, rnull, B=1000, TSextra=TSextra)$p.value
 #Adjusted p value
 gof_test_adjusted_pvalue(x, NA, pnull, rnull, B=c(1000,500), TSextra=TSextra)
 
 ## -----------------------------------------------------------------------------
 x = rnorm(1000, 0.5) 
-gof_test(x, NA, pnull, rnull, B=1000, TSextra=TSextra, doMethod = "all")$p.value
+gof_test(x, NA, pnull, rnull, B=1000, TSextra=TSextra)$p.value
 
 ## -----------------------------------------------------------------------------
 pnull = function(x, p=0) pnorm(x, p)
@@ -99,7 +99,7 @@ phat = function(x) mean(x)
 
 ## -----------------------------------------------------------------------------
 x = rnorm(1000) 
-gof_test(x, NA, pnull, rnull, phat=phat, TSextra=TSextra, B=1000, doMethod = "all")$p.value
+gof_test(x, NA, pnull, rnull, phat=phat, TSextra=TSextra, B=1000)$p.value
 
 ## -----------------------------------------------------------------------------
 x = rnorm(1000, 0.5) 
@@ -107,7 +107,7 @@ gof_test(x, NA, pnull, rnull, phat=phat, TSextra=TSextra)$p.value
 
 ## -----------------------------------------------------------------------------
 x = rnorm(1000, 0.5, 2) 
-gof_test(x, NA, pnull, rnull, phat=phat, TSextra=TSextra, B=1000, doMethod = "all")$p.value
+gof_test(x, NA, pnull, rnull, phat=phat, TSextra=TSextra, B=1000)$p.value
 
 ## -----------------------------------------------------------------------------
 pnull = function(x, p=c(0, 1)) pnorm(x, p[1], ifelse(p[2]>0, p[2], 0.001))
@@ -117,19 +117,19 @@ phat = function(x) c(mean(x), sd(x))
 
 ## -----------------------------------------------------------------------------
 x = rnorm(1000) 
-gof_test(x, NA, pnull, rnull, phat=phat, TSextra=TSextra, B=1000, doMethod = "all")$p.value
+gof_test(x, NA, pnull, rnull, phat=phat, TSextra=TSextra, B=1000)$p.value
 
 ## -----------------------------------------------------------------------------
 x = rnorm(1000, 0.5) 
-gof_test(x, NA, pnull, rnull, phat=phat, TSextra=TSextra, B=1000, doMethod = "all")$p.value
+gof_test(x, NA, pnull, rnull, phat=phat, TSextra=TSextra, B=1000)$p.value
 
 ## -----------------------------------------------------------------------------
 x = rnorm(1000, 0.5, 2) 
-gof_test(x, NA, pnull, rnull, phat=phat, TSextra=TSextra, B=1000, doMethod = "all")$p.value
+gof_test(x, NA, pnull, rnull, phat=phat, TSextra=TSextra, B=1000)$p.value
 
 ## -----------------------------------------------------------------------------
 x = rt(1000, 2) 
-gof_test(x, NA, pnull, rnull, phat=phat, TSextra=TSextra, B=1000, doMethod = "all")$p.value
+gof_test(x, NA, pnull, rnull, phat=phat, TSextra=TSextra, B=1000)$p.value
 
 ## ----pow1---------------------------------------------------------------------
 vals = 0:10
@@ -219,4 +219,15 @@ ralt = function(slope) {
   c(rmultinom(1, 500, p))
 }
 gof_power(pnull, vals, rnull, ralt, TS=newTS_disc, param_alt=round(seq(0, 0.5, length=5), 3), B=Bsim)
+
+## -----------------------------------------------------------------------------
+df=3
+pnull=function(x) pnorm(x)/(2*pnorm(3)-1)
+rnull=function() {x=rt(2000, df);x=x[abs(x)<3];sort(x[1:1000])}
+w=function(x) (dnorm(x)/(2*pnorm(3)-1))/(dt(x,df)/(2*pt(3,df)-1))
+x=sort(rnull())
+plot(x, w(x), type="l", ylim=c(0, 2*max(w(x))))
+ralt=function(m) {x=rt(2000,df)+m;x=x[abs(x)<3];sort(x[1:1000])}
+set.seed(111)
+gof_power(pnull, NA, rnull, ralt, w=w, param_alt = c(0,0.2), Range=c(-3,3),B=Bsim)
 

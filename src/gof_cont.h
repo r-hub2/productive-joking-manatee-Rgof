@@ -10,7 +10,7 @@ Rcpp::NumericMatrix gof_cont(
         Rcpp::Function w,
         Rcpp::Function phat, 
         Rcpp::Function TS,
-        int NewTS,
+        int typeTS,
         Rcpp::List TSextra,        
         int B=5000
         );

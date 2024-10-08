@@ -21,7 +21,7 @@ chi_test_cont = function(x, pnull, w=function(x) -99, phat=function(x) -99,
   rownames(out) = c("ES-l-P", "ES-s-P", "EP-l-P", "EP-s-P",
                     "ES-l-L", "ES-s-L", "EP-l-L", "EP-s-L")
   if(length(formals(w))==1) wx=w(x)
-  else wx=w(x, phat(x)) # with parameter estimation
+  else wx=w(x, phat(x)) # with parameter estimation  
   if(missing(allbins)) {
      allbins = make_bins_cont(x, pnull, 
               qnull, phat, 
@@ -54,7 +54,6 @@ chi_test_cont = function(x, pnull, w=function(x) -99, phat=function(x) -99,
           E[k]=rate*stats::integrate(f, bins[k], max(x)+xrange/10)$value
         for(i in 2:(k-1)) E[i]=rate*stats::integrate(f, bins[i], bins[i+1])$value
     }
-
     if(formula=="P") chi = sum((O-E)^2/E)
     else {
       I = seq_along(O)[O>0]

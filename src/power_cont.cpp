@@ -53,15 +53,16 @@ Rcpp::NumericMatrix power_cont(
   if(typeTS==4) TS_data=TS(x, Fx, TSextra);  
   int const nummethods=TS_data.size();
   Rcpp::CharacterVector methods=TS_data.names();
-  NumericMatrix out(np, nummethods);
+  NumericMatrix tmp(np, nummethods),out(np, nummethods);
   colnames(out) = methods;
   for(i=0;i<B(0);++i) {
      for(j=0;j<np;++j) {
          NumericVector x=ralt(param_alt[j]); 
          TSextra["p"] = phat(x);
-         NumericMatrix tmp = gof_cont(x, pnull, rnull, qnull, w, phat, TS, typeTS, TSextra, B(1));
-         for(k=0;k<nummethods;++k) 
-            if(tmp(1,k)<alpha) out(j, k) = out(j, k)+1;            
+         tmp = gof_cont(x, pnull, rnull, qnull, w, phat, TS, typeTS, TSextra, B(1));
+         for(k=0;k<nummethods;++k) {
+           if(tmp(1,k)<alpha) out(j,k) = out(j,k)+1;
+         } 
      }   
   }
   return out/B(0);
