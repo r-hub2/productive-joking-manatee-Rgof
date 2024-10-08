@@ -798,8 +798,8 @@ find the null distribution.</p></li>
 <span id="cb26-2"><a href="#cb26-2" tabindex="-1"></a><span class="fu">gof_power</span>(pnull, vals, rnull, ralt, <span class="fu">c</span>(<span class="fl">0.5</span>, <span class="fl">0.6</span>), <span class="at">phat=</span>phat,</span>
 <span id="cb26-3"><a href="#cb26-3" tabindex="-1"></a>        <span class="at">B=</span>Bsim, <span class="at">nbins=</span><span class="fu">c</span>(<span class="dv">11</span>, <span class="dv">5</span>), <span class="at">maxProcessors =</span> <span class="dv">2</span>)</span>
 <span id="cb26-4"><a href="#cb26-4" tabindex="-1"></a><span class="co">#&gt;       KS    K   AD  CvM    W Wassp1   l-P  s-P</span></span>
-<span id="cb26-5"><a href="#cb26-5" tabindex="-1"></a><span class="co">#&gt; 0.5 0.04 0.05 0.07 0.06 0.07   0.06 0.040 0.04</span></span>
-<span id="cb26-6"><a href="#cb26-6" tabindex="-1"></a><span class="co">#&gt; 0.6 0.03 0.05 0.08 0.07 0.06   0.07 0.025 0.04</span></span></code></pre></div>
+<span id="cb26-5"><a href="#cb26-5" tabindex="-1"></a><span class="co">#&gt; 0.5 0.09 0.10 0.05 0.04 0.09   0.05 0.040 0.04</span></span>
+<span id="cb26-6"><a href="#cb26-6" tabindex="-1"></a><span class="co">#&gt; 0.6 0.09 0.08 0.04 0.07 0.06   0.04 0.025 0.04</span></span></code></pre></div>
 <p>Note that power estimation in the case of a composite hypothesis (aka
 with parameters estimated) is much slower than the simple hypothesis
 case.</p>
@@ -810,7 +810,7 @@ case.</p>
 <span id="cb27-2"><a href="#cb27-2" tabindex="-1"></a><span class="fu">gof_power</span>(pnull, vals, rnull, ralt, <span class="fl">0.5</span>, <span class="at">phat=</span>phat,</span>
 <span id="cb27-3"><a href="#cb27-3" tabindex="-1"></a>        <span class="at">B=</span>Bsim, <span class="at">nbins=</span><span class="fu">c</span>(<span class="dv">11</span>, <span class="dv">5</span>), <span class="at">maxProcessors =</span> <span class="dv">2</span>)</span>
 <span id="cb27-4"><a href="#cb27-4" tabindex="-1"></a><span class="co">#&gt;     KS      K     AD    CvM      W Wassp1    l-P    s-P </span></span>
-<span id="cb27-5"><a href="#cb27-5" tabindex="-1"></a><span class="co">#&gt;   0.13   0.34   1.00   1.00   0.62   1.00   1.00   1.00</span></span></code></pre></div>
+<span id="cb27-5"><a href="#cb27-5" tabindex="-1"></a><span class="co">#&gt;   0.12   0.25   1.00   1.00   0.58   1.00   1.00   1.00</span></span></code></pre></div>
 </div>
 </div>
 <div id="continuous-datamodel" class="section level3">
@@ -839,8 +839,8 @@ case.</p>
 <span id="cb29-6"><a href="#cb29-6" tabindex="-1"></a><span class="fu">gof_power</span>(pnull, <span class="cn">NA</span>, rnull, ralt, <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="at">phat=</span> phat, </span>
 <span id="cb29-7"><a href="#cb29-7" tabindex="-1"></a>          <span class="at">TSextra=</span>TSextra, <span class="at">B=</span>Bsim, <span class="at">maxProcessor=</span><span class="dv">2</span>)</span>
 <span id="cb29-8"><a href="#cb29-8" tabindex="-1"></a><span class="co">#&gt;     KS    K   AD  CvM    W   ZA   ZK ZC Wassp1 ES-l-P ES-s-P EP-l-P EP-s-P</span></span>
-<span id="cb29-9"><a href="#cb29-9" tabindex="-1"></a><span class="co">#&gt; 0 1.00 0.96 0.05 0.07 0.07 0.61 0.01  0      1   0.03   0.08   0.06   0.10</span></span>
-<span id="cb29-10"><a href="#cb29-10" tabindex="-1"></a><span class="co">#&gt; 1 0.96 0.90 0.02 0.04 0.06 0.66 0.00  0      1   0.02   0.04   0.02   0.02</span></span>
+<span id="cb29-9"><a href="#cb29-9" tabindex="-1"></a><span class="co">#&gt; 0 0.96 0.85 0.02 0.03 0.02 0.47 0.00  0   0.99   0.03   0.08   0.06   0.10</span></span>
+<span id="cb29-10"><a href="#cb29-10" tabindex="-1"></a><span class="co">#&gt; 1 0.92 0.86 0.03 0.04 0.04 0.44 0.01  0   1.00   0.02   0.04   0.02   0.02</span></span>
 <span id="cb29-11"><a href="#cb29-11" tabindex="-1"></a><span class="co">#&gt;   ES-l-L ES-s-L EP-l-L EP-s-L</span></span>
 <span id="cb29-12"><a href="#cb29-12" tabindex="-1"></a><span class="co">#&gt; 0   0.05   0.09   0.05   0.09</span></span>
 <span id="cb29-13"><a href="#cb29-13" tabindex="-1"></a><span class="co">#&gt; 1   0.03   0.06   0.01   0.05</span></span></code></pre></div>
@@ -853,8 +853,8 @@ case.</p>
 <span id="cb30-7"><a href="#cb30-7" tabindex="-1"></a><span class="fu">gof_power</span>(pnull, <span class="cn">NA</span>, rnull, ralt, <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">50</span>), <span class="at">phat=</span>phat, </span>
 <span id="cb30-8"><a href="#cb30-8" tabindex="-1"></a>          <span class="at">Range=</span><span class="fu">c</span>(<span class="sc">-</span><span class="dv">5</span>,<span class="dv">5</span>), <span class="at">TSextra=</span>TSextra, <span class="at">B=</span>Bsim, <span class="at">maxProcessor=</span><span class="dv">2</span>)</span>
 <span id="cb30-9"><a href="#cb30-9" tabindex="-1"></a><span class="co">#&gt;      KS    K   AD  CvM    W   ZA   ZK   ZC Wassp1 ES-l-P ES-s-P EP-l-P EP-s-P</span></span>
-<span id="cb30-10"><a href="#cb30-10" tabindex="-1"></a><span class="co">#&gt; 2  0.99 0.98 0.56 0.50 0.53 0.95 0.22 0.17      1   0.30   0.35   0.29   0.32</span></span>
-<span id="cb30-11"><a href="#cb30-11" tabindex="-1"></a><span class="co">#&gt; 50 0.98 0.92 0.10 0.07 0.06 0.63 0.01 0.03      1   0.08   0.08   0.08   0.03</span></span>
+<span id="cb30-10"><a href="#cb30-10" tabindex="-1"></a><span class="co">#&gt; 2  1.00 1.00 0.59 0.59 0.61 0.92 0.17 0.19      1   0.30   0.35   0.29   0.32</span></span>
+<span id="cb30-11"><a href="#cb30-11" tabindex="-1"></a><span class="co">#&gt; 50 0.96 0.93 0.05 0.05 0.05 0.71 0.01 0.02      1   0.08   0.08   0.08   0.03</span></span>
 <span id="cb30-12"><a href="#cb30-12" tabindex="-1"></a><span class="co">#&gt;    ES-l-L ES-s-L EP-l-L EP-s-L</span></span>
 <span id="cb30-13"><a href="#cb30-13" tabindex="-1"></a><span class="co">#&gt; 2    0.27   0.36   0.30   0.30</span></span>
 <span id="cb30-14"><a href="#cb30-14" tabindex="-1"></a><span class="co">#&gt; 50   0.08   0.07   0.11   0.03</span></span></code></pre></div>
@@ -874,7 +874,7 @@ theoretical distribution function:</p>
 <p><span class="math display">\[\int_{-\infty}^{\infty} \vert F(x) -
 \hat{F}(x) \vert dF(x)\]</span> For continuous data we have the
 routine</p>
-<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" tabindex="-1"></a>newTS_cont <span class="ot">=</span> <span class="cf">function</span>(x, Fx) {</span>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" tabindex="-1"></a>newTScont <span class="ot">=</span> <span class="cf">function</span>(x, Fx) {</span>
 <span id="cb31-2"><a href="#cb31-2" tabindex="-1"></a>   Fx<span class="ot">=</span><span class="fu">sort</span>(Fx)</span>
 <span id="cb31-3"><a href="#cb31-3" tabindex="-1"></a>   n<span class="ot">=</span><span class="fu">length</span>(x)</span>
 <span id="cb31-4"><a href="#cb31-4" tabindex="-1"></a>   out <span class="ot">=</span> <span class="fu">sum</span>(<span class="fu">abs</span>( (<span class="dv">2</span><span class="sc">*</span><span class="dv">1</span><span class="sc">:</span>n<span class="dv">-1</span>)<span class="sc">/</span><span class="dv">2</span><span class="sc">/</span>n<span class="sc">-</span>Fx ))</span>
@@ -889,7 +889,7 @@ necessary.</p>
 <div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" tabindex="-1"></a>pnull <span class="ot">=</span> <span class="cf">function</span>(x) <span class="fu">punif</span>(x)</span>
 <span id="cb32-2"><a href="#cb32-2" tabindex="-1"></a>rnull <span class="ot">=</span> <span class="cf">function</span>() <span class="fu">runif</span>(<span class="dv">500</span>)</span>
 <span id="cb32-3"><a href="#cb32-3" tabindex="-1"></a>x <span class="ot">=</span> <span class="fu">rnull</span>()</span>
-<span id="cb32-4"><a href="#cb32-4" tabindex="-1"></a>Rgof<span class="sc">::</span><span class="fu">gof_test</span>(x, <span class="cn">NA</span>, pnull, rnull, <span class="at">TS=</span>newTS_cont)</span>
+<span id="cb32-4"><a href="#cb32-4" tabindex="-1"></a>Rgof<span class="sc">::</span><span class="fu">gof_test</span>(x, <span class="cn">NA</span>, pnull, rnull, <span class="at">TS=</span>newTScont)</span>
 <span id="cb32-5"><a href="#cb32-5" tabindex="-1"></a><span class="co">#&gt; $statistics</span></span>
 <span id="cb32-6"><a href="#cb32-6" tabindex="-1"></a><span class="co">#&gt; CvM alt </span></span>
 <span id="cb32-7"><a href="#cb32-7" tabindex="-1"></a><span class="co">#&gt;  2.5847 </span></span>
@@ -903,7 +903,7 @@ is a linear:</p>
 <span id="cb33-2"><a href="#cb33-2" tabindex="-1"></a>  <span class="cf">if</span>(slope<span class="sc">==</span><span class="dv">0</span>) y<span class="ot">=</span><span class="fu">runif</span>(<span class="dv">500</span>)</span>
 <span id="cb33-3"><a href="#cb33-3" tabindex="-1"></a>    <span class="cf">else</span> y<span class="ot">=</span>(slope<span class="dv">-1</span><span class="sc">+</span><span class="fu">sqrt</span>((<span class="dv">1</span><span class="sc">-</span>slope)<span class="sc">^</span><span class="dv">2</span><span class="sc">+</span><span class="dv">4</span><span class="sc">*</span>slope<span class="sc">*</span> <span class="fu">runif</span>(<span class="dv">500</span>)))<span class="sc">/</span><span class="dv">2</span><span class="sc">/</span>slope</span>
 <span id="cb33-4"><a href="#cb33-4" tabindex="-1"></a>}</span></code></pre></div>
-<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" tabindex="-1"></a><span class="fu">gof_power</span>(pnull, <span class="cn">NA</span>, rnull, ralt, <span class="at">TS=</span>newTS_cont, <span class="at">param_alt=</span><span class="fu">round</span>(<span class="fu">seq</span>(<span class="dv">0</span>, <span class="fl">0.5</span>, <span class="at">length=</span><span class="dv">5</span>), <span class="dv">3</span>), <span class="at">Range=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>), <span class="at">B=</span>Bsim)</span>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" tabindex="-1"></a><span class="fu">gof_power</span>(pnull, <span class="cn">NA</span>, rnull, ralt, <span class="at">TS=</span>newTScont, <span class="at">param_alt=</span><span class="fu">round</span>(<span class="fu">seq</span>(<span class="dv">0</span>, <span class="fl">0.5</span>, <span class="at">length=</span><span class="dv">5</span>), <span class="dv">3</span>), <span class="at">Range=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>), <span class="at">B=</span>Bsim)</span>
 <span id="cb34-2"><a href="#cb34-2" tabindex="-1"></a><span class="co">#&gt;       CvM alt</span></span>
 <span id="cb34-3"><a href="#cb34-3" tabindex="-1"></a><span class="co">#&gt; 0        0.07</span></span>
 <span id="cb34-4"><a href="#cb34-4" tabindex="-1"></a><span class="co">#&gt; 0.125    0.38</span></span>
@@ -914,7 +914,7 @@ is a linear:</p>
 <div class="sourceCode" id="cb35"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb35-1"><a href="#cb35-1" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;Rcpp.h&gt;</span></span>
 <span id="cb35-2"><a href="#cb35-2" tabindex="-1"></a><span class="kw">using</span> <span class="kw">namespace</span> Rcpp<span class="op">;</span></span>
 <span id="cb35-3"><a href="#cb35-3" tabindex="-1"></a><span class="co">// [[Rcpp::export]]</span></span>
-<span id="cb35-4"><a href="#cb35-4" tabindex="-1"></a>NumericVector newTS_disc<span class="op">(</span>IntegerVector x<span class="op">,</span> </span>
+<span id="cb35-4"><a href="#cb35-4" tabindex="-1"></a>NumericVector newTSdisc<span class="op">(</span>IntegerVector x<span class="op">,</span> </span>
 <span id="cb35-5"><a href="#cb35-5" tabindex="-1"></a>                      NumericVector Fx<span class="op">,</span>  </span>
 <span id="cb35-6"><a href="#cb35-6" tabindex="-1"></a>                      NumericVector vals<span class="op">)</span> <span class="op">{</span></span>
 <span id="cb35-7"><a href="#cb35-7" tabindex="-1"></a>    </span>
@@ -947,7 +947,7 @@ then not possible to use multiple processors.</p>
 <span id="cb36-2"><a href="#cb36-2" tabindex="-1"></a>pnull <span class="ot">=</span> <span class="cf">function</span>() (<span class="dv">1</span><span class="sc">:</span><span class="dv">50</span>)<span class="sc">/</span><span class="dv">50</span></span>
 <span id="cb36-3"><a href="#cb36-3" tabindex="-1"></a>rnull <span class="ot">=</span> <span class="cf">function</span>() <span class="fu">c</span>(<span class="fu">rmultinom</span>(<span class="dv">1</span>, <span class="dv">500</span>, <span class="fu">rep</span>(<span class="dv">1</span><span class="sc">/</span><span class="dv">50</span>,<span class="dv">50</span>)))</span>
 <span id="cb36-4"><a href="#cb36-4" tabindex="-1"></a>x <span class="ot">=</span> <span class="fu">rnull</span>()</span>
-<span id="cb36-5"><a href="#cb36-5" tabindex="-1"></a><span class="fu">gof_test</span>(x, vals, pnull, rnull, <span class="at">TS=</span>newTS_disc)</span>
+<span id="cb36-5"><a href="#cb36-5" tabindex="-1"></a><span class="fu">gof_test</span>(x, vals, pnull, rnull, <span class="at">TS=</span>newTSdisc)</span>
 <span id="cb36-6"><a href="#cb36-6" tabindex="-1"></a><span class="co">#&gt; Parallel Programming is not possible if custom TS is written in C++. Switching to single processor</span></span>
 <span id="cb36-7"><a href="#cb36-7" tabindex="-1"></a><span class="co">#&gt; $statistics</span></span>
 <span id="cb36-8"><a href="#cb36-8" tabindex="-1"></a><span class="co">#&gt;  CvM alt </span></span>
@@ -962,7 +962,7 @@ then not possible to use multiple processors.</p>
 <span id="cb37-3"><a href="#cb37-3" tabindex="-1"></a>    <span class="cf">else</span> p<span class="ot">=</span><span class="fu">diff</span>(slope <span class="sc">*</span> (<span class="dv">0</span><span class="sc">:</span><span class="dv">50</span><span class="sc">/</span><span class="dv">50</span>)<span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">-</span> slope) <span class="sc">*</span> <span class="dv">0</span><span class="sc">:</span><span class="dv">50</span><span class="sc">/</span><span class="dv">50</span>)  </span>
 <span id="cb37-4"><a href="#cb37-4" tabindex="-1"></a>  <span class="fu">c</span>(<span class="fu">rmultinom</span>(<span class="dv">1</span>, <span class="dv">500</span>, p))</span>
 <span id="cb37-5"><a href="#cb37-5" tabindex="-1"></a>}</span>
-<span id="cb37-6"><a href="#cb37-6" tabindex="-1"></a><span class="fu">gof_power</span>(pnull, vals, rnull, ralt, <span class="at">TS=</span>newTS_disc, <span class="at">param_alt=</span><span class="fu">round</span>(<span class="fu">seq</span>(<span class="dv">0</span>, <span class="fl">0.5</span>, <span class="at">length=</span><span class="dv">5</span>), <span class="dv">3</span>), <span class="at">B=</span>Bsim)</span>
+<span id="cb37-6"><a href="#cb37-6" tabindex="-1"></a><span class="fu">gof_power</span>(pnull, vals, rnull, ralt, <span class="at">TS=</span>newTSdisc, <span class="at">param_alt=</span><span class="fu">round</span>(<span class="fu">seq</span>(<span class="dv">0</span>, <span class="fl">0.5</span>, <span class="at">length=</span><span class="dv">5</span>), <span class="dv">3</span>), <span class="at">B=</span>Bsim)</span>
 <span id="cb37-7"><a href="#cb37-7" tabindex="-1"></a><span class="co">#&gt; Parallel Programming is not possible if custom TS is written in C++. Switching to single processor</span></span>
 <span id="cb37-8"><a href="#cb37-8" tabindex="-1"></a><span class="co">#&gt;       CvM alt</span></span>
 <span id="cb37-9"><a href="#cb37-9" tabindex="-1"></a><span class="co">#&gt; 0        0.04</span></span>

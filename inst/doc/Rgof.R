@@ -184,7 +184,7 @@ gof_power(pnull, NA, rnull, ralt, c(2, 50), phat=phat,
           Range=c(-5,5), TSextra=TSextra, B=Bsim, maxProcessor=2)
 
 ## -----------------------------------------------------------------------------
-newTS_cont = function(x, Fx) {
+newTScont = function(x, Fx) {
    Fx=sort(Fx)
    n=length(x)
    out = sum(abs( (2*1:n-1)/2/n-Fx ))
@@ -196,7 +196,7 @@ newTS_cont = function(x, Fx) {
 pnull = function(x) punif(x)
 rnull = function() runif(500)
 x = rnull()
-Rgof::gof_test(x, NA, pnull, rnull, TS=newTS_cont)
+Rgof::gof_test(x, NA, pnull, rnull, TS=newTScont)
 
 ## -----------------------------------------------------------------------------
 ralt = function(slope=0) {
@@ -205,14 +205,14 @@ ralt = function(slope=0) {
 }
 
 ## -----------------------------------------------------------------------------
-gof_power(pnull, NA, rnull, ralt, TS=newTS_cont, param_alt=round(seq(0, 0.5, length=5), 3), Range=c(0,1), B=Bsim)
+gof_power(pnull, NA, rnull, ralt, TS=newTScont, param_alt=round(seq(0, 0.5, length=5), 3), Range=c(0,1), B=Bsim)
 
 ## -----------------------------------------------------------------------------
 vals=1:50/51
 pnull = function() (1:50)/50
 rnull = function() c(rmultinom(1, 500, rep(1/50,50)))
 x = rnull()
-gof_test(x, vals, pnull, rnull, TS=newTS_disc)
+gof_test(x, vals, pnull, rnull, TS=newTSdisc)
 
 ## -----------------------------------------------------------------------------
 ralt = function(slope=0) {
@@ -220,7 +220,7 @@ ralt = function(slope=0) {
     else p=diff(slope * (0:50/50)^2 + (1 - slope) * 0:50/50)  
   c(rmultinom(1, 500, p))
 }
-gof_power(pnull, vals, rnull, ralt, TS=newTS_disc, param_alt=round(seq(0, 0.5, length=5), 3), B=Bsim)
+gof_power(pnull, vals, rnull, ralt, TS=newTSdisc, param_alt=round(seq(0, 0.5, length=5), 3), B=Bsim)
 
 ## -----------------------------------------------------------------------------
 df=3
