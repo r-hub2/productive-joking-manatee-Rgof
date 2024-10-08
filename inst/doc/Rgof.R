@@ -135,25 +135,25 @@ gof_test(x, NA, pnull, rnull, phat=phat, TSextra=TSextra, B=1000)$p.value
 vals = 0:10
 pnull = function() pbinom(0:10, 10, 0.5)
 rnull =function () table(c(0:10, rbinom(100, 10, 0.5)))-1
-ralt =function (p) table(c(0:10, rbinom(100, 10, p)))-1
+ralt =function (p=0.5) table(c(0:10, rbinom(100, 10, p)))-1
 P=gof_power(pnull, vals, rnull, ralt, 
   param_alt=seq(0.5, 0.6, 0.02),  B=Bsim, nbins=c(11, 5))
 plot_power(P, "p", Smooth=FALSE)
 
 ## -----------------------------------------------------------------------------
 vals = 0:10
-pnull = function(p) pbinom(0:10, 10, ifelse(0<p&p<1,p,0.001))
-rnull = function (p) table(c(0:10, rbinom(100, 10, ifelse(0<p&p<1,p,0.001))))-1
+pnull = function(p=0.5) pbinom(0:10, 10, ifelse(0<p&p<1,p,0.001))
+rnull = function (p=0.5) table(c(0:10, rbinom(100, 10, ifelse(0<p&p<1,p,0.001))))-1
 phat = function(x) sum(0:10*x)/1000
 
 ## ----pow2---------------------------------------------------------------------
-ralt =function (p) table(c(0:10, rbinom(100, 10, p)))-1
+ralt =function (p=0.5) table(c(0:10, rbinom(100, 10, p)))-1
 gof_power(pnull, vals, rnull, ralt, c(0.5, 0.6), phat,
         B=Bsim, nbins=c(11, 5), maxProcessors = 2)
 
 
 ## -----------------------------------------------------------------------------
-ralt =function (p) table(c(rep(0:10, 2), rbinom(100, 10, p)))
+ralt =function (p=0.5) table(c(rep(0:10, 2), rbinom(100, 10, p)))
 gof_power(pnull, vals, rnull, ralt, 0.5, phat,
         B=Bsim, nbins=c(11, 5), maxProcessors = 2)
 
@@ -197,7 +197,7 @@ x = rnull()
 Rgof::gof_test(x, NA, pnull, rnull, TS=newTS_cont)
 
 ## -----------------------------------------------------------------------------
-ralt = function(slope) {
+ralt = function(slope=0) {
   if(slope==0) y=runif(500)
     else y=(slope-1+sqrt((1-slope)^2+4*slope* runif(500)))/2/slope
 }
@@ -213,7 +213,7 @@ x = rnull()
 gof_test(x, vals, pnull, rnull, TS=newTS_disc)
 
 ## -----------------------------------------------------------------------------
-ralt = function(slope) {
+ralt = function(slope=0) {
     if(slope==0) p=rep(1/50, 50)
     else p=diff(slope * (0:50/50)^2 + (1 - slope) * 0:50/50)  
   c(rmultinom(1, 500, p))
@@ -227,7 +227,7 @@ rnull=function() {x=rt(2000, df);x=x[abs(x)<3];sort(x[1:1000])}
 w=function(x) (dnorm(x)/(2*pnorm(3)-1))/(dt(x,df)/(2*pt(3,df)-1))
 x=sort(rnull())
 plot(x, w(x), type="l", ylim=c(0, 2*max(w(x))))
-ralt=function(m) {x=rt(2000,df)+m;x=x[abs(x)<3];sort(x[1:1000])}
+ralt=function(m=0) {x=rt(2000,df)+m;x=x[abs(x)<3];sort(x[1:1000])}
 set.seed(111)
 gof_power(pnull, NA, rnull, ralt, w=w, param_alt = c(0,0.2), Range=c(-3,3),B=Bsim)
 
