@@ -795,11 +795,11 @@ find the null distribution.</p></li>
 <li><strong>Null Hypothesis is true</strong></li>
 </ul>
 <div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" tabindex="-1"></a>ralt <span class="ot">=</span><span class="cf">function</span> (<span class="at">p=</span><span class="fl">0.5</span>) <span class="fu">table</span>(<span class="fu">c</span>(<span class="dv">0</span><span class="sc">:</span><span class="dv">10</span>, <span class="fu">rbinom</span>(<span class="dv">100</span>, <span class="dv">10</span>, p)))<span class="sc">-</span><span class="dv">1</span></span>
-<span id="cb26-2"><a href="#cb26-2" tabindex="-1"></a><span class="fu">gof_power</span>(pnull, vals, rnull, ralt, <span class="fu">c</span>(<span class="fl">0.5</span>, <span class="fl">0.6</span>), phat,</span>
+<span id="cb26-2"><a href="#cb26-2" tabindex="-1"></a><span class="fu">gof_power</span>(pnull, vals, rnull, ralt, <span class="fu">c</span>(<span class="fl">0.5</span>, <span class="fl">0.6</span>), <span class="at">phat=</span>phat,</span>
 <span id="cb26-3"><a href="#cb26-3" tabindex="-1"></a>        <span class="at">B=</span>Bsim, <span class="at">nbins=</span><span class="fu">c</span>(<span class="dv">11</span>, <span class="dv">5</span>), <span class="at">maxProcessors =</span> <span class="dv">2</span>)</span>
-<span id="cb26-4"><a href="#cb26-4" tabindex="-1"></a><span class="co">#&gt; pnull should have no argument for simple hypothesis if data is discrete</span></span>
-<span id="cb26-5"><a href="#cb26-5" tabindex="-1"></a><span class="co">#&gt; rnull should have no argument for simple hypothesis if data is discrete</span></span>
-<span id="cb26-6"><a href="#cb26-6" tabindex="-1"></a><span class="co">#&gt; Error in 0 &lt; p: comparison (&lt;) is possible only for atomic and list types</span></span></code></pre></div>
+<span id="cb26-4"><a href="#cb26-4" tabindex="-1"></a><span class="co">#&gt;       KS    K   AD  CvM    W Wassp1   l-P  s-P</span></span>
+<span id="cb26-5"><a href="#cb26-5" tabindex="-1"></a><span class="co">#&gt; 0.5 0.04 0.05 0.07 0.06 0.07   0.06 0.040 0.04</span></span>
+<span id="cb26-6"><a href="#cb26-6" tabindex="-1"></a><span class="co">#&gt; 0.6 0.03 0.05 0.08 0.07 0.06   0.07 0.025 0.04</span></span></code></pre></div>
 <p>Note that power estimation in the case of a composite hypothesis (aka
 with parameters estimated) is much slower than the simple hypothesis
 case.</p>
@@ -807,11 +807,10 @@ case.</p>
 <li><strong>Null Hypothesis is false</strong></li>
 </ul>
 <div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" tabindex="-1"></a>ralt <span class="ot">=</span><span class="cf">function</span> (<span class="at">p=</span><span class="fl">0.5</span>) <span class="fu">table</span>(<span class="fu">c</span>(<span class="fu">rep</span>(<span class="dv">0</span><span class="sc">:</span><span class="dv">10</span>, <span class="dv">2</span>), <span class="fu">rbinom</span>(<span class="dv">100</span>, <span class="dv">10</span>, p)))</span>
-<span id="cb27-2"><a href="#cb27-2" tabindex="-1"></a><span class="fu">gof_power</span>(pnull, vals, rnull, ralt, <span class="fl">0.5</span>, phat,</span>
+<span id="cb27-2"><a href="#cb27-2" tabindex="-1"></a><span class="fu">gof_power</span>(pnull, vals, rnull, ralt, <span class="fl">0.5</span>, <span class="at">phat=</span>phat,</span>
 <span id="cb27-3"><a href="#cb27-3" tabindex="-1"></a>        <span class="at">B=</span>Bsim, <span class="at">nbins=</span><span class="fu">c</span>(<span class="dv">11</span>, <span class="dv">5</span>), <span class="at">maxProcessors =</span> <span class="dv">2</span>)</span>
-<span id="cb27-4"><a href="#cb27-4" tabindex="-1"></a><span class="co">#&gt; pnull should have no argument for simple hypothesis if data is discrete</span></span>
-<span id="cb27-5"><a href="#cb27-5" tabindex="-1"></a><span class="co">#&gt; rnull should have no argument for simple hypothesis if data is discrete</span></span>
-<span id="cb27-6"><a href="#cb27-6" tabindex="-1"></a><span class="co">#&gt; Error in 0 &lt; p: comparison (&lt;) is possible only for atomic and list types</span></span></code></pre></div>
+<span id="cb27-4"><a href="#cb27-4" tabindex="-1"></a><span class="co">#&gt;     KS      K     AD    CvM      W Wassp1    l-P    s-P </span></span>
+<span id="cb27-5"><a href="#cb27-5" tabindex="-1"></a><span class="co">#&gt;   0.13   0.34   1.00   1.00   0.62   1.00   1.00   1.00</span></span></code></pre></div>
 </div>
 </div>
 <div id="continuous-datamodel" class="section level3">
@@ -823,11 +822,11 @@ case.</p>
 <span id="cb28-3"><a href="#cb28-3" tabindex="-1"></a>rnull <span class="ot">=</span> <span class="cf">function</span>() <span class="fu">rnorm</span>(<span class="dv">100</span>)</span>
 <span id="cb28-4"><a href="#cb28-4" tabindex="-1"></a>ralt <span class="ot">=</span> <span class="cf">function</span>(<span class="at">mu=</span><span class="dv">0</span>) <span class="fu">rnorm</span>(<span class="dv">100</span>, mu)</span>
 <span id="cb28-5"><a href="#cb28-5" tabindex="-1"></a><span class="fu">gof_power</span>(pnull, <span class="cn">NA</span>, rnull, ralt, <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="at">TSextra=</span>TSextra, <span class="at">B=</span>Bsim)</span>
-<span id="cb28-6"><a href="#cb28-6" tabindex="-1"></a><span class="co">#&gt;     KS    K   AD  CvM W   ZA   ZK   ZC Wassp1 ES-l-P ES-s-P EP-l-P EP-s-P</span></span>
-<span id="cb28-7"><a href="#cb28-7" tabindex="-1"></a><span class="co">#&gt; 0 0.07 0.07 0.04 0.03 0 0.05 0.03 0.03   0.05   0.03   0.04   0.04   0.07</span></span>
-<span id="cb28-8"><a href="#cb28-8" tabindex="-1"></a><span class="co">#&gt; 1 1.00 1.00 1.00 1.00 1 1.00 1.00 1.00   1.00   1.00   1.00   1.00   1.00</span></span>
+<span id="cb28-6"><a href="#cb28-6" tabindex="-1"></a><span class="co">#&gt;     KS    K   AD  CvM    W   ZA   ZK   ZC Wassp1 ES-l-P ES-s-P EP-l-P EP-s-P</span></span>
+<span id="cb28-7"><a href="#cb28-7" tabindex="-1"></a><span class="co">#&gt; 0 0.04 0.04 0.06 0.07 0.03 0.08 0.05 0.06   0.07   0.04   0.04   0.04   0.02</span></span>
+<span id="cb28-8"><a href="#cb28-8" tabindex="-1"></a><span class="co">#&gt; 1 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00   1.00   1.00   1.00   1.00   1.00</span></span>
 <span id="cb28-9"><a href="#cb28-9" tabindex="-1"></a><span class="co">#&gt;   ES-l-L ES-s-L EP-l-L EP-s-L</span></span>
-<span id="cb28-10"><a href="#cb28-10" tabindex="-1"></a><span class="co">#&gt; 0   0.03   0.01   0.02   0.06</span></span>
+<span id="cb28-10"><a href="#cb28-10" tabindex="-1"></a><span class="co">#&gt; 0   0.05   0.05   0.04   0.01</span></span>
 <span id="cb28-11"><a href="#cb28-11" tabindex="-1"></a><span class="co">#&gt; 1   1.00   1.00   1.00   1.00</span></span></code></pre></div>
 </div>
 <div id="composite-null-hypothesis-2" class="section level4">
@@ -837,20 +836,28 @@ case.</p>
 <span id="cb29-3"><a href="#cb29-3" tabindex="-1"></a>rnull <span class="ot">=</span> <span class="cf">function</span>(<span class="at">p=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>)) <span class="fu">rnorm</span>(<span class="dv">500</span>, p[<span class="dv">1</span>], p[<span class="dv">2</span>])</span>
 <span id="cb29-4"><a href="#cb29-4" tabindex="-1"></a>ralt <span class="ot">=</span> <span class="cf">function</span>(<span class="at">mu=</span><span class="dv">0</span>) <span class="fu">rnorm</span>(<span class="dv">100</span>, mu)</span>
 <span id="cb29-5"><a href="#cb29-5" tabindex="-1"></a>phat <span class="ot">=</span> <span class="cf">function</span>(x) <span class="fu">c</span>(<span class="fu">mean</span>(x), <span class="fu">sd</span>(x))</span>
-<span id="cb29-6"><a href="#cb29-6" tabindex="-1"></a><span class="fu">gof_power</span>(pnull, <span class="cn">NA</span>, rnull, ralt, <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), phat, <span class="at">TSextra=</span>TSextra, <span class="at">B=</span>Bsim, <span class="at">maxProcessor=</span><span class="dv">2</span>)</span>
-<span id="cb29-7"><a href="#cb29-7" tabindex="-1"></a><span class="co">#&gt; pnull should have one argument for simple hypothesis if data is continuous</span></span>
-<span id="cb29-8"><a href="#cb29-8" tabindex="-1"></a><span class="co">#&gt; rnull should have no argument for simple hypothesis if data is continuous</span></span>
-<span id="cb29-9"><a href="#cb29-9" tabindex="-1"></a><span class="co">#&gt; Error in if (length(formals(w)) == 1 &amp; w(x[1]) == -99) WithWeights = FALSE: the condition has length &gt; 1</span></span></code></pre></div>
+<span id="cb29-6"><a href="#cb29-6" tabindex="-1"></a><span class="fu">gof_power</span>(pnull, <span class="cn">NA</span>, rnull, ralt, <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="at">phat=</span> phat, </span>
+<span id="cb29-7"><a href="#cb29-7" tabindex="-1"></a>          <span class="at">TSextra=</span>TSextra, <span class="at">B=</span>Bsim, <span class="at">maxProcessor=</span><span class="dv">2</span>)</span>
+<span id="cb29-8"><a href="#cb29-8" tabindex="-1"></a><span class="co">#&gt;     KS    K   AD  CvM    W   ZA   ZK ZC Wassp1 ES-l-P ES-s-P EP-l-P EP-s-P</span></span>
+<span id="cb29-9"><a href="#cb29-9" tabindex="-1"></a><span class="co">#&gt; 0 1.00 0.96 0.05 0.07 0.07 0.61 0.01  0      1   0.03   0.08   0.06   0.10</span></span>
+<span id="cb29-10"><a href="#cb29-10" tabindex="-1"></a><span class="co">#&gt; 1 0.96 0.90 0.02 0.04 0.06 0.66 0.00  0      1   0.02   0.04   0.02   0.02</span></span>
+<span id="cb29-11"><a href="#cb29-11" tabindex="-1"></a><span class="co">#&gt;   ES-l-L ES-s-L EP-l-L EP-s-L</span></span>
+<span id="cb29-12"><a href="#cb29-12" tabindex="-1"></a><span class="co">#&gt; 0   0.05   0.09   0.05   0.09</span></span>
+<span id="cb29-13"><a href="#cb29-13" tabindex="-1"></a><span class="co">#&gt; 1   0.03   0.06   0.01   0.05</span></span></code></pre></div>
 <div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" tabindex="-1"></a>ralt <span class="ot">=</span> <span class="cf">function</span>(<span class="at">df=</span><span class="dv">1</span>) {</span>
 <span id="cb30-2"><a href="#cb30-2" tabindex="-1"></a><span class="co"># t distribution truncated at +- 5  </span></span>
 <span id="cb30-3"><a href="#cb30-3" tabindex="-1"></a>  x<span class="ot">=</span><span class="fu">rt</span>(<span class="dv">1000</span>, df)</span>
 <span id="cb30-4"><a href="#cb30-4" tabindex="-1"></a>  x<span class="ot">=</span>x[<span class="fu">abs</span>(x)<span class="sc">&lt;</span><span class="dv">5</span>]</span>
 <span id="cb30-5"><a href="#cb30-5" tabindex="-1"></a>  x[<span class="dv">1</span><span class="sc">:</span><span class="dv">100</span>]</span>
 <span id="cb30-6"><a href="#cb30-6" tabindex="-1"></a>}  </span>
-<span id="cb30-7"><a href="#cb30-7" tabindex="-1"></a><span class="fu">gof_power</span>(pnull, <span class="cn">NA</span>, rnull, ralt, <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">50</span>), phat, <span class="at">Range=</span><span class="fu">c</span>(<span class="sc">-</span><span class="dv">5</span>,<span class="dv">5</span>), <span class="at">TSextra=</span>TSextra, <span class="at">B=</span>Bsim, <span class="at">maxProcessor=</span><span class="dv">2</span>)</span>
-<span id="cb30-8"><a href="#cb30-8" tabindex="-1"></a><span class="co">#&gt; pnull should have one argument for simple hypothesis if data is continuous</span></span>
-<span id="cb30-9"><a href="#cb30-9" tabindex="-1"></a><span class="co">#&gt; rnull should have no argument for simple hypothesis if data is continuous</span></span>
-<span id="cb30-10"><a href="#cb30-10" tabindex="-1"></a><span class="co">#&gt; Error in if (length(formals(w)) == 1 &amp; w(x[1]) == -99) WithWeights = FALSE: the condition has length &gt; 1</span></span></code></pre></div>
+<span id="cb30-7"><a href="#cb30-7" tabindex="-1"></a><span class="fu">gof_power</span>(pnull, <span class="cn">NA</span>, rnull, ralt, <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">50</span>), <span class="at">phat=</span>phat, </span>
+<span id="cb30-8"><a href="#cb30-8" tabindex="-1"></a>          <span class="at">Range=</span><span class="fu">c</span>(<span class="sc">-</span><span class="dv">5</span>,<span class="dv">5</span>), <span class="at">TSextra=</span>TSextra, <span class="at">B=</span>Bsim, <span class="at">maxProcessor=</span><span class="dv">2</span>)</span>
+<span id="cb30-9"><a href="#cb30-9" tabindex="-1"></a><span class="co">#&gt;      KS    K   AD  CvM    W   ZA   ZK   ZC Wassp1 ES-l-P ES-s-P EP-l-P EP-s-P</span></span>
+<span id="cb30-10"><a href="#cb30-10" tabindex="-1"></a><span class="co">#&gt; 2  0.99 0.98 0.56 0.50 0.53 0.95 0.22 0.17      1   0.30   0.35   0.29   0.32</span></span>
+<span id="cb30-11"><a href="#cb30-11" tabindex="-1"></a><span class="co">#&gt; 50 0.98 0.92 0.10 0.07 0.06 0.63 0.01 0.03      1   0.08   0.08   0.08   0.03</span></span>
+<span id="cb30-12"><a href="#cb30-12" tabindex="-1"></a><span class="co">#&gt;    ES-l-L ES-s-L EP-l-L EP-s-L</span></span>
+<span id="cb30-13"><a href="#cb30-13" tabindex="-1"></a><span class="co">#&gt; 2    0.27   0.36   0.30   0.30</span></span>
+<span id="cb30-14"><a href="#cb30-14" tabindex="-1"></a><span class="co">#&gt; 50   0.08   0.07   0.11   0.03</span></span></code></pre></div>
 </div>
 </div>
 <div id="running-other-tests" class="section level3">
@@ -885,11 +892,11 @@ necessary.</p>
 <span id="cb32-4"><a href="#cb32-4" tabindex="-1"></a>Rgof<span class="sc">::</span><span class="fu">gof_test</span>(x, <span class="cn">NA</span>, pnull, rnull, <span class="at">TS=</span>newTS_cont)</span>
 <span id="cb32-5"><a href="#cb32-5" tabindex="-1"></a><span class="co">#&gt; $statistics</span></span>
 <span id="cb32-6"><a href="#cb32-6" tabindex="-1"></a><span class="co">#&gt; CvM alt </span></span>
-<span id="cb32-7"><a href="#cb32-7" tabindex="-1"></a><span class="co">#&gt;  5.3614 </span></span>
+<span id="cb32-7"><a href="#cb32-7" tabindex="-1"></a><span class="co">#&gt;  2.5847 </span></span>
 <span id="cb32-8"><a href="#cb32-8" tabindex="-1"></a><span class="co">#&gt; </span></span>
 <span id="cb32-9"><a href="#cb32-9" tabindex="-1"></a><span class="co">#&gt; $p.values</span></span>
 <span id="cb32-10"><a href="#cb32-10" tabindex="-1"></a><span class="co">#&gt; CvM alt </span></span>
-<span id="cb32-11"><a href="#cb32-11" tabindex="-1"></a><span class="co">#&gt;  0.6504</span></span></code></pre></div>
+<span id="cb32-11"><a href="#cb32-11" tabindex="-1"></a><span class="co">#&gt;   0.994</span></span></code></pre></div>
 <p>Say we want to find the power of this test when the true distribution
 is a linear:</p>
 <div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" tabindex="-1"></a>ralt <span class="ot">=</span> <span class="cf">function</span>(<span class="at">slope=</span><span class="dv">0</span>) {</span>
@@ -898,9 +905,9 @@ is a linear:</p>
 <span id="cb33-4"><a href="#cb33-4" tabindex="-1"></a>}</span></code></pre></div>
 <div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" tabindex="-1"></a><span class="fu">gof_power</span>(pnull, <span class="cn">NA</span>, rnull, ralt, <span class="at">TS=</span>newTS_cont, <span class="at">param_alt=</span><span class="fu">round</span>(<span class="fu">seq</span>(<span class="dv">0</span>, <span class="fl">0.5</span>, <span class="at">length=</span><span class="dv">5</span>), <span class="dv">3</span>), <span class="at">Range=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>), <span class="at">B=</span>Bsim)</span>
 <span id="cb34-2"><a href="#cb34-2" tabindex="-1"></a><span class="co">#&gt;       CvM alt</span></span>
-<span id="cb34-3"><a href="#cb34-3" tabindex="-1"></a><span class="co">#&gt; 0        0.08</span></span>
-<span id="cb34-4"><a href="#cb34-4" tabindex="-1"></a><span class="co">#&gt; 0.125    0.43</span></span>
-<span id="cb34-5"><a href="#cb34-5" tabindex="-1"></a><span class="co">#&gt; 0.25     0.89</span></span>
+<span id="cb34-3"><a href="#cb34-3" tabindex="-1"></a><span class="co">#&gt; 0        0.07</span></span>
+<span id="cb34-4"><a href="#cb34-4" tabindex="-1"></a><span class="co">#&gt; 0.125    0.38</span></span>
+<span id="cb34-5"><a href="#cb34-5" tabindex="-1"></a><span class="co">#&gt; 0.25     0.91</span></span>
 <span id="cb34-6"><a href="#cb34-6" tabindex="-1"></a><span class="co">#&gt; 0.375    1.00</span></span>
 <span id="cb34-7"><a href="#cb34-7" tabindex="-1"></a><span class="co">#&gt; 0.5      1.00</span></span></code></pre></div>
 <p>for discrete data we write will the routine using Rcpp:</p>
@@ -943,12 +950,12 @@ then not possible to use multiple processors.</p>
 <span id="cb36-5"><a href="#cb36-5" tabindex="-1"></a><span class="fu">gof_test</span>(x, vals, pnull, rnull, <span class="at">TS=</span>newTS_disc)</span>
 <span id="cb36-6"><a href="#cb36-6" tabindex="-1"></a><span class="co">#&gt; Parallel Programming is not possible if custom TS is written in C++. Switching to single processor</span></span>
 <span id="cb36-7"><a href="#cb36-7" tabindex="-1"></a><span class="co">#&gt; $statistics</span></span>
-<span id="cb36-8"><a href="#cb36-8" tabindex="-1"></a><span class="co">#&gt; CvM alt </span></span>
-<span id="cb36-9"><a href="#cb36-9" tabindex="-1"></a><span class="co">#&gt; 0.01052 </span></span>
+<span id="cb36-8"><a href="#cb36-8" tabindex="-1"></a><span class="co">#&gt;  CvM alt </span></span>
+<span id="cb36-9"><a href="#cb36-9" tabindex="-1"></a><span class="co">#&gt; 0.009039 </span></span>
 <span id="cb36-10"><a href="#cb36-10" tabindex="-1"></a><span class="co">#&gt; </span></span>
 <span id="cb36-11"><a href="#cb36-11" tabindex="-1"></a><span class="co">#&gt; $p.values</span></span>
 <span id="cb36-12"><a href="#cb36-12" tabindex="-1"></a><span class="co">#&gt; CvM alt </span></span>
-<span id="cb36-13"><a href="#cb36-13" tabindex="-1"></a><span class="co">#&gt;  0.6706</span></span></code></pre></div>
+<span id="cb36-13"><a href="#cb36-13" tabindex="-1"></a><span class="co">#&gt;  0.7908</span></span></code></pre></div>
 <p>and for power calculations we can run</p>
 <div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" tabindex="-1"></a>ralt <span class="ot">=</span> <span class="cf">function</span>(<span class="at">slope=</span><span class="dv">0</span>) {</span>
 <span id="cb37-2"><a href="#cb37-2" tabindex="-1"></a>    <span class="cf">if</span>(slope<span class="sc">==</span><span class="dv">0</span>) p<span class="ot">=</span><span class="fu">rep</span>(<span class="dv">1</span><span class="sc">/</span><span class="dv">50</span>, <span class="dv">50</span>)</span>
@@ -958,9 +965,9 @@ then not possible to use multiple processors.</p>
 <span id="cb37-6"><a href="#cb37-6" tabindex="-1"></a><span class="fu">gof_power</span>(pnull, vals, rnull, ralt, <span class="at">TS=</span>newTS_disc, <span class="at">param_alt=</span><span class="fu">round</span>(<span class="fu">seq</span>(<span class="dv">0</span>, <span class="fl">0.5</span>, <span class="at">length=</span><span class="dv">5</span>), <span class="dv">3</span>), <span class="at">B=</span>Bsim)</span>
 <span id="cb37-7"><a href="#cb37-7" tabindex="-1"></a><span class="co">#&gt; Parallel Programming is not possible if custom TS is written in C++. Switching to single processor</span></span>
 <span id="cb37-8"><a href="#cb37-8" tabindex="-1"></a><span class="co">#&gt;       CvM alt</span></span>
-<span id="cb37-9"><a href="#cb37-9" tabindex="-1"></a><span class="co">#&gt; 0        0.05</span></span>
-<span id="cb37-10"><a href="#cb37-10" tabindex="-1"></a><span class="co">#&gt; 0.125    0.30</span></span>
-<span id="cb37-11"><a href="#cb37-11" tabindex="-1"></a><span class="co">#&gt; 0.25     0.88</span></span>
+<span id="cb37-9"><a href="#cb37-9" tabindex="-1"></a><span class="co">#&gt; 0        0.04</span></span>
+<span id="cb37-10"><a href="#cb37-10" tabindex="-1"></a><span class="co">#&gt; 0.125    0.32</span></span>
+<span id="cb37-11"><a href="#cb37-11" tabindex="-1"></a><span class="co">#&gt; 0.25     0.89</span></span>
 <span id="cb37-12"><a href="#cb37-12" tabindex="-1"></a><span class="co">#&gt; 0.375    1.00</span></span>
 <span id="cb37-13"><a href="#cb37-13" tabindex="-1"></a><span class="co">#&gt; 0.5      1.00</span></span></code></pre></div>
 </div>
@@ -977,7 +984,7 @@ a t distribution with 3 degrees of freedom:</p>
 <span id="cb38-4"><a href="#cb38-4" tabindex="-1"></a>w<span class="ot">=</span><span class="cf">function</span>(x) (<span class="fu">dnorm</span>(x)<span class="sc">/</span>(<span class="dv">2</span><span class="sc">*</span><span class="fu">pnorm</span>(<span class="dv">3</span>)<span class="sc">-</span><span class="dv">1</span>))<span class="sc">/</span>(<span class="fu">dt</span>(x,df)<span class="sc">/</span>(<span class="dv">2</span><span class="sc">*</span><span class="fu">pt</span>(<span class="dv">3</span>,df)<span class="sc">-</span><span class="dv">1</span>))</span>
 <span id="cb38-5"><a href="#cb38-5" tabindex="-1"></a>x<span class="ot">=</span><span class="fu">sort</span>(<span class="fu">rnull</span>())</span>
 <span id="cb38-6"><a href="#cb38-6" tabindex="-1"></a><span class="fu">plot</span>(x, <span class="fu">w</span>(x), <span class="at">type=</span><span class="st">&quot;l&quot;</span>, <span class="at">ylim=</span><span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">2</span><span class="sc">*</span><span class="fu">max</span>(<span class="fu">w</span>(x))))</span></code></pre></div>
-<p><img role="img" src="data:image/png;base64,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" /><!-- --></p>
+<p><img role="img" src="data:image/png;base64,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" /><!-- --></p>
 <div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" tabindex="-1"></a>ralt<span class="ot">=</span><span class="cf">function</span>(<span class="at">m=</span><span class="dv">0</span>) {x<span class="ot">=</span><span class="fu">rt</span>(<span class="dv">2000</span>,df)<span class="sc">+</span>m;x<span class="ot">=</span>x[<span class="fu">abs</span>(x)<span class="sc">&lt;</span><span class="dv">3</span>];<span class="fu">sort</span>(x[<span class="dv">1</span><span class="sc">:</span><span class="dv">1000</span>])}</span>
 <span id="cb39-2"><a href="#cb39-2" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">111</span>)</span>
 <span id="cb39-3"><a href="#cb39-3" tabindex="-1"></a><span class="fu">gof_power</span>(pnull, <span class="cn">NA</span>, rnull, ralt, <span class="at">w=</span>w, <span class="at">param_alt =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="fl">0.2</span>), <span class="at">Range=</span><span class="fu">c</span>(<span class="sc">-</span><span class="dv">3</span>,<span class="dv">3</span>),<span class="at">B=</span>Bsim)</span>

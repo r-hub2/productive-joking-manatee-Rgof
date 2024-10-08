@@ -19,6 +19,6 @@ Imports: Rcpp, parallel, ggplot2, stats
 Suggests: rmarkdown, knitr
 VignetteBuilder: knitr
 NeedsCompilation: yes
-Packaged: 2024-10-08 17:54:47 UTC; Wolfgang
+Packaged: 2024-10-08 18:13:03 UTC; Wolfgang
 Author: Wolfgang Rolke [aut, cre] (<https://orcid.org/0000-0002-3514-726X>)
 Maintainer: Wolfgang Rolke <wolfgang.rolke@upr.edu>

@@ -148,13 +148,13 @@ phat = function(x) sum(0:10*x)/1000
 
 ## ----pow2---------------------------------------------------------------------
 ralt =function (p=0.5) table(c(0:10, rbinom(100, 10, p)))-1
-gof_power(pnull, vals, rnull, ralt, c(0.5, 0.6), phat,
+gof_power(pnull, vals, rnull, ralt, c(0.5, 0.6), phat=phat,
         B=Bsim, nbins=c(11, 5), maxProcessors = 2)
 
 
 ## -----------------------------------------------------------------------------
 ralt =function (p=0.5) table(c(rep(0:10, 2), rbinom(100, 10, p)))
-gof_power(pnull, vals, rnull, ralt, 0.5, phat,
+gof_power(pnull, vals, rnull, ralt, 0.5, phat=phat,
         B=Bsim, nbins=c(11, 5), maxProcessors = 2)
 
 ## -----------------------------------------------------------------------------
@@ -170,7 +170,8 @@ TSextra = list(qnull = function(x, p=c(0,1)) qnorm(x, p[1], ifelse(p[2]>0, p[2],
 rnull = function(p=c(0,1)) rnorm(500, p[1], p[2])
 ralt = function(mu=0) rnorm(100, mu)
 phat = function(x) c(mean(x), sd(x))
-gof_power(pnull, NA, rnull, ralt, c(0, 1), phat, TSextra=TSextra, B=Bsim, maxProcessor=2)
+gof_power(pnull, NA, rnull, ralt, c(0, 1), phat= phat, 
+          TSextra=TSextra, B=Bsim, maxProcessor=2)
 
 ## -----------------------------------------------------------------------------
 ralt = function(df=1) {
@@ -179,7 +180,8 @@ ralt = function(df=1) {
   x=x[abs(x)<5]
   x[1:100]
 }  
-gof_power(pnull, NA, rnull, ralt, c(2, 50), phat, Range=c(-5,5), TSextra=TSextra, B=Bsim, maxProcessor=2)
+gof_power(pnull, NA, rnull, ralt, c(2, 50), phat=phat, 
+          Range=c(-5,5), TSextra=TSextra, B=Bsim, maxProcessor=2)
 
 ## -----------------------------------------------------------------------------
 newTS_cont = function(x, Fx) {
