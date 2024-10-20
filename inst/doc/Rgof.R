@@ -222,6 +222,34 @@ ralt = function(slope=0) {
 }
 gof_power(pnull, vals, rnull, ralt, TS=newTSdisc, param_alt=round(seq(0, 0.5, length=5), 3), B=Bsim)
 
+## ----eval=FALSE---------------------------------------------------------------
+#  pnull=function(x) punif(x)
+#  rnull=function() runif(250)
+#  pvals=matrix(0,1000,16)
+#  for(i in 1:1000) pvals[i, ]=Rgof::gof_test(rnull(), NA, pnull, rnull,B=1000)$p.values
+
+## ----eval=FALSE---------------------------------------------------------------
+#  colnames(pvals)=names(Rgof::gof_test(rnull(), NA, pnull, rnull,B=10)$p.values)
+#  p1=apply(pvals[, c("W", "ZC", "AD", "ES-s-P" )], 1, min)
+#  p2=apply(pvals[, c("KS", "K", "AD", "CvM")], 1, min)
+
+## -----------------------------------------------------------------------------
+tmp=readRDS("../inst/extdata/pvaluecdf.rds")
+Tests=factor(c(rep("Identical Tests", nrow(tmp)),
+        rep("Correlated Selection", nrow(tmp)),
+        rep("Best Selection", nrow(tmp)),
+        rep("Independent Tests", nrow(tmp))),
+        levels=c("Identical Tests",  "Chi Square Selection", 
+                 "Best Selection", "Independent Tests"),
+        ordered = TRUE)
+dta=data.frame(x=c(tmp[,1],tmp[,1],tmp[,1],tmp[,1]),
+          y=c(tmp[,1],tmp[,3],tmp[,2],1-(1-tmp[,1])^4),
+          Tests=Tests)
+ggplot(data=dta, aes(x=x,y=y,col=Tests))+
+  geom_line(linewidth=1.2)+
+  labs(x="p value", y="CDF")+
+  scale_color_manual(values=c("blue","red", "Orange", "green"))
+
 ## -----------------------------------------------------------------------------
 df=3
 pnull=function(x) pnorm(x)/(2*pnorm(3)-1)
