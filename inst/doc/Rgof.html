@@ -798,8 +798,8 @@ find the null distribution.</p></li>
 <span id="cb26-2"><a href="#cb26-2" tabindex="-1"></a><span class="fu">gof_power</span>(pnull, vals, rnull, ralt, <span class="fu">c</span>(<span class="fl">0.5</span>, <span class="fl">0.6</span>), <span class="at">phat=</span>phat,</span>
 <span id="cb26-3"><a href="#cb26-3" tabindex="-1"></a>        <span class="at">B=</span>Bsim, <span class="at">nbins=</span><span class="fu">c</span>(<span class="dv">11</span>, <span class="dv">5</span>), <span class="at">maxProcessors =</span> <span class="dv">2</span>)</span>
 <span id="cb26-4"><a href="#cb26-4" tabindex="-1"></a><span class="co">#&gt;       KS    K   AD  CvM    W Wassp1   l-P   s-P</span></span>
-<span id="cb26-5"><a href="#cb26-5" tabindex="-1"></a><span class="co">#&gt; 0.5 0.05 0.04 0.03 0.03 0.04   0.03 0.095 0.045</span></span>
-<span id="cb26-6"><a href="#cb26-6" tabindex="-1"></a><span class="co">#&gt; 0.6 0.04 0.05 0.04 0.06 0.03   0.05 0.045 0.040</span></span></code></pre></div>
+<span id="cb26-5"><a href="#cb26-5" tabindex="-1"></a><span class="co">#&gt; 0.5 0.04 0.03 0.07 0.05 0.03   0.04 0.095 0.045</span></span>
+<span id="cb26-6"><a href="#cb26-6" tabindex="-1"></a><span class="co">#&gt; 0.6 0.04 0.06 0.08 0.08 0.05   0.06 0.045 0.040</span></span></code></pre></div>
 <p>Note that power estimation in the case of a composite hypothesis (aka
 with parameters estimated) is much slower than the simple hypothesis
 case.</p>
@@ -810,7 +810,7 @@ case.</p>
 <span id="cb27-2"><a href="#cb27-2" tabindex="-1"></a><span class="fu">gof_power</span>(pnull, vals, rnull, ralt, <span class="fl">0.5</span>, <span class="at">phat=</span>phat,</span>
 <span id="cb27-3"><a href="#cb27-3" tabindex="-1"></a>        <span class="at">B=</span>Bsim, <span class="at">nbins=</span><span class="fu">c</span>(<span class="dv">11</span>, <span class="dv">5</span>), <span class="at">maxProcessors =</span> <span class="dv">2</span>)</span>
 <span id="cb27-4"><a href="#cb27-4" tabindex="-1"></a><span class="co">#&gt;     KS      K     AD    CvM      W Wassp1    l-P    s-P </span></span>
-<span id="cb27-5"><a href="#cb27-5" tabindex="-1"></a><span class="co">#&gt;   0.09   0.21   1.00   1.00   0.53   1.00   1.00   1.00</span></span></code></pre></div>
+<span id="cb27-5"><a href="#cb27-5" tabindex="-1"></a><span class="co">#&gt;   0.10   0.29   1.00   1.00   0.58   1.00   1.00   1.00</span></span></code></pre></div>
 </div>
 </div>
 <div id="continuous-datamodel" class="section level3">
@@ -839,8 +839,8 @@ case.</p>
 <span id="cb29-6"><a href="#cb29-6" tabindex="-1"></a><span class="fu">gof_power</span>(pnull, <span class="cn">NA</span>, rnull, ralt, <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="at">phat=</span> phat, </span>
 <span id="cb29-7"><a href="#cb29-7" tabindex="-1"></a>          <span class="at">TSextra=</span>TSextra, <span class="at">B=</span>Bsim, <span class="at">maxProcessor=</span><span class="dv">2</span>)</span>
 <span id="cb29-8"><a href="#cb29-8" tabindex="-1"></a><span class="co">#&gt;     KS    K   AD  CvM    W   ZA   ZK   ZC Wassp1 ES-l-P ES-s-P EP-l-P EP-s-P</span></span>
-<span id="cb29-9"><a href="#cb29-9" tabindex="-1"></a><span class="co">#&gt; 0 1.00 0.95 0.04 0.06 0.03 0.68 0.00 0.01      1   0.05   0.03   0.04   0.07</span></span>
-<span id="cb29-10"><a href="#cb29-10" tabindex="-1"></a><span class="co">#&gt; 1 0.98 0.91 0.02 0.00 0.02 0.53 0.01 0.01      1   0.04   0.04   0.05   0.04</span></span>
+<span id="cb29-9"><a href="#cb29-9" tabindex="-1"></a><span class="co">#&gt; 0 0.98 0.91 0.07 0.06 0.08 0.58 0.00 0.01      1   0.05   0.03   0.04   0.07</span></span>
+<span id="cb29-10"><a href="#cb29-10" tabindex="-1"></a><span class="co">#&gt; 1 0.96 0.90 0.04 0.06 0.05 0.63 0.01 0.04      1   0.04   0.04   0.05   0.04</span></span>
 <span id="cb29-11"><a href="#cb29-11" tabindex="-1"></a><span class="co">#&gt;   ES-l-L ES-s-L EP-l-L EP-s-L</span></span>
 <span id="cb29-12"><a href="#cb29-12" tabindex="-1"></a><span class="co">#&gt; 0   0.06   0.05   0.06   0.06</span></span>
 <span id="cb29-13"><a href="#cb29-13" tabindex="-1"></a><span class="co">#&gt; 1   0.05   0.05   0.07   0.05</span></span></code></pre></div>
@@ -852,9 +852,9 @@ case.</p>
 <span id="cb30-6"><a href="#cb30-6" tabindex="-1"></a>}  </span>
 <span id="cb30-7"><a href="#cb30-7" tabindex="-1"></a><span class="fu">gof_power</span>(pnull, <span class="cn">NA</span>, rnull, ralt, <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">50</span>), <span class="at">phat=</span>phat, </span>
 <span id="cb30-8"><a href="#cb30-8" tabindex="-1"></a>          <span class="at">Range=</span><span class="fu">c</span>(<span class="sc">-</span><span class="dv">5</span>,<span class="dv">5</span>), <span class="at">TSextra=</span>TSextra, <span class="at">B=</span>Bsim, <span class="at">maxProcessor=</span><span class="dv">2</span>)</span>
-<span id="cb30-9"><a href="#cb30-9" tabindex="-1"></a><span class="co">#&gt;      KS   K   AD  CvM    W   ZA   ZK   ZC Wassp1 ES-l-P ES-s-P EP-l-P EP-s-P</span></span>
-<span id="cb30-10"><a href="#cb30-10" tabindex="-1"></a><span class="co">#&gt; 2  1.00 1.0 0.62 0.58 0.61 0.98 0.15 0.14      1   0.36   0.31   0.36   0.44</span></span>
-<span id="cb30-11"><a href="#cb30-11" tabindex="-1"></a><span class="co">#&gt; 50 0.98 0.9 0.07 0.07 0.07 0.57 0.01 0.04      1   0.04   0.12   0.08   0.03</span></span>
+<span id="cb30-9"><a href="#cb30-9" tabindex="-1"></a><span class="co">#&gt;      KS    K   AD  CvM    W   ZA   ZK   ZC Wassp1 ES-l-P ES-s-P EP-l-P EP-s-P</span></span>
+<span id="cb30-10"><a href="#cb30-10" tabindex="-1"></a><span class="co">#&gt; 2  1.00 1.00 0.67 0.64 0.66 0.97 0.23 0.13      1   0.36   0.31   0.36   0.44</span></span>
+<span id="cb30-11"><a href="#cb30-11" tabindex="-1"></a><span class="co">#&gt; 50 0.98 0.92 0.06 0.04 0.04 0.55 0.00 0.03      1   0.04   0.12   0.08   0.03</span></span>
 <span id="cb30-12"><a href="#cb30-12" tabindex="-1"></a><span class="co">#&gt;    ES-l-L ES-s-L EP-l-L EP-s-L</span></span>
 <span id="cb30-13"><a href="#cb30-13" tabindex="-1"></a><span class="co">#&gt; 2    0.34   0.34   0.31   0.43</span></span>
 <span id="cb30-14"><a href="#cb30-14" tabindex="-1"></a><span class="co">#&gt; 50   0.05   0.12   0.08   0.03</span></span></code></pre></div>
