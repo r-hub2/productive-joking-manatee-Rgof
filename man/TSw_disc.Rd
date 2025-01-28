@@ -4,12 +4,14 @@
 \alias{TSw_disc}
 \title{Find test statistics for discrete data}
 \usage{
-TSw_disc(x, Fx, vals, w)
+TSw_disc(x, pnull, param, vals, w)
 }
 \arguments{
 \item{x}{An integer vector.}
 
-\item{Fx}{A numeric vector of cumulative probabilities.}
+\item{pnull}{cdf.}
+
+\item{param}{parameters for pnull in case of parameter estimation.}
 
 \item{vals}{A numeric vector with the values of the discrete rv.}
 

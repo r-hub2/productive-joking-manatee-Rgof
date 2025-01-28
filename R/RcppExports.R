@@ -14,47 +14,48 @@ Cpporder <- function(y, x) {
 #' Find test statistics for continuous data
 #' 
 #' @param x A numeric vector.
-#' @param Fx numeric vector of cdf probabilities.
-#' @param param parameters for pnull
+#' @param pnull cdf.
+#' @param param parameters for pnull  in case of parameter estimation.
 #' @param qnull An R function, the quantile function under the null hypothesis.
-#' @keywords internal
 #' @return A numeric vector with test statistics
-TS_cont <- function(x, Fx, param, qnull) {
-    .Call(`_Rgof_TS_cont`, x, Fx, param, qnull)
+TS_cont <- function(x, pnull, param, qnull) {
+    .Call(`_Rgof_TS_cont`, x, pnull, param, qnull)
 }
 
 #' Find test statistics for discrete data
 #' 
 #' @param x An integer vector.
-#' @param Fx A numeric vector of cumulative probabilities.
+#' @param pnull cdf.
+#' @param param parameters for pnull in case of parameter estimation.
 #' @param vals A numeric vector with the values of the discrete rv.
-#' @keywords internal
 #' @return A vector with test statistics
-TS_disc <- function(x, Fx, vals) {
-    .Call(`_Rgof_TS_disc`, x, Fx, vals)
+TS_disc <- function(x, pnull, param, vals) {
+    .Call(`_Rgof_TS_disc`, x, pnull, param, vals)
 }
 
 #' Find test statistics for continuous data with weights
 #' 
 #' @param x A numeric vector.
-#' @param Fx numeric vector of cdf probabilities.
+#' @param pnull cdf.
+#' @param param parameters for pnull in case of parameter estimation.
 #' @param w numeric vector of weights
 #' @keywords internal
 #' @return A numeric vector with test statistics
-TSw_cont <- function(x, Fx, w) {
-    .Call(`_Rgof_TSw_cont`, x, Fx, w)
+TSw_cont <- function(x, pnull, param, w) {
+    .Call(`_Rgof_TSw_cont`, x, pnull, param, w)
 }
 
 #' Find test statistics for discrete data
 #' 
 #' @param x An integer vector.
-#' @param Fx A numeric vector of cumulative probabilities.
+#' @param pnull cdf.
+#' @param param parameters for pnull in case of parameter estimation.
 #' @param vals A numeric vector with the values of the discrete rv.
 #' @param w weights 
 #' @keywords internal
 #' @return A vector with test statistics
-TSw_disc <- function(x, Fx, vals, w) {
-    .Call(`_Rgof_TSw_disc`, x, Fx, vals, w)
+TSw_disc <- function(x, pnull, param, vals, w) {
+    .Call(`_Rgof_TSw_disc`, x, pnull, param, vals, w)
 }
 
 #' count events in bins. Useful for power calculations. Replaces hist command from R.

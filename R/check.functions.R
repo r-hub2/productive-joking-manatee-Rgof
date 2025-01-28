@@ -41,7 +41,7 @@ check.functions=function(pnull, rnull, phat=function(x) -99, vals, x) {
   } 
 # Discrete -  With Estimation 
   if(phat(x)[1]!=-99 && !missing(vals)) {
-    if(npnull!=1) message("pnull should have one arguments for composite hypothesis if data is discrete")
+    if(npnull!=1) message("pnull should have one argument for composite hypothesis if data is discrete")
     if(nrnull!=1) message("rnull should have one argument for composite hypothesis if data is discrete")
     if(is.function(phat) && length(formals(phat))!=1) 
         message("phat should have one argument x, the data")

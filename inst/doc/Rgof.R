@@ -34,9 +34,9 @@ gof_test(x, vals, pnull, rnull, B=1000, doMethod = "all")$p.value
 gof_test_adjusted_pvalue(x, vals, pnull, rnull, B=c(1000, 500))
 
 ## ----r1, eval=FALSE-----------------------------------------------------------
-#  rnull = function() table(c(0:20, rbinom(rpois(1, 650), 20, 0.5)))-1
-#  x = rnull()
-#  gof_test(x, vals, pnull, rnull, rate=650, B=1000)$p.value
+# rnull = function() table(c(0:20, rbinom(rpois(1, 650), 20, 0.5)))-1
+# x = rnull()
+# gof_test(x, vals, pnull, rnull, rate=650, B=1000)$p.value
 
 ## -----------------------------------------------------------------------------
 vals=0:20
@@ -223,32 +223,32 @@ ralt = function(slope=0) {
 gof_power(pnull, vals, rnull, ralt, TS=newTSdisc, param_alt=round(seq(0, 0.5, length=5), 3), B=Bsim)
 
 ## ----eval=FALSE---------------------------------------------------------------
-#  pnull=function(x) punif(x)
-#  rnull=function() runif(250)
-#  pvals=matrix(0,1000,16)
-#  for(i in 1:1000) pvals[i, ]=Rgof::gof_test(rnull(), NA, pnull, rnull,B=1000)$p.values
+# pnull=function(x) punif(x)
+# rnull=function() runif(250)
+# pvals=matrix(0,1000,16)
+# for(i in 1:1000) pvals[i, ]=Rgof::gof_test(rnull(), NA, pnull, rnull,B=1000)$p.values
 
 ## ----eval=FALSE---------------------------------------------------------------
-#  colnames(pvals)=names(Rgof::gof_test(rnull(), NA, pnull, rnull,B=10)$p.values)
-#  p1=apply(pvals[, c("W", "ZC", "AD", "ES-s-P" )], 1, min)
-#  p2=apply(pvals[, c("KS", "K", "AD", "CvM")], 1, min)
+# colnames(pvals)=names(Rgof::gof_test(rnull(), NA, pnull, rnull,B=10)$p.values)
+# p1=apply(pvals[, c("W", "ZC", "AD", "ES-s-P" )], 1, min)
+# p2=apply(pvals[, c("KS", "K", "AD", "CvM")], 1, min)
 
 ## -----------------------------------------------------------------------------
-tmp=readRDS("../inst/extdata/pvaluecdf.rds")
+tmp=Rgof::pvaluecdf
 Tests=factor(c(rep("Identical Tests", nrow(tmp)),
         rep("Correlated Selection", nrow(tmp)),
         rep("Best Selection", nrow(tmp)),
         rep("Independent Tests", nrow(tmp))),
-        levels=c("Identical Tests",  "Chi Square Selection", 
+        levels=c("Identical Tests",  "Correlated Selection", 
                  "Best Selection", "Independent Tests"),
         ordered = TRUE)
 dta=data.frame(x=c(tmp[,1],tmp[,1],tmp[,1],tmp[,1]),
           y=c(tmp[,1],tmp[,3],tmp[,2],1-(1-tmp[,1])^4),
           Tests=Tests)
-ggplot(data=dta, aes(x=x,y=y,col=Tests))+
-  geom_line(linewidth=1.2)+
-  labs(x="p value", y="CDF")+
-  scale_color_manual(values=c("blue","red", "Orange", "green"))
+ggplot2::ggplot(data=dta, ggplot2::aes(x=x,y=y,col=Tests))+
+  ggplot2::geom_line(linewidth=1.2)+
+  ggplot2::labs(x="p value", y="CDF")+
+  ggplot2::scale_color_manual(values=c("blue","red", "Orange", "green"))
 
 ## -----------------------------------------------------------------------------
 df=3
@@ -259,5 +259,40 @@ x=sort(rnull())
 plot(x, w(x), type="l", ylim=c(0, 2*max(w(x))))
 ralt=function(m=0) {x=rt(2000,df)+m;x=x[abs(x)<3];sort(x[1:1000])}
 set.seed(111)
-gof_power(pnull, NA, rnull, ralt, w=w, param_alt = c(0,0.2), Range=c(-3,3),B=Bsim)
+Rgof::gof_power(pnull, NA, rnull, ralt, w=w, param_alt = c(0,0.2), Range=c(-3,3),B=Bsim)
+
+## -----------------------------------------------------------------------------
+chitest=function(x, pnull, param, TSextra) {
+    nbins=TSextra$nbins #number of bins
+    bins=seq(min(x)-1e-10, max(x)+1e-10, length=nbins+1)
+    O=hist(x, bins, plot=FALSE)$counts #bin counts
+    if(param[1]!=-99) { #with parameter estimation
+        E=length(x)*diff(pnull(bins, param)) #expected counts
+        chi=sum((O-E)^2/E) #Pearson's chi square
+        pval=1-pchisq(chi, nbins-1-length(param)) #p value
+    }
+    else {
+      E=length(x)*diff(pnull(bins))
+      chi=sum((O-E)^2/E)
+      pval=1-pchisq(chi,nbins-1)
+    }  
+    out=ifelse(TSextra$statistic, chi, pval)
+    names(out)="ChiSquare"
+    out
+}
+
+## -----------------------------------------------------------------------------
+TSextra=list(nbins=5, statistic=FALSE)
+pwr=Rgof::run.studies(chitest, "uniform.linear", TSextra=TSextra, With.p.value=TRUE)
+Rgof::plot_power(pwr, "Slope")
+
+## ----message=FALSE------------------------------------------------------------
+Rgof::run.studies(chitest, TSextra=TSextra, With.p.value=TRUE)
+
+## ----message=FALSE------------------------------------------------------------
+Rgof::run.studies(TRUE, # continuous data/model
+                  study="uniform.linear",
+                  param_alt=c(0.1, 0.2),
+                  nsample=2000,
+                  alpha=0.01)
 
