@@ -7,7 +7,7 @@ knitr::opts_chunk$set(
 
 ## ----setup--------------------------------------------------------------------
 library(Rgof)
-Bsim = c(100, 200) #Number of Simulation Runs
+Bsim = c(100, 100) #Number of Simulation Runs
 
 ## -----------------------------------------------------------------------------
 set.seed(123)
@@ -67,7 +67,7 @@ rnull = function() {
 }
 x = rnull()
 bins = 0:40/20
-vals = (bins[-1]+bins[-21])/2
+vals = (bins[-1]+bins[-21])/2 #use bin midpoints as values
 pnull = function() {
    bins = 1:40/20
    pexp(bins, 1)/pexp(2, 1)
@@ -137,7 +137,7 @@ pnull = function() pbinom(0:10, 10, 0.5)
 rnull =function () table(c(0:10, rbinom(100, 10, 0.5)))-1
 ralt =function (p=0.5) table(c(0:10, rbinom(100, 10, p)))-1
 P=gof_power(pnull, vals, rnull, ralt, 
-  param_alt=seq(0.5, 0.6, 0.02),  B=Bsim, nbins=c(11, 5))
+  param_alt=seq(0.5, 0.6, 0.02), B=Bsim, nbins=c(11, 5))
 plot_power(P, "p", Smooth=FALSE)
 
 ## -----------------------------------------------------------------------------
@@ -184,8 +184,8 @@ gof_power(pnull, NA, rnull, ralt, c(2, 50), phat=phat,
           Range=c(-5,5), TSextra=TSextra, B=Bsim, maxProcessor=2)
 
 ## -----------------------------------------------------------------------------
-newTScont = function(x, Fx) {
-   Fx=sort(Fx)
+newTScont = function(x, pnull, param) {
+   Fx=sort(pnull(x))
    n=length(x)
    out = sum(abs( (2*1:n-1)/2/n-Fx ))
    names(out) = "CvM alt"
@@ -205,22 +205,23 @@ ralt = function(slope=0) {
 }
 
 ## -----------------------------------------------------------------------------
-gof_power(pnull, NA, rnull, ralt, TS=newTScont, param_alt=round(seq(0, 0.5, length=5), 3), Range=c(0,1), B=Bsim)
+gof_power(pnull, NA, rnull, ralt, TS=newTScont, param_alt=round(seq(0, 0.5, length=3), 3), Range=c(0,1), B=Bsim)
 
 ## -----------------------------------------------------------------------------
-vals=1:50/51
-pnull = function() (1:50)/50
-rnull = function() c(rmultinom(1, 500, rep(1/50,50)))
-x = rnull()
-gof_test(x, vals, pnull, rnull, TS=newTSdisc)
+vals=0:10
+pnull = function(p) pbinom(0:10, 10, p) 
+rnull = function(p) table(c(0:10,rbinom(10000, 10, p)))-1
+phat=function(x) sum(0:10*x)/100000
+x = rnull(0.5)
+gof_test(x, vals, pnull, rnull, phat=phat, TS=newTSdisc)
 
-## -----------------------------------------------------------------------------
-ralt = function(slope=0) {
-    if(slope==0) p=rep(1/50, 50)
-    else p=diff(slope * (0:50/50)^2 + (1 - slope) * 0:50/50)  
-  c(rmultinom(1, 500, p))
+## ----powerdiscnew-------------------------------------------------------------
+ralt = function(tau=0) {
+   x=rbinom(5000, 10, 0.5-tau)
+   y=rbinom(5000, 10, 0.5+tau) 
+   table(c(0:10,x,y))-1
 }
-gof_power(pnull, vals, rnull, ralt, TS=newTSdisc, param_alt=round(seq(0, 0.5, length=5), 3), B=Bsim)
+gof_power(pnull, vals, rnull, ralt, TS=newTSdisc, phat=phat, param_alt=round(seq(0, 0.03, length=3), 3), B=Bsim)
 
 ## ----eval=FALSE---------------------------------------------------------------
 # pnull=function(x) punif(x)
@@ -286,13 +287,13 @@ TSextra=list(nbins=5, statistic=FALSE)
 pwr=Rgof::run.studies(chitest, "uniform.linear", TSextra=TSextra, With.p.value=TRUE)
 Rgof::plot_power(pwr, "Slope")
 
-## ----message=FALSE------------------------------------------------------------
-Rgof::run.studies(chitest, TSextra=TSextra, With.p.value=TRUE)
+## ----eval=FALSE, message=FALSE------------------------------------------------
+# Rgof::run.studies(chitest, TSextra=TSextra, With.p.value=TRUE)
 
-## ----message=FALSE------------------------------------------------------------
-Rgof::run.studies(TRUE, # continuous data/model
-                  study="uniform.linear",
-                  param_alt=c(0.1, 0.2),
-                  nsample=2000,
-                  alpha=0.01)
+## ----eval=FALSE, message=FALSE------------------------------------------------
+# Rgof::run.studies(TRUE, # continuous data/model
+#                   study="uniform.linear",
+#                   param_alt=c(0.1, 0.2),
+#                   nsample=2000,
+#                   alpha=0.01)
 

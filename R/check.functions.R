@@ -14,7 +14,7 @@ check.functions=function(pnull, rnull, phat=function(x) -99, vals, x) {
      message("vector x is all integers but argument vals is missing. Is data discrete?")
   if(!all(is.wholenumber(x)) & !missing(vals)) 
     message("vector x has to be all integers/counts for discrete data")
-   npnull = length(formals(pnull))
+  npnull = length(formals(pnull))
   nrnull = length(formals(rnull))
 # Continuous -  No Estimation 
   if(phat(x)[1]==-99 && missing(vals)) {
