@@ -213,7 +213,7 @@ pnull = function(p) pbinom(0:10, 10, p)
 rnull = function(p) table(c(0:10,rbinom(10000, 10, p)))-1
 phat=function(x) sum(0:10*x)/100000
 x = rnull(0.5)
-gof_test(x, vals, pnull, rnull, phat=phat, TS=newTSdisc)
+gof_test(x, vals, pnull, rnull, phat=phat, TS=Rgof::newTSdisc)
 
 ## ----powerdiscnew-------------------------------------------------------------
 ralt = function(tau=0) {
@@ -221,7 +221,8 @@ ralt = function(tau=0) {
    y=rbinom(5000, 10, 0.5+tau) 
    table(c(0:10,x,y))-1
 }
-gof_power(pnull, vals, rnull, ralt, TS=newTSdisc, phat=phat, param_alt=round(seq(0, 0.03, length=3), 3), B=Bsim)
+gof_power(pnull, vals, rnull, ralt, TS=Rgof::newTSdisc, phat=phat, param_alt=round(seq(0, 0.03, length=3), 3), B=Bsim,
+          maxProcessors = 1)
 
 ## ----eval=FALSE---------------------------------------------------------------
 # pnull=function(x) punif(x)

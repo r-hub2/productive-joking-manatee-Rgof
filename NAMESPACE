@@ -3,6 +3,7 @@
 export(gof_power)
 export(gof_test)
 export(gof_test_adjusted_pvalue)
+export(newTSdisc)
 export(plot_power)
 export(run.studies)
 importFrom(Rcpp,sourceCpp)

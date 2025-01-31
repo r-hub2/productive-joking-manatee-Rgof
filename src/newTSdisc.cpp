@@ -8,6 +8,7 @@ using namespace Rcpp;
 //' @param param parameters for pnull in case of parameter estimation.
 //' @param vals A numeric vector with the values of the discrete rv.
 //' @return A vector with test statistics
+//' @export
 // [[Rcpp::export]]
 NumericVector newTSdisc(IntegerVector x, 
                       Function pnull,  
