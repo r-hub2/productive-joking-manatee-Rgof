@@ -131,6 +131,20 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// newTSdisc
+NumericVector newTSdisc(IntegerVector x, Function pnull, NumericVector param, NumericVector vals);
+RcppExport SEXP _Rgof_newTSdisc(SEXP xSEXP, SEXP pnullSEXP, SEXP paramSEXP, SEXP valsSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< IntegerVector >::type x(xSEXP);
+    Rcpp::traits::input_parameter< Function >::type pnull(pnullSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type param(paramSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type vals(valsSEXP);
+    rcpp_result_gen = Rcpp::wrap(newTSdisc(x, pnull, param, vals));
+    return rcpp_result_gen;
+END_RCPP
+}
 // power_cont
 Rcpp::NumericMatrix power_cont(Rcpp::Function pnull, Rcpp::Function rnull, Rcpp::Function qnull, Rcpp::Function ralt, Rcpp::NumericVector param_alt, Rcpp::Function w, Rcpp::Function phat, Rcpp::Function TS, int typeTS, Rcpp::List TSextra, Rcpp::IntegerVector B, const double alpha);
 RcppExport SEXP _Rgof_power_cont(SEXP pnullSEXP, SEXP rnullSEXP, SEXP qnullSEXP, SEXP raltSEXP, SEXP param_altSEXP, SEXP wSEXP, SEXP phatSEXP, SEXP TSSEXP, SEXP typeTSSEXP, SEXP TSextraSEXP, SEXP BSEXP, SEXP alphaSEXP) {
@@ -198,6 +212,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_Rgof_bincounter", (DL_FUNC) &_Rgof_bincounter, 2},
     {"_Rgof_gof_cont", (DL_FUNC) &_Rgof_gof_cont, 10},
     {"_Rgof_gof_disc", (DL_FUNC) &_Rgof_gof_disc, 10},
+    {"_Rgof_newTSdisc", (DL_FUNC) &_Rgof_newTSdisc, 4},
     {"_Rgof_power_cont", (DL_FUNC) &_Rgof_power_cont, 12},
     {"_Rgof_power_disc", (DL_FUNC) &_Rgof_power_disc, 12},
     {"_Rgof_wbincounter", (DL_FUNC) &_Rgof_wbincounter, 3},

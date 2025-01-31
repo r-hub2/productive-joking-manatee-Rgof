@@ -474,8 +474,9 @@ gof_power(pnull, NA, rnull, ralt, TS=newTScont, param_alt=round(seq(0, 0.5, leng
 
 for discrete data we write will the routine using Rcpp:
 
+(For reasons to avoid issues with CRAN this routine is already part of Rgof)
 
-```{Rcpp}
+```{Rcpp, eval=FALSE}
 #include <Rcpp.h>
 using namespace Rcpp;
 // [[Rcpp::export]]

@@ -104,6 +104,17 @@ gof_disc <- function(x, pnull, rnull, vals, phat, TS, typeTS, TSextra, rate = 0.
     .Call(`_Rgof_gof_disc`, x, pnull, rnull, vals, phat, TS, typeTS, TSextra, rate, B)
 }
 
+#' a local function needed for the vignette
+#' 
+#' @param x An integer vector.
+#' @param pnull cdf.
+#' @param param parameters for pnull in case of parameter estimation.
+#' @param vals A numeric vector with the values of the discrete rv.
+#' @return A vector with test statistics
+newTSdisc <- function(x, pnull, param, vals) {
+    .Call(`_Rgof_newTSdisc`, x, pnull, param, vals)
+}
+
 #' find power of gof tests for continuous data
 #' 
 #' @param pnull R function (cdf)
