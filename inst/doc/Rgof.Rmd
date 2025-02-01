@@ -78,7 +78,7 @@ $$A^2=n\sum_{i=1}^k \frac{(\hat{F}(x_i)-F(x_i))^2}{F(x_i)(1-F(x_i))}\left(F(x_i)
 
 with $F(x_0)=0$. 
 
-In the continuous case $\hat{F}$ is a step function but $F$ is continuous, and therefore $A^2>0$. In the discrete case however$A^2=0$ is possible. This shows that the two cases are fundamentally different.
+In the continuous case $\hat{F}$ is a step function but $F$ is continuous, and therefore $A^2>0$. In the discrete case however$A^2=0$ is possible. This shows that the two cases are fundamentally different and therefore require different formulas for the test statistic.
 
 As for continuous data null distributions are found using simulation. In fact in the case of discrete data none of the tests has a known distribution for the test statistic under the null hypothesis.
 
@@ -99,7 +99,8 @@ We generate a data set of size 1000 from a Binomial distribution with n=20 and s
 vals=0:20 #possible values of random variable
 pnull=function()  pbinom(0:20, 20, 0.5)  # cumulative distribution function (cdf)
 rnull = function() table(c(0:20, rbinom(1000, 20, 0.5)))-1 
-# generate data under the null hypothesis, make sure that vector of counts has same length as vals, possibly 0.
+# generate data under the null hypothesis, make sure that vector of counts has 
+#same length as vals, possibly 0.
 ```
 
 -  **Null Hypothesis is true**
@@ -152,7 +153,7 @@ Arguments of *gof_test* for discrete data/model:
 
 -  ChiUsePhat=TRUE, if TRUE uses user supplied function phat for parameter estimation. If false uses method of minimum chi square.
 
--  maxProcessors=1 if greater than 1 number of cores for parallel processing. Parallel processing should not be useful for discrete data.
+-  maxProcessors=1 if greater than 1 number of cores for parallel processing. Parallel processing is usually not be useful for discrete data as the single thread version generally runs faster.
 
 -  doMethods="all" names of methods to include
   
@@ -472,9 +473,9 @@ ralt = function(slope=0) {
 gof_power(pnull, NA, rnull, ralt, TS=newTScont, param_alt=round(seq(0, 0.5, length=3), 3), Range=c(0,1), B=Bsim)
 ```
 
-for discrete data we write will the routine using Rcpp:
+for discrete data we will write the routine using Rcpp:
 
-(For reasons to avoid issues with CRAN this routine is already part of Rgof)
+(For reasons to avoid issues with CRAN submission this routine is already part of Rgof)
 
 ```{Rcpp, eval=FALSE}
 #include <Rcpp.h>
@@ -531,8 +532,10 @@ ralt = function(tau=0) {
    y=rbinom(5000, 10, 0.5+tau) 
    table(c(0:10,x,y))-1
 }
-gof_power(pnull, vals, rnull, ralt, TS=Rgof::newTSdisc, phat=phat, param_alt=round(seq(0, 0.03, length=3), 3), B=Bsim,
-          maxProcessors = 1)
+gof_power(pnull, vals, rnull, ralt,
+    TS=Rgof::newTSdisc, phat=phat, 
+    param_alt=round(seq(0, 0.05, length=3), 3),
+    B=Bsim, maxProcessors = 1)
 ```
 
 ### Adjusted p values for Several Tests
@@ -603,6 +606,8 @@ It should be noted that these tests are quite sensitive to the size of the weigh
 
 The package includes the routine *run.studies*, which provides 20 case studies each for the continuous and the discrete case. This allows the user to easily compare the power of the methods included in the package to a different one of their choice.
 
+If the user supplied method only yields the test statistic, simulation is used to find the p value. If the new test can find p values, these are used and then the routine will of course run much faster.
+
 Say a user wishes to study the performance of the chi square test for the case where the null hypothesis specifies a uniform distribution but the data actually comes from a linear distribution with slope s. (This test is of course already included in the package, so this is for illustration purposes only). So
 
 ```{r}
@@ -641,69 +646,77 @@ Arguments of *run.studies*:
 -  TS: new test statistic  
 -  study:  the name of the case study. If missing all 20 are run  
 -  TSextra: a list passed to TS  
--  With.p.value =FALSE se to TRUE if the user supplied method calculates p values  
+-  With.p.value =FALSE set to TRUE if the user supplied method calculates p values  
 -  BasicComparison = TRUE: if TRUE one value of the parameters under the alternative is chosen for each case study and all 20 studies are run 
--  nsample =500: desired smample size. 
+-  nsample =500: desired sample size. 
 -  alpha = 0.05: desired true type I error probability  
 -  param_alt: a vector of values of the parameter of the alternative distribution. If missing the ones included in Rgof are used. If more than one study is run this needs to be a list of vectors  
 -  B=c(1000, 1000) number of simulation runs
 
 The arguments of the user supplied test routine have to be
 
-- Continuous Data: 
-   x: the data set  
-   pnull:  a routine to calculate the distribution function  
-   param:  if parameters of pnull are estimated, this is vector of parameter estimates. If no parameters are estimated, this is ignored but has to be present.  
-   TSextra:  a list with any object needed to calculate the test statistic / p value.  
-- Discrete Data: 
-   x: the data set  (the counts)
-   pnull:  a routine to calculate the distribution function  
-   param:  if parameters of pnull are estimated, this is vector of parameter estimates. If no parameters are estimated, this is ignored but has to be present.  
-   vals: the possible values of the discrete random variable. 
-   TSextra:  a list with any object needed to calculate the test statistic / p value.   
-The output of the routine has to be a named vector with either the test statistic(s) or the p values(s).   
+**Continuous Data:**
+
+-   x: the data set  
+-   pnull:  a routine to calculate the distribution function  
+-   param:  if parameters of pnull are estimated, this is vector of parameter estimates. If no parameters are estimated, this is ignored but has to be present.  
+-   TSextra:  a list with any object needed to calculate the test statistic / p value.  
+
+**Discrete Data**
+
+-   x: the data set  (the counts)
+-   pnull:  a routine to calculate the distribution function  
+-   param:  if parameters of pnull are estimated, this is vector of parameter estimates. If no parameters are estimated, this is ignored but has to be present.  
+-   vals: the possible values of the discrete random variable. 
+-   TSextra:  a list with any object needed to calculate the test statistic / p value.   
+
+In either case the output of the routine has to be a named vector with either the test statistic(s) or the p values(s).   
 
 The case studies are as follows. In each the first term specifies the model under the null hypothesis and the second the model under the alternative hypothesis. The cases studies with names ending in .est include parameter estimation.
 
-  1:  uniform.linear
+**Without parameter estimation**
+
+1.  uniform.linear$\hspace{3cm}$ U[0,1] vs a linear model on [0,1] with slope s.
   
-  2:  uniform.quadratic
+2.  uniform.quadratic$\hspace{2.5cm}$ U[0,1] vs a quadratic model with vertex at 0.5 and some curvature a.
   
-  3:  uniform.bump
+3.  uniform.bump$\hspace{3.1cm}$ U[0,1] vs U[0,1]+N(0.5,0.05).
   
-  4:  uniform.sine
+4.  uniform.sine$\hspace{3.3cm}$ U[0,1] vs U[0,1]+Sine wave
   
-  5:  beta22.betaaa
+5.  beta22.betaaa$\hspace{3cm}$ Beta(2,2) vs Beta(a,a)
   
-  6:  beta22.beta2a
+6.  beta22.beta2a$\hspace{3cm}$ Beta(2,2) vs Beta(2,a)
   
-  7:  normal.shift
+7.  normal.shift$\hspace{3.5cm}$ N(0,1) vs N($\mu$,1)
   
-  8:  normal.stretch
+8.  normal.stretch$\hspace{3.1cm}$ N(0,1) vs N(0, $\sigma$)
   
-  9:  normal.outlier1
+9. normal.t$\hspace{4.2cm}$ N(0,1) vs t(df)  
   
-  10: normal.outlier2
+10.  normal.outlier1$\hspace{3.1cm}$ N(0,1) vs N(0,1)+U[2,3]
   
-  11: normal.t
+11. normal.outlier2$\hspace{3.1cm}$ N(0,1) vs N(0,1)+U[-3,-2]+U[2,3]
   
-  12: exponential.gamma
+12. exponential.gamma$\hspace{2.3cm}$ Exp(1) vs Gamma(1,b)
   
-  13: exponential.weibull
+13. exponential.weibull$\hspace{2.5cm}$ Exp(1) vs Weibull(1,b)
   
-  14: exponential.bump
+14. exponential.bump$\hspace{2.7cm}$ Exp(1) vs Exp(1)+N(0.5,0.05)
   
-  15: trunc.exponential.linear
+15. trunc.exponential.linear$\hspace{1.7cm}$ Exp(1) vs Linear, on [0,1]
+
+**With parameter estimation**
   
-  16: normal.t.est
+16. normal.t.est$\hspace{3.7cm}$ N($\mu$,$\sigma$) vs t(df)
   
-  17: exponential.weibull.est
+17. exponential.weibull.est$\hspace{1.9cm}$ Exp($\lambda$) vs Weibull(1,b)
   
-  18: trunc.exponential.linear.est
+18. trunc.exponential.linear.est$\hspace{1.2cm}$ Exp($\lambda$) vs Linear, on [0,1]
   
-  19: exponential.gamma.est
+19. exponential.gamma.est$\hspace{1.8cm}$ Exp($\lambda$) vs Gamma(1,b)
   
-  20: normal.cauchy.est
+20. normal.cauchy.est$\hspace{2.7cm}$ N($\mu$,$\sigma$) vs Cauchy (Breit-Wigner)
 
 Generally a user will likely wish to run all the included case studies. This is very easily done with
 
@@ -711,6 +724,7 @@ Generally a user will likely wish to run all the included case studies. This is 
 Rgof::run.studies(chitest, TSextra=TSextra, With.p.value=TRUE)
 ```
 
+If only the test statistic is supplied by the new test and therefore simulation has to be used to find p values, this will take several hours to run.
 *run.studies* can also be used to run the studies for the included methods but for different values of param_alt, nsample and/or alpha. For example, say we wish to find the powers of the included continuous methods for the case uniform.linear and samples of size 2000, slopes of 0.1 and 0.2, and a true type I error of 0.01:
 
 ```{r eval=FALSE, message=FALSE}

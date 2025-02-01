@@ -16,7 +16,8 @@ set.seed(123)
 vals=0:20 #possible values of random variable
 pnull=function()  pbinom(0:20, 20, 0.5)  # cumulative distribution function (cdf)
 rnull = function() table(c(0:20, rbinom(1000, 20, 0.5)))-1 
-# generate data under the null hypothesis, make sure that vector of counts has same length as vals, possibly 0.
+# generate data under the null hypothesis, make sure that vector of counts has 
+#same length as vals, possibly 0.
 
 ## -----------------------------------------------------------------------------
 x = rnull()
@@ -221,8 +222,10 @@ ralt = function(tau=0) {
    y=rbinom(5000, 10, 0.5+tau) 
    table(c(0:10,x,y))-1
 }
-gof_power(pnull, vals, rnull, ralt, TS=Rgof::newTSdisc, phat=phat, param_alt=round(seq(0, 0.03, length=3), 3), B=Bsim,
-          maxProcessors = 1)
+gof_power(pnull, vals, rnull, ralt,
+    TS=Rgof::newTSdisc, phat=phat, 
+    param_alt=round(seq(0, 0.05, length=3), 3),
+    B=Bsim, maxProcessors = 1)
 
 ## ----eval=FALSE---------------------------------------------------------------
 # pnull=function(x) punif(x)
