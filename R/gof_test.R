@@ -13,7 +13,7 @@
 #' @param  B   =5000  number of simulation runs
 #' @param  minexpcount =5 minimal expected bin count required
 #' @param  ChiUsePhat = TRUE, if TRUE param is estimated parameter, otherwise minimum chi square method is used.
-#' @param  maxProcessors =1, number of processors to use in parallel processing. 
+#' @param  maxProcessor =1, number of processors to use in parallel processing. 
 #' @param  doMethods Methods to include in tests
 #' @return A list with vectors of test statistics and p.values
 #' @export
@@ -50,9 +50,9 @@ gof_test <- function(x, vals= NA, pnull, rnull,
                     w=function(x) -99, phat=function(x) -99, 
                     TS, TSextra=NA, nbins=c(50, 10), rate=0, 
                     Range=c(-Inf, Inf), B=5000,  minexpcount=5.0,  
-                    ChiUsePhat=TRUE, maxProcessors=1, doMethods="all") {
+                    ChiUsePhat=TRUE, maxProcessor=1, doMethods="all") {
 
-  if(length(x)>10000 && maxProcessors==1)
+  if(length(x)>10000 && maxProcessor==1)
       message("Consider using parallel processing with maxProcessor= (your number of cores)")
 # adjust number of bins to account for parameter estimation
    if(abs(phat(x)[1]+99)<0.001) nbins=nbins+length(phat(x)) 
@@ -62,11 +62,11 @@ gof_test <- function(x, vals= NA, pnull, rnull,
      if(missing(TS)) # run built-in methods
         out = gof_test_cont(x, pnull, rnull, w, phat, TSextra=TSextra, nbins=nbins, 
                   rate=rate, Range=Range, B=B, minexpcount=minexpcount, ChiUsePhat=ChiUsePhat, 
-                  maxProcessors=maxProcessors, doMethods=doMethods)
+                  maxProcessor=maxProcessor, doMethods=doMethods)
      else # run user-provided tests
        out = gof_test_cont(x, pnull, rnull, w, phat, TS=TS, TSextra=TSextra, nbins=nbins, 
                     rate=rate, Range=Range, B=B, minexpcount=minexpcount, 
-                    ChiUsePhat=ChiUsePhat, maxProcessors=maxProcessors, doMethods=doMethods)           
+                    ChiUsePhat=ChiUsePhat, maxProcessor=maxProcessor, doMethods=doMethods)           
    }
    else { #discrete data/model
      # do some checks to see arguments are given correctly
@@ -74,11 +74,11 @@ gof_test <- function(x, vals= NA, pnull, rnull,
      if(missing(TS)) # run built-in methods
      out = gof_test_disc(x, pnull, rnull, vals, phat, TSextra=TSextra, nbins=nbins, 
                    rate=rate, B=B, minexpcount=minexpcount, ChiUsePhat=ChiUsePhat,
-                   maxProcessors=maxProcessors, doMethods=doMethods)     
+                   maxProcessor=maxProcessor, doMethods=doMethods)     
      else # run user-provided tests
        out = gof_test_disc(x, pnull, rnull, vals, phat, TS=TS, TSextra=TSextra, nbins=nbins, 
                    rate=rate, B=B, minexpcount=minexpcount, ChiUsePhat=ChiUsePhat,
-                   maxProcessors=maxProcessors, doMethods=doMethods)     
+                   maxProcessor=maxProcessor, doMethods=doMethods)     
    }
    # make output look nice
    signif.digits(out)

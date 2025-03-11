@@ -51,7 +51,7 @@ gof_test_adjusted_pvalue <- function(x, vals= NA, pnull, rnull,
                     Range=c(-Inf, Inf), B=c(5000,1000),  minexpcount=5.0,  
                     ChiUsePhat=TRUE, doMethods) {
   # adjust number of bins to account for parameter estimation
-  if(abs(phat(x)[1]+99)<0.001) nbins=nbins+length(phat(x)) 
+  if(abs(phat(x)[1]+99)>0.001) nbins=nbins+length(phat(x)) 
    if(length(B)==1) B=c(B, B) # this routine needs two simulation sizes
    if(any(is.na(vals))) { # continuous data
      check.functions(pnull, rnull, phat, x=x) # do some sanity checks

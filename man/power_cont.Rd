@@ -15,8 +15,7 @@ power_cont(
   TS,
   typeTS,
   TSextra,
-  B = as.integer(c(1000, 1000)),
-  alpha = 0.05
+  B = 1000L
 )
 }
 \arguments{
@@ -40,9 +39,7 @@ power_cont(
 
 \item{TSextra}{list to pass to TS}
 
-\item{B}{=c(1000, 1000) Number of simulation runs for power and null distribution}
-
-\item{alpha}{=0.05, type I error of test}
+\item{B}{=1000 Number of simulation runs}
 }
 \value{
 A matrix of powers

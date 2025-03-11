@@ -12,15 +12,16 @@
 #' @param  B   =5000  number of simulation runs
 #' @param  minexpcount =5 minimal expected bin count required
 #' @param  ChiUsePhat =TRUE, if TRUE param is estimated parameter, otherwise minimum chi square method is used.
-#' @param  maxProcessors =1, number of processors to use in parallel processing. If missing single processor is used.
+#' @param  maxProcessor =1, number of processors to use in parallel processing. If missing single processor is used.
 #' @param  doMethods Methods to include in tests
 #' @return A list with vectors of test statistics and p.values
 
 gof_test_cont <- function(x, pnull,  rnull, w=function(x) -99, phat=function(x) -99, 
                           TS, TSextra=NA, nbins=c(50, 10), rate=0, 
                           Range=c(-Inf, Inf), B=5000,  minexpcount=5.0, 
-                          ChiUsePhat=TRUE, maxProcessors=1, doMethods="all") {
+                          ChiUsePhat=TRUE, maxProcessor=1, doMethods="all") {
   # Are weights present?
+  
   WithWeights = TRUE
   if(length(formals(w))==1 && w(x[1])==-99) WithWeights = FALSE
   if(any(is.na(TSextra))) TSextra = list(p=phat(x))
@@ -51,7 +52,7 @@ gof_test_cont <- function(x, pnull,  rnull, w=function(x) -99, phat=function(x) 
     # can't do parallel processing if TS written in C/C++
     if(substr(deparse(TS)[2], 1, 5)==".Call") {
       message("Parallel Programming is not possible if custom TS is written in C++. Switching to single processor")  
-      maxProcessors=1
+      maxProcessor=1
     }
     if(length(formals(TS))==3) {
        typeTS=3
@@ -70,11 +71,11 @@ gof_test_cont <- function(x, pnull,  rnull, w=function(x) -99, phat=function(x) 
       return(NULL)
     }
   }
-  
-  if(maxProcessors==1)
+ 
+  if(maxProcessor==1)
       out = gof_cont(x, pnull, rnull, qnull, w, phat, TS, typeTS, TSextra, B)
   else {
-      m=maxProcessors
+      m=maxProcessor
       cl = parallel::makeCluster(m)
       z=parallel::clusterCall(cl, 
                                 gof_cont, 

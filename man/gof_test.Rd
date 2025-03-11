@@ -19,7 +19,7 @@ gof_test(
   B = 5000,
   minexpcount = 5,
   ChiUsePhat = TRUE,
-  maxProcessors = 1,
+  maxProcessor = 1,
   doMethods = "all"
 )
 }
@@ -52,7 +52,7 @@ gof_test(
 
 \item{ChiUsePhat}{= TRUE, if TRUE param is estimated parameter, otherwise minimum chi square method is used.}
 
-\item{maxProcessors}{=1, number of processors to use in parallel processing.}
+\item{maxProcessor}{=1, number of processors to use in parallel processing.}
 
 \item{doMethods}{Methods to include in tests}
 }

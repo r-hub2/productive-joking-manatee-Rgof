@@ -15,10 +15,10 @@ gof_power_cont(
   TSextra = NA,
   alpha = 0.05,
   Range = c(-Inf, Inf),
-  B = c(1000, 1000),
+  B = 1000,
   nbins = c(100, 10),
   rate = 0,
-  maxProcessors,
+  maxProcessor,
   minexpcount = 5,
   ChiUsePhat = TRUE
 )
@@ -44,13 +44,13 @@ gof_power_cont(
 
 \item{Range}{=c(-Inf, Inf) limits of possible observations, if any}
 
-\item{B}{=c(1000, 1000), number of simulation runs to find power and null distribution}
+\item{B}{=1000 number of simulation runs}
 
 \item{nbins}{=c(100,10), number of bins for chi square tests.}
 
 \item{rate}{=0 rate of Poisson if sample size is random, 0 if sample size is fixed}
 
-\item{maxProcessors}{maximum of number of processors to use, 1 if no parallel processing is needed or number of cores-1 if missing}
+\item{maxProcessor}{maximum of number of processors to use, 1 if no parallel processing is needed or number of cores-1 if missing}
 
 \item{minexpcount}{=5 minimal expected bin count required}
 

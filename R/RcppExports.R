@@ -128,32 +128,58 @@ newTSdisc <- function(x, pnull, param, vals) {
 #' @param TS function to calculate test statistics
 #' @param typeTS integer indicating type of test statistic
 #' @param TSextra list to pass to TS
-#' @param B  =c(1000, 1000) Number of simulation runs for power and null distribution
-#' @param alpha =0.05, type I error of test 
+#' @param B  =1000 Number of simulation runs
 #' @keywords internal
 #' @return A matrix of powers
-power_cont <- function(pnull, rnull, qnull, ralt, param_alt, w, phat, TS, typeTS, TSextra, B = as.integer( c(1000, 1000)), alpha = 0.05) {
-    .Call(`_Rgof_power_cont`, pnull, rnull, qnull, ralt, param_alt, w, phat, TS, typeTS, TSextra, B, alpha)
+power_cont <- function(pnull, rnull, qnull, ralt, param_alt, w, phat, TS, typeTS, TSextra, B = 1000L) {
+    .Call(`_Rgof_power_cont`, pnull, rnull, qnull, ralt, param_alt, w, phat, TS, typeTS, TSextra, B)
 }
 
-#' find power of gof tests for discrete data
+#' find power of gof tests for continuous data
 #' 
 #' @param pnull R function (cdf)
 #' @param rnull R function (generate data under null hypothesis)
-#' @param vals vector of values of discrete random variable
+#' @param vals values of discrete distribution
 #' @param ralt  R function to generate data under alternative
-#' @param param_alt parameters of function ralt
+#' @param param_alt parameters of ralt
 #' @param phat  function to estimate parameters from the data
 #' @param TS function to calculate test statistics
-#' @param typeTS type of test statistic
-#' @param TSextra list passed to TS, if desired
-#' @param rate =0, rate of sample size, if random
-#' @param B  =c(1000, 1000) Number of simulation runs for power and null distribution
-#' @param alpha =0.05, type I error of test
+#' @param typeTS integer indicating type of test statistic
+#' @param TSextra list to pass to TS
+#' @param B  =1000 Number of simulation runs
 #' @keywords internal
 #' @return A matrix of powers
-power_disc <- function(pnull, rnull, vals, ralt, param_alt, phat, TS, typeTS, TSextra, rate = 0.0, B = as.integer( c(1000, 1000)), alpha = 0.05) {
-    .Call(`_Rgof_power_disc`, pnull, rnull, vals, ralt, param_alt, phat, TS, typeTS, TSextra, rate, B, alpha)
+power_disc <- function(pnull, rnull, vals, ralt, param_alt, phat, TS, typeTS, TSextra, B = 1000L) {
+    .Call(`_Rgof_power_disc`, pnull, rnull, vals, ralt, param_alt, phat, TS, typeTS, TSextra, B)
+}
+
+#' This function calculates the test statistics for continuous data
+#' @param  typeTS format of TS
+#' @param  x continuous data set
+#' @param  TS routine
+#' @param  pnull  cdf under the null hypothesis
+#' @param  param estimated parameters
+#' @param  w routine to calculate weights
+#' @param  qnull quantile function
+#' @param  TSextra list passed to TS function
+#' @keywords internal
+#' @return A vector of numbers
+ts_C <- function(typeTS, x, TS, pnull, param, w, qnull, TSextra) {
+    .Call(`_Rgof_ts_C`, typeTS, x, TS, pnull, param, w, qnull, TSextra)
+}
+
+#' This function calculates the test statistics for discrete data
+#' @param  typeTS format of TS
+#' @param  x discrete data set (counts)
+#' @param  TS routine 
+#' @param  pnull  cdf under the null hypothesis
+#' @param  param estimated parameters
+#' @param  vals values of discrete RV
+#' @param  TSextra list passed to TS function
+#' @keywords internal
+#' @return A vector of numbers
+ts_D <- function(typeTS, x, TS, pnull, param, vals, TSextra) {
+    .Call(`_Rgof_ts_D`, typeTS, x, TS, pnull, param, vals, TSextra)
 }
 
 #' Find counts or sum of weights in bins. Useful for power calculations. Replaces hist command from R.
