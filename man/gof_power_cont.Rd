@@ -32,7 +32,7 @@ gof_power_cont(
 
 \item{param_alt}{vector of parameter values for distribution under alternative hypothesis}
 
-\item{w}{(Optional) function to calculate weights, returns -99 if no weights}
+\item{w}{=function(x) -99, function to calculate weights, returns -99 if no weights}
 
 \item{phat}{=function(x) -99, function to estimate parameters from the data, or -99 if no parameters aare estimated}
 

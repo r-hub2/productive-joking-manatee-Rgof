@@ -4,32 +4,16 @@
 \alias{power_cont}
 \title{find power of gof tests for continuous data}
 \usage{
-power_cont(
-  pnull,
-  rnull,
-  qnull,
-  ralt,
-  param_alt,
-  w,
-  phat,
-  TS,
-  typeTS,
-  TSextra,
-  B = 1000L
-)
+power_cont(pnull, rnull, ralt, param_alt, phat, TS, typeTS, TSextra, B = 1000L)
 }
 \arguments{
 \item{pnull}{R function (cdf)}
 
 \item{rnull}{R function (generate data under null hypothesis)}
 
-\item{qnull}{R function (quantiles under null hypothesis)}
-
 \item{ralt}{R function to generate data under alternative}
 
 \item{param_alt}{parameters of ralt}
-
-\item{w}{(Optional) function to calculate weights, returns -99 if no weights}
 
 \item{phat}{function to estimate parameters from the data}
 

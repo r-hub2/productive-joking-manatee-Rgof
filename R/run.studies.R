@@ -31,7 +31,7 @@
 #'     out
 #' }
 #' TSextra=list(nbins=10, statistic=FALSE) # Use 10 bins, test routine returns p-value
-#' Rgof::run.studies(chitest, TSextra=TSextra, With.p.value=TRUE, maxProcessor=1)
+#' run.studies(chitest, TSextra=TSextra, With.p.value=TRUE, maxProcessor=1, B=200)
 #' @export
 
 run.studies <- function(TS, study, TSextra=list(aaa=1), With.p.value=FALSE, BasicComparison=TRUE, 

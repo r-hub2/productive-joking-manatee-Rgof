@@ -1,10 +1,8 @@
 #' Find the power of various gof tests for continuous data.
 #' @param  pnull function to find cdf under  null hypothesis
 #' @param  rnull function to generate data under  null hypothesis
-#' @param  qnull quantile function (optional)
 #' @param  ralt function to generate data under  alternative hypothesis
 #' @param  param_alt  vector of parameter values for distribution under alternative hypothesis
-#' @param  w =function(x) -99  function to calculate weights, returns -99 if no weights
 #' @param  phat =function(x) -99, function to estimate parameters from the data, or -99 if no parameters are estimated
 #' @param  TS user supplied function to find test statistics, if any
 #' @param  typeTS format of TS routine
@@ -14,17 +12,16 @@
 #' @param  maxProcessor maximum of number of processors to use, 1 if no parallel processing is needed or number of cores-1 if missing
 #' @return A numeric matrix of power values
 
-power_cont_R=function(pnull, rnull, qnull, ralt, param_alt, 
-        w=function(x) -99, phat=function(x) -99, TS, typeTS, TSextra, 
+power_cont_R=function(pnull, rnull, ralt, param_alt, phat=function(x) -99, TS, typeTS, TSextra, 
         alpha=0.05,  B=1000,  maxProcessor) {
   
   x = ralt(param_alt[1])  
   WithEstimation=0
   if(abs(phat(x)[1]+99)>0.001) WithEstimation=1
-  if(typeTS==1) TS_data=TS(x, pnull, phat(x), qnull)
+  if(typeTS==1) TS_data=TS(x, pnull, phat(x), TSextra$qnull)
   if(typeTS==2) {
-    if(WithEstimation==0) wx=w(x)
-    else wx=w(x, phat(x))
+    if(WithEstimation==0) wx=TSextra$w(x)
+    else wx=TSextra$w(x, phat(x))
     TS_data=TS(x, pnull, phat(x), wx)
   }  
   if(typeTS==3) TS_data=TS(x, pnull, phat(x))
@@ -32,7 +29,7 @@ power_cont_R=function(pnull, rnull, qnull, ralt, param_alt,
   nummethods = length(TS_data)
   methods = names(TS_data)
   if(maxProcessor>1) {
-    tm=timecheck(x, pnull, phat(x), w(x), TS, typeTS, TSextra)
+    tm=timecheck(x, pnull, phat(x), TSextra$w(x), TS, typeTS, TSextra)
     if(tm*length(param_alt)*2*B<20) {
       maxProcessor=1
       message("maxProcessor set to 1 for faster computation")
@@ -40,7 +37,7 @@ power_cont_R=function(pnull, rnull, qnull, ralt, param_alt,
     else message(paste("Using ",maxProcessor," cores.."))
   }
   if(maxProcessor==1) { # no parallel processing 
-    tmp=power_cont(pnull, rnull, qnull, ralt, param_alt, w, phat, 
+    tmp=power_cont(pnull, rnull, ralt, param_alt, phat, 
                    TS, typeTS, TSextra, B)
     Data=tmp$Data
     Sim=tmp$Sim
@@ -48,7 +45,7 @@ power_cont_R=function(pnull, rnull, qnull, ralt, param_alt,
   else { 
     cl <- parallel::makeCluster(maxProcessor)
     z=parallel::clusterCall(cl, power_cont, 
-                    pnull, rnull, qnull, ralt, param_alt, w, phat, 
+                    pnull, rnull, ralt, param_alt, phat, 
                     TS, typeTS, TSextra, B=round(B/maxProcessor))
     parallel::stopCluster(cl)
     Sim=z[[1]][["Sim"]]

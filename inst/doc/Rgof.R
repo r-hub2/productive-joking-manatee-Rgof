@@ -34,10 +34,10 @@ gof_test(x, vals, pnull, rnull, B=1000, doMethod = "all")$p.value
 #Test with adjusted overall p value
 gof_test_adjusted_pvalue(x, vals, pnull, rnull, B=c(1000, 500))
 
-## ----r1, eval=FALSE-----------------------------------------------------------
-# rnull = function() table(c(0:20, rbinom(rpois(1, 650), 20, 0.5)))-1
-# x = rnull()
-# gof_test(x, vals, pnull, rnull, rate=650, B=1000)$p.value
+## ----r1-----------------------------------------------------------------------
+rnull = function() table(c(0:20, rbinom(rpois(1, 650), 20, 0.5)))-1 
+x = rnull()
+gof_test(x, vals, pnull, rnull, rate=650, B=1000)$p.value
 
 ## -----------------------------------------------------------------------------
 vals=0:20

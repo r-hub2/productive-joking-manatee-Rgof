@@ -20,9 +20,7 @@ power_disc_R=function(pnull, rnull, vals, ralt, param_alt,
   x = ralt(param_alt[1])  
   WithEstimation=0
   if(abs(phat(x)[1]+99)>0.001) WithEstimation=1
-  if(typeTS==5) TS_data = TS(x, pnull, phat(x), vals)
-  if(typeTS==6) TS_data = TS(x, pnull, phat(x), vals)
-  if(typeTS==7) TS_data = TS(x, pnull, phat(x), vals, TSextra)
+  TS_data=calcTS(list(x=x, vals=vals), pnull, phat(x), TS, typeTS, TSextra)
   nummethods = length(TS_data)
   methods = names(TS_data)
 

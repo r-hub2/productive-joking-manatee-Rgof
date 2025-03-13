@@ -165,7 +165,7 @@ The arguments of *gof_test_adjusted_pvalue* for discrete data/model are the same
 
 In some fields like high energy physics it is common that the sample size is not fixed but a random variable drawn from a Poisson distribution with a known rate. Our package runs this as follows:
 
-```{r r1, eval=FALSE}
+```{r r1}
 rnull = function() table(c(0:20, rbinom(rpois(1, 650), 20, 0.5)))-1 
 x = rnull()
 gof_test(x, vals, pnull, rnull, rate=650, B=1000)$p.value

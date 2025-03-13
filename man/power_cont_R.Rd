@@ -7,10 +7,8 @@
 power_cont_R(
   pnull,
   rnull,
-  qnull,
   ralt,
   param_alt,
-  w = function(x) -99,
   phat = function(x) -99,
   TS,
   typeTS,
@@ -25,13 +23,9 @@ power_cont_R(
 
 \item{rnull}{function to generate data under  null hypothesis}
 
-\item{qnull}{quantile function (optional)}
-
 \item{ralt}{function to generate data under  alternative hypothesis}
 
 \item{param_alt}{vector of parameter values for distribution under alternative hypothesis}
-
-\item{w}{=function(x) -99  function to calculate weights, returns -99 if no weights}
 
 \item{phat}{=function(x) -99, function to estimate parameters from the data, or -99 if no parameters are estimated}
 

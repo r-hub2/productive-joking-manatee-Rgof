@@ -65,5 +65,5 @@ chitest=function(x, pnull, param, TSextra) {
     out
 }
 TSextra=list(nbins=10, statistic=FALSE) # Use 10 bins, test routine returns p-value
-Rgof::run.studies(chitest, TSextra=TSextra, With.p.value=TRUE, maxProcessor=1)
+run.studies(chitest, TSextra=TSextra, With.p.value=TRUE, maxProcessor=1, B=200)
 }

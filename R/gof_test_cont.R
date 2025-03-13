@@ -22,22 +22,20 @@ gof_test_cont <- function(x, pnull,  rnull, w=function(x) -99, phat=function(x) 
                           ChiUsePhat=TRUE, maxProcessor=1, doMethods="all") {
   # Are weights present?
   
+  if(any(is.na(TSextra))) TSextra = list(p=phat(x))  
   WithWeights = TRUE
   if(length(formals(w))==1 && w(x[1])==-99) WithWeights = FALSE
-  if(any(is.na(TSextra))) TSextra = list(p=phat(x))
-  else TSextra = c(TSextra, p=phat)
-  Noqnull = FALSE
-  if( !("qnull" %in% names(TSextra)) ) {
-    Noqnull = TRUE
-    qnull=function(x, p=0) rep(-99,length(x))
-    TSextra = c(TSextra, qnull=qnull)
-  }  
-  else qnull = TSextra$qnull
+  TSextra=c(TSextra, w=w)
+  Noqnull=FALSE
+  if(!("qnull" %in% names(TSextra))) {
+     Noqnull=TRUE
+     TSextra=c(TSextra, qnull=function(x) -99)
+  }   
   if(missing(TS)) {
      if(!WithWeights) { #data is not weighted
        typeTS=1
        TS = TS_cont
-       TS_data = TS(x, pnull, phat(x), function(x) abs(x)/max(x))
+       TS_data = TS(x, pnull, phat(x), TSextra$qnull)
      }
      else {
        typeTS=2
@@ -73,7 +71,7 @@ gof_test_cont <- function(x, pnull,  rnull, w=function(x) -99, phat=function(x) 
   }
  
   if(maxProcessor==1)
-      out = gof_cont(x, pnull, rnull, qnull, w, phat, TS, typeTS, TSextra, B)
+      out = gof_cont(x, pnull, rnull, phat, TS, typeTS, TSextra, B)
   else {
       m=maxProcessor
       cl = parallel::makeCluster(m)
@@ -82,8 +80,6 @@ gof_test_cont <- function(x, pnull,  rnull, w=function(x) -99, phat=function(x) 
                                 x = x,
                                 pnull = pnull,
                                 rnull = rnull,
-                                qnull = qnull,
-                                w = w,
                                 phat = phat,
                                 TS = TS,
                                 typeTS = typeTS,
@@ -101,7 +97,7 @@ gof_test_cont <- function(x, pnull,  rnull, w=function(x) -99, phat=function(x) 
   if(is.infinite(Range[1])) Range[1]=-99999
   if(is.infinite(Range[2])) Range[2]=99999
   outchi = t(chi_test_cont(x, pnull, w, phat, 
-          ifelse(Noqnull, NA, qnull),
+          ifelse(Noqnull, NA, TSextra$qnull),
           nbins, rate, Range, minexpcount, ChiUsePhat)[,c(1, 2)])                        
   if(WithWeights) outchi=outchi[, 1:4]
   out = cbind(out, outchi) 

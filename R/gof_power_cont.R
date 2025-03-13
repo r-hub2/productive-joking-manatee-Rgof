@@ -3,7 +3,7 @@
 #' @param  rnull function to generate data under  null hypothesis
 #' @param  ralt function to generate data under  alternative hypothesis
 #' @param  param_alt  vector of parameter values for distribution under alternative hypothesis
-#' @param  w (Optional) function to calculate weights, returns -99 if no weights
+#' @param  w =function(x) -99, function to calculate weights, returns -99 if no weights
 #' @param  phat =function(x) -99, function to estimate parameters from the data, or -99 if no parameters aare estimated
 #' @param  TS user supplied function to find test statistics, if any
 #' @param  TSextra =NA, list provided to TS
@@ -27,13 +27,13 @@ gof_power_cont=function(pnull, rnull, ralt, param_alt,
   if(length(formals(w))==1 && w(x[1])==-99) WithWeights = FALSE
   WithEstimation = TRUE
   if(phat(x)[1]==-99) WithEstimation = FALSE
-
   if(any(is.na(TSextra))) TSextra = list(p=phat(x))
   else TSextra = c(TSextra, p=phat)
+  TSextra = c(TSextra, w=w)
   Noqnull = FALSE
   if( !("qnull" %in% names(TSextra)) ) {
     Noqnull = TRUE
-    qnull=function(x) abs(x)/sum(abs(x))
+    qnull=function(x) -99
     TSextra = c(TSextra, qnull=qnull)
   }  
   else qnull = TSextra$qnull
@@ -41,7 +41,7 @@ gof_power_cont=function(pnull, rnull, ralt, param_alt,
     if(!WithWeights) { #data is not weighted
       typeTS=1
       TS = TS_cont
-      TS_data = TS(x, pnull, phat(x), function(x) abs(x)/max(x))
+      TS_data = TS(x, pnull, phat(x), qnull)
     }
     else {
       typeTS=2
@@ -99,11 +99,9 @@ gof_power_cont=function(pnull, rnull, ralt, param_alt,
   }
 # Now the other tests
   out = power_cont_R(pnull = pnull,
-                    rnull = rnull,
-                    qnull = qnull,  
+                    rnull = rnull,  
                     ralt = ralt, 
-                    param_alt = param_alt, 
-                    w = w,
+                    param_alt = param_alt,
                     phat = phat,
                     TS = TS,
                     typeTS = typeTS,

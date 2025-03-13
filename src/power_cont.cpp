@@ -6,10 +6,8 @@ using namespace Rcpp;
 //' 
 //' @param pnull R function (cdf)
 //' @param rnull R function (generate data under null hypothesis)
-//' @param qnull R function (quantiles under null hypothesis)
 //' @param ralt  R function to generate data under alternative
 //' @param param_alt parameters of ralt
-//' @param  w (Optional) function to calculate weights, returns -99 if no weights
 //' @param phat  function to estimate parameters from the data
 //' @param TS function to calculate test statistics
 //' @param typeTS integer indicating type of test statistic
@@ -20,11 +18,9 @@ using namespace Rcpp;
 // [[Rcpp::export]]
 Rcpp::List power_cont(
         Rcpp::Function pnull, 
-        Rcpp::Function rnull,       
-        Rcpp::Function qnull, 
+        Rcpp::Function rnull, 
         Rcpp::Function ralt, 
         Rcpp::NumericVector param_alt,
-        Rcpp::Function w,
         Rcpp::Function phat,  
         Rcpp::Function TS,
         int typeTS,
@@ -33,9 +29,10 @@ Rcpp::List power_cont(
 
   int  i, l, m, np=param_alt.size();
   NumericVector x=ralt(param_alt[0]);
+  List dta=List::create(Named("x") =x);
   NumericVector p=phat(x);
   NumericVector TS_data;
-  TS_data = ts_C(typeTS, x, TS, pnull, phat(x), w, qnull, TSextra); 
+  TS_data = calcTS(dta, pnull, p, TS, typeTS, TSextra);
   int withest=0;
   if(std::abs(p(0)+99)>0.001) withest=1;
   int const nummethods=TS_data.size();
@@ -46,14 +43,14 @@ Rcpp::List power_cont(
      if(withest==0) x=rnull();
      else x=rnull(p);
      p=phat(x);
-     TSextra["p"] = phat(x);
-     TS_data = ts_C(typeTS, x, TS, pnull, phat(x), w, qnull, TSextra); 
+     dta["x"]=x;
+     TS_data = calcTS(dta, pnull, p, TS, typeTS, TSextra); 
      for(i=0;i<nummethods;++i) realdata(l,i)=TS_data(i);
      for(m=0;m<np;++m) {
          ++cn;
          x=ralt(param_alt[m]); 
-         TSextra["p"] = phat(x);
-         TS_data = ts_C(typeTS, x, TS, pnull, phat(x), w, qnull, TSextra);
+         dta["x"]=x;
+         TS_data = calcTS(dta, pnull, p, TS, typeTS, TSextra);
          simdata(cn,0)=param_alt(m);
          for(i=0;i<nummethods;++i) simdata(cn,i+1)=TS_data(i);
      }   

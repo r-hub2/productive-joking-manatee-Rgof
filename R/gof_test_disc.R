@@ -34,14 +34,14 @@ gof_test_disc <- function(x, pnull, rnull, vals, phat=function(x) -99,
       maxProcessor=1
     }
     if(length(formals(TS))==4) {
-      typeTS=6
+      typeTS=5
       TS_data = TS(x, pnull, phat(x), vals)
     }
     if(length(formals(TS))==5) {
-      typeTS=7
+      typeTS=6
       TS_data = TS(x, pnull, phat(x), vals, TSextra)
     }
-    if(length(formals(TS))>8) {
+    if(length(formals(TS))>6) {
       message("TS should have either 4 or 5 arguments")
       return(NULL)
     }

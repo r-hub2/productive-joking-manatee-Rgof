@@ -33,10 +33,11 @@ Rcpp::List power_disc(
   IntegerVector x=ralt(param_alt[0]);
   NumericVector p=phat(x);
   NumericVector TS_data;
-
+  List dta=List::create(Named("x") =x, Named("vals")=vals);
   int withest=0;
   if(std::abs(p(0)+99)>0.001) withest=1;
-  TS_data = ts_D(typeTS, x, TS, pnull, phat(x), vals, TSextra);
+  
+  TS_data=calcTS(dta, pnull, phat(x), TS, typeTS, TSextra);
   int const nummethods=TS_data.size();
   NumericMatrix realdata(B, nummethods), simdata(B*np, 1+nummethods);
   Rcpp::CharacterVector methods=TS_data.names();
@@ -45,13 +46,13 @@ Rcpp::List power_disc(
      if(withest==0) x=rnull();
      else x=rnull(p);
      p=phat(x);
-     TSextra["p"] = phat(x);
-     TS_data = ts_D(typeTS, x, TS, pnull, phat(x), vals, TSextra);
+     dta["x"]=x;
+     TS_data = calcTS(dta, pnull, phat(x), TS, typeTS,  TSextra);
      for(i=0;i<nummethods;++i) realdata(l,i)=TS_data(i);
      for(m=0;m<np;++m) {
          ++cn;
-         x=ralt(param_alt[m]); 
-         TS_data = ts_D(typeTS, x, TS, pnull, phat(x), vals, TSextra);
+         dta["x"]=ralt(param_alt[m]); 
+         TS_data = calcTS(dta, pnull, phat(x),TS, typeTS, TSextra);
          simdata(cn,0)=param_alt(m);
          for(i=0;i<nummethods;++i) simdata(cn,i+1)=TS_data(i);
      }   
