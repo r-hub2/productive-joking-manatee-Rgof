@@ -188,8 +188,8 @@ gof_power(pnull, NA, rnull, ralt, c(2, 50), phat=phat,
 newTScont = function(x, pnull, param) {
    Fx=sort(pnull(x))
    n=length(x)
-   out = sum(abs( (2*1:n-1)/2/n-Fx ))
-   names(out) = "CvM alt"
+   out = c(sum(abs( (2*1:n-1)/2/n-Fx )),sum(sqrt(abs( (2*1:n-1)/2/n-Fx ))))
+   names(out) = c("CvM alt 1", "CvM alt 2")
    out
 }
 
@@ -256,6 +256,11 @@ ggplot2::ggplot(data=dta, ggplot2::aes(x=x,y=y,col=Tests))+
   ggplot2::scale_color_manual(values=c("blue","red", "Orange", "green"))
 
 ## -----------------------------------------------------------------------------
+x=rnull()
+Rgof::gof_test_adjusted_pvalue(x, NA, pnull, rnull, 
+              B=c(100, 100), maxProcessor = 1)
+
+## -----------------------------------------------------------------------------
 df=3
 pnull=function(x) pnorm(x)/(2*pnorm(3)-1)
 rnull=function() {x=rt(2000, df);x=x[abs(x)<3];sort(x[1:1000])}
@@ -288,7 +293,8 @@ chitest=function(x, pnull, param, TSextra) {
 
 ## -----------------------------------------------------------------------------
 TSextra=list(nbins=5, statistic=FALSE)
-pwr=Rgof::run.studies(chitest, "uniform.linear", TSextra=TSextra, With.p.value=TRUE)
+pwr=Rgof::run.studies(chitest, "uniform.linear", 
+                      TSextra=TSextra, With.p.value=TRUE)
 Rgof::plot_power(pwr, "Slope")
 
 ## ----eval=FALSE, message=FALSE------------------------------------------------

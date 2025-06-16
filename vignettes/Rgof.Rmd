@@ -42,7 +42,7 @@ The highlights of this package are:
 set.seed(123)
 ```
 
-**Note** all runs of the test routine are done with *B=1000* and all runs of the power routines with arguments *B=500, maxProcessor = 2* in order to pass *devtools::check()*.
+**Note** all runs of the test routine are done with *B=1000* and all runs of the power routines with arguments *B=500* in order to pass *devtools::check()*.
 
 ## The Methods 
 
@@ -428,26 +428,26 @@ gof_power(pnull, NA, rnull, ralt, c(2, 50), phat=phat,
 
 ### Running other tests
 
-Its is very easy for a user to add other goodness-of-fit tests to the package. This can be done by editing the routines **TS_cont** and/or **TS_disc**, which are located in the folder *inst/examples* in the Rgof library folder. Or a user can write their own version of these files.
+It is very easy for a user to add other goodness-of-fit tests to the package. 
 
 **Example**
 
-Say we wish to use a test that is a variant of the Cramer-vonMises test, using the integrated absolute difference of the empirical and the theoretical distribution function:
+Say we wish to use tests that are variants of the Cramer-vonMises test, using the integrated absolute difference of the empirical and the theoretical distribution function:
 
-$$\int_{-\infty}^{\infty} \vert F(x) - \hat{F}(x) \vert dF(x)$$
+$$\int_{-\infty}^{\infty} \vert F(x) - \hat{F}(x) \vert^p dF(x)$$
 For continuous data we have the routine
 
 ```{r}
 newTScont = function(x, pnull, param) {
    Fx=sort(pnull(x))
    n=length(x)
-   out = sum(abs( (2*1:n-1)/2/n-Fx ))
-   names(out) = "CvM alt"
+   out = c(sum(abs( (2*1:n-1)/2/n-Fx )),sum(sqrt(abs( (2*1:n-1)/2/n-Fx ))))
+   names(out) = c("CvM alt 1", "CvM alt 2")
    out
 }
 ```
 
-This routine has to have three or four arguments x, pnull, param and (optionally) TSextra. x is the data and pnull a function that finds the cdf at x. param has to be the estimated parameters in the case of a composite null hypothesis, and is ignored in the case of a simple null hypothesis. Tsextra has to be a list of additional items needed for the calculation of the test statistic.
+This routine has to have three or four arguments x, pnull, param and (optionally) TSextra. x is the data and pnull a function that finds the cdf at x. param has to be the estimated parameters in the case of a composite null hypothesis, and is ignored in the case of a simple null hypothesis. Tsextra has to be a list of additional items needed for the calculation of the test statistic, if any.
 
 Note that the return object has to be a **named** vector. 
 
@@ -538,6 +538,8 @@ gof_power(pnull, vals, rnull, ralt,
     B=Bsim, maxProcessor = 1)
 ```
 
+If the new routine can also calculate p values use the argument *With.p.value=TRUE* to indicate that. In that case the return object should be a (vector of) p values.
+
 ### Adjusted p values for Several Tests
 
 As no single test can be relied upon to consistently have good power, it is reasonable to employ several of them. We could then reject the null hypothesis if any of the tests does so, that is, if the smallest p-value is less than the desired type I error probability $\alpha$. 
@@ -579,6 +581,14 @@ ggplot2::ggplot(data=dta, ggplot2::aes(x=x,y=y,col=Tests))+
   ggplot2::geom_line(linewidth=1.2)+
   ggplot2::labs(x="p value", y="CDF")+
   ggplot2::scale_color_manual(values=c("blue","red", "Orange", "green"))
+```
+
+Here is how to find these adjusted p values with *Rgof*:
+
+```{r}
+x=rnull()
+Rgof::gof_test_adjusted_pvalue(x, NA, pnull, rnull, 
+              B=c(100, 100), maxProcessor = 1)
 ```
 
 
@@ -636,7 +646,8 @@ In this example we find the power of *chitest* when the null hypothesis specifie
 
 ```{r}
 TSextra=list(nbins=5, statistic=FALSE)
-pwr=Rgof::run.studies(chitest, "uniform.linear", TSextra=TSextra, With.p.value=TRUE)
+pwr=Rgof::run.studies(chitest, "uniform.linear", 
+                      TSextra=TSextra, With.p.value=TRUE)
 Rgof::plot_power(pwr, "Slope")
 ```
 
