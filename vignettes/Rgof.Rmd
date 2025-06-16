@@ -553,12 +553,21 @@ This procedure clearly suffers from the problem of simultaneous inference, and t
 
 We generate a number of data sets under the null hypothesis. Generally about 1000 will be sufficient. Then for each simulated data set we apply the tests we wish to include, and record the smallest p value. Here is an example. Say the null hypothesis specifies a uniform $[0.1]$ and a sample size of 250. 
 
+```{r echo=FALSE}
+pnull=function(x) punif(x)
+rnull=function() runif(250)
+```
+
 ```{r eval=FALSE}
 pnull=function(x) punif(x)
 rnull=function() runif(250)
 pvals=matrix(0,1000,16)
-for(i in 1:1000) pvals[i, ]=Rgof::gof_test(rnull(), NA, pnull, rnull,B=1000)$p.values
+for(i in 1:1000) 
+  pvals[i, ]=Rgof::gof_test(rnull(), NA, pnull,
+                            rnull,B=1000)$p.values
 ```
+
+**Note** this is not run because of CRAN time constraints. The resulting matrix is in *Rgof::pvaluecdf*.
 
 Next we find the smallest p value in each run for two selections of four methods. One is the selection found to be best above, namely the methods by Wilson, Anderson-Darling, Zhang's ZC and a chi square test with a small number of bins and using Pearson's formula. As a second selection we use the methods by Kolmogorov-Smirnov, Kuiper, Anderson-Darling and Cramer-vonMises. It can be checked that for this null hypothesis these methods are highly correlated.
 
@@ -593,7 +602,7 @@ Here is how to find these adjusted p values with *Rgof*:
 ```{r}
 x=rnull()
 Rgof::gof_test_adjusted_pvalue(x, NA, pnull, rnull, 
-              B=c(100, 100), maxProcessor = 1)
+              B=c(1000,500), maxProcessor = 1)
 ```
 
 

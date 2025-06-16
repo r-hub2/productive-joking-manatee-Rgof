@@ -232,11 +232,17 @@ gof_power(pnull, vals, rnull, ralt,
     param_alt=round(seq(0, 0.05, length=3), 3),
     B=Bsim, maxProcessor = 1)
 
+## ----echo=FALSE---------------------------------------------------------------
+pnull=function(x) punif(x)
+rnull=function() runif(250)
+
 ## ----eval=FALSE---------------------------------------------------------------
 # pnull=function(x) punif(x)
 # rnull=function() runif(250)
 # pvals=matrix(0,1000,16)
-# for(i in 1:1000) pvals[i, ]=Rgof::gof_test(rnull(), NA, pnull, rnull,B=1000)$p.values
+# for(i in 1:1000)
+#   pvals[i, ]=Rgof::gof_test(rnull(), NA, pnull,
+#                             rnull,B=1000)$p.values
 
 ## ----eval=FALSE---------------------------------------------------------------
 # colnames(pvals)=names(Rgof::gof_test(rnull(), NA, pnull, rnull,B=10)$p.values)
@@ -263,7 +269,7 @@ ggplot2::ggplot(data=dta, ggplot2::aes(x=x,y=y,col=Tests))+
 ## -----------------------------------------------------------------------------
 x=rnull()
 Rgof::gof_test_adjusted_pvalue(x, NA, pnull, rnull, 
-              B=c(100, 100), maxProcessor = 1)
+              B=c(1000,500), maxProcessor = 1)
 
 ## -----------------------------------------------------------------------------
 df=3

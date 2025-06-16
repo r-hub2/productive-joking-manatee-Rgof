@@ -1038,7 +1038,11 @@ value. Here is an example. Say the null hypothesis specifies a uniform
 <div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" tabindex="-1"></a>pnull<span class="ot">=</span><span class="cf">function</span>(x) <span class="fu">punif</span>(x)</span>
 <span id="cb38-2"><a href="#cb38-2" tabindex="-1"></a>rnull<span class="ot">=</span><span class="cf">function</span>() <span class="fu">runif</span>(<span class="dv">250</span>)</span>
 <span id="cb38-3"><a href="#cb38-3" tabindex="-1"></a>pvals<span class="ot">=</span><span class="fu">matrix</span>(<span class="dv">0</span>,<span class="dv">1000</span>,<span class="dv">16</span>)</span>
-<span id="cb38-4"><a href="#cb38-4" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">1000</span>) pvals[i, ]<span class="ot">=</span>Rgof<span class="sc">::</span><span class="fu">gof_test</span>(<span class="fu">rnull</span>(), <span class="cn">NA</span>, pnull, rnull,<span class="at">B=</span><span class="dv">1000</span>)<span class="sc">$</span>p.values</span></code></pre></div>
+<span id="cb38-4"><a href="#cb38-4" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">1000</span>) </span>
+<span id="cb38-5"><a href="#cb38-5" tabindex="-1"></a>  pvals[i, ]<span class="ot">=</span>Rgof<span class="sc">::</span><span class="fu">gof_test</span>(<span class="fu">rnull</span>(), <span class="cn">NA</span>, pnull,</span>
+<span id="cb38-6"><a href="#cb38-6" tabindex="-1"></a>                            rnull,<span class="at">B=</span><span class="dv">1000</span>)<span class="sc">$</span>p.values</span></code></pre></div>
+<p><strong>Note</strong> this is not run because of CRAN time
+constraints. The resulting matrix is in <em>Rgof::pvaluecdf</em>.</p>
 <p>Next we find the smallest p value in each run for two selections of
 four methods. One is the selection found to be best above, namely the
 methods by Wilson, Anderson-Darling, Zhang’s ZC and a chi square test
@@ -1072,217 +1076,14 @@ inst/extdata directory of the package</p>
 <p><img role="img" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASAAAAEgCAMAAAAjXV6yAAABhlBMVEUAAAAAADoAAGYAAP8AOmYAOpAAZrYA/wAzMzM6AAA6ADo6AGY6OmY6OpA6kNtNTU1NTVNNTW5NTY5NZKtNaatNbp1NbqtNeXlNg45NjqJNjrVNjshZTU1ZTY5ZZKteTW5eaatkTY5mAABmADpmAGZmOgBmZjpmtrZmtv9pf2lpq+RuTU1uTWRuTW5uTXluTYNuTY5ubqtuq81uq+RvTU15TY5/tauDjm6OTU2OTVmOTV6OTWSOTW6OTY6Obk2Obm6OtauOyMiOyOSOyP+QOgCQOjqQZgCQkDqQkGaQtpCQ27aQ2/+dbk2dnW6rY1mrY2SraV6rbk2rbm6rboOrbo6rtY6ryKur5Mir5OSr5P+1q262ZgC225C22/+2///Ig03Ijk3IyI7I5KvI/8jI/+TI///Nq27bkDrb25Db/7bb/9vb///kq27kyI7k5Kvk/8jk/+Tk///r6+v/AAD/omT/pQD/tmb/yI7/25D/27b/29v/5I7/5Kv//7b//8j//9v//+T///+ljUJAAAAACXBIWXMAAA7DAAAOwwHHb6hkAAAOUUlEQVR4nO2di3cbRxXG5RhHdUJtEkqABih1UjCEgtvwKCWFNHZ41LwcCiVVMSIhGEiAZoQUA5ad/c+Z585776x2JFva+53EOxqtdLS/M4/VfLpzOwWqUp3T/gBnXQgIEAIChIAAISBACAjQxIAIof9Izb85P/mMhIAAISBACAgQAgKEgAAhIEAICFAloKOtR/x4/Nb6laflQQgBFcWz9csc0PO97eLJVXWQQkBF/9LvRAs6fucRa0zyIJ9Ng9I1tHCAyi529MbT4vjWfXmgFS9QJbx319ZgOccHnrVSAD27wsnIg3wObkFdD1BrWhATCEhQEeUh1WBxAU0yBkk6okbwGSzsGPR876aYxW4mz2Kq9RQGn+XFBMT+178PUr1LARosJqAqVQLSo4/RgBCQNX+VNYwPQUAuoLLM+BQc0ALeKFYJmOBVmbefYoCAjL/uBE8I54OADEDmBE+IGIEQkHGLaAAiCMgHRGxAooct3nJHtVIAWT0MAXn30EOrhyGgEhDRgAoEBAMaqNtoBOR8C9OAlhGQAcj+koGArL9dGxBBQNVfUzUggoBcQEMJaICAooCIBLSMgMILHQgoAMhe6GgxoKDYHCbF5ngmuRY0t8ragoylMvk9rNANqG0tCF4qIwgoDmiIgEBAon6AgPRfvdg6NAFJPgiIWEtlBQKKAxqWgAYIKAKIlICWERAIqEBABTGW64cIqIgAIgoQQUBJgAYIKABoaAGShg8CsgARBOQD6iIgSyFA9kIHAooCUvUDBAQCUo4YAkJAjlxAXQRkKwDIWWzVX+URkAFoaAEqDR8EZAAiLQFUxq48WWfa5sfLsXAoH9BgwQHZMbws3LC/bTydBIgsMiArfo5FGj6/d9942gGkXPmhBWh5kQFZEZisKdEuxzpaEQzqVaazcpyV55xgOp/sdITOe0/95w/wy6esOCAzhpcfj143W5HfgojnZxDtiAEt6PDCbnLtbJXWgp6VkYblOBQGNGwRIHMM6t9UtTAgogEt1wXEetu5ffpwlfa4TfZ3TZZzXOtEqprFyhhe0bFYM3r+fmSajwEidQCd7NBh6GDlMX90uLrJjqqc75LrCbwP4kG9oqfR+6BL5URmA+pmATRirWe8sXl4cb+sVeXTUqY7aeXKNwN0IGaztaInpjRe2wtNb7NTXkC2I1Yf0MpjVTHeoIORHJl4edLP2VTZARENaLl2F1syZi3W1dQsRsuTfs6mmjKgohagkx3ahCglPhbRKsZFlSf9nE11pgDxaZ61olFHHHt0+FHlU9K0ALmeKgDo7CorIM9TRUAeIGIBchf2c37yGSkPoC4C8uQCIgjIVgCQYTp7nioCItWOGAJCQI4yAiJhTfrJ8mo6gHxPtd2AugFABQKyABEX0DICcgFVuvIICDCdERBgOiMgwHRuHyBT3HfWpnORajpLVQOStsbJjrPqSutdx4M/lk62Xt4236W+srYgVWOFYTZtQRWA3Dcq7aL4U7U1DUCD2oCWPdmAxhudT7y2Ke2Nwxd/3OlssvJH4qmlXW6/bjqApBkyYmYtL486E7gjOQB1fUCe6dwMUG+NXucmOxycpzDoo5XHoouxhjVa+du1XbPLiaM4e3x9n7/o4r4s1VQmQEU8TjUDIHZplMSYYqBFdvmChjUMyWfkS+hjcTY7yHe5NsnSfzZA0TjVDGMQv+Ae61XM4LABvSgG4x7rPjYgcTbrfUvCwRalmsoJSBs+JC8g1YKu76vLd1oQM9DcLibPZhIdUpZqXud0APmeaiNAxhgkr7Wkw8agw4tstD68sOuNQfRshkS8SJbOCiAHTTNA9N5GzmKqtzA0xix20GEneLOYMB/Z3EXP3u+d4iw2RUCnrPyAwp5q6wENTUAEAZmAuhIQKQEFTOf5B1T3JzgWIOIBctEsCKBR+igfAxSxDNsOaGgCIgioCAAiCMhSBaBlBFRAgDw0iwCoo5REKQIo5qnOP6C6igMKeqotBtR1AQU91YUANOIdLPF+0QREXEA+mgUAxBYECjYWpS2ZtA+QCpQ42VkTFTpjnwx3Dqfw0/eJpMJ0bgJo5NtcWnpR2nZ2pE3E5h496QSMNMgPKgFp30mSMqKeRRRdJJWxHoJIhencANABu8BejFA1IH7zomNkgk5jtQJfVuXNkI44lIGqkTSiLqCw6VwNaOBJAxJmBLteaYt98rVzH9H/+/KhWI0XRpmsUz6a6W+UJ+tTlt7T3lrpt6UD0jGrMtw5kspYLnaIBzVN5xRAehlZLkmvbooIROmSCT9HdhZRp9awZXiMfK04WZaEn/bX8lX8jdcCa9ZxQDrqWYY7R1IZmy0o7qlO3oJGyutjNgVlIZekC8MlK5Qrprww4YKIl3PvR59svUxgdd44FZCduZiOQ5FUxhTQ0ADkRTo3HYOU8yVW7+9qQNolK10xq67sLTywSj2hSvxdtXVkvHEUkPNVwx5yKKD4GORsjpwXUDkGuS2odMm0KybrdAsSza9nWGqGuVavBXnSUc8y3DmSytgHFEIzOSA9i1m2WKEfHmpXTNTpMYj3C4ZYv1aUSj/NGINqAjKinmW4c/Q+aLqAyvsgY9qS3rJ0yYQrxu50pRcmfbRCdAxWo0+Wp/CD9tbMN44B4rTLYR+Suuzu9AGdqjQgNssx9dLWhAxA5a8TK362sACAeufdQqUigGKu/PwD8qZ5QHFAQTStBmRkw1xgQOWXeHP/gwrZgAoJKGo6zz8gcbtRmKQqFQYUNZ0XAFDR479Pq7tg5gEKo1kEQGIro9Rf8bURUC35gCpd+ZYDIhJQ3HRuLaCuBShuOrcZUCDhLAJCQKA8QNWu/OSA+NzqLaarldamrg6orIAqTOcGgC6GtqDSv7Bv5uqAyg0ohqYa0NCTA+jkrnJujPCmHK7O7AABnmpDQGyN3Q1vKnK4OqCyACIE9FQbAFoVEZZeeBN/tqmrAyonoCpPteEYxEwNL7xJndDE1QGVCxBkGTYEpJ0bpjK8qbmrA6pp1DMHVHDPuahvOgslANLOjQ5vKnK4OqAytqBKT7VBC1L3QV54U5HB1Zk2oO70AZ2ymgMaKkCVpnPbAYGOGAKKBvIiIAQUlAGIIKCAPEDVpnPLAcGeKgICPFUEhIAcuYAA0xkBAYZPmwEleaotBdQtAUGeansBGUPQdAAFg3iqFN4ObtLN8TICqkRz6oC8d4pVOcoBKMUyrAbU9WQBUo6NtRne+PpP1NKYYepE9ssz1mFrbo6XCVBFIG8OQKvWD+il/7Ox8pj9nNLaGi+2X556p6L25njzAUisltqb4bH16JO7u/bWeLH98jSgupvjNQeUZjo3GoPMCy03w+MXFtgaL1JZAqq5OV4+QNVocgCyN8NjgFgLsrbGi+2XZwCquTnePAGyN8Mbb5wvRx1t6kT2y9OA6m6Ol5LruTi6wTPQ+rmeOaAkVz4LIGszvPG1rziOj3eKrJQW0WSb46XkemZhhiws08/1rADBrvzkgGKabOfR2krJs/qMYepvB3I9K0CwK7+AgOwQVVoK5HpmgCaLdDY1GaAZKS3XM4/P9HM9d40WBLSd/C1oRkprQcdvqVzGVirj8j6xlYCMIOejG+Xw7ANK++FLFaAzrZSoZ8nHz/VsDEEQmgUEpKOe2f0PG569XM8tB1QtBAQIAQFCQIBsQCCa9gIaIKCwDEApnioCQkCOJCDxRQNGg4AQkCMJaICAItKAkkzndgNKQIOAEJAjIjZKRkAxCUBDBBQTAgJUAkozfBAQAnKEgAAhIFhqls/2Yc6iGrYg2YCwBflCQIAQECAEBKgElIYGASEgRwgIkPj19yDVU20poOEg1fBBQAjIEQIChIAAEbFkj4BikoBS0SAgBORIAEr2VBEQAnKEgAAJQMloEBACcsQBpXuqCAgBORJ5oVoNSAf1ypKTwq/tgHRQryw5qYy7bQekA+pkyUkjKiaxFgPSIZmy5KYy7nZn9ilPUSlBvbIUSWWMLchvQUwICBqDWg9IB/XKUiSVcWsBGamMw/dBrQdULQQECAEBQkCAEBAgBATqhQbl+RECAoSAACEgQE3TZy28EBAgBAQIAQFCQIDqArK8oHVa5hVss1d64Ju9frhe1v+Fb372Rb4J2uWHgTWTOVBNQKYXdGfve1efvMwqPn/r93u3X//FVb6HYP8Oq3pZnfjv9cuPWH3QO5oD1QRkrsM+fOfB1oNvfodWfOMqre/f/taP7lMQ9z5g5/B6emL/U9/d+jPbvjO4bjsHqgnIXMn/5xv/uvXB21+WC/q0/INv0670Lt/x9VjW09ZytPWQVd0OrfzPgWoCMr2gf1yhUL7/krCEPvPzm8dvv3K/eP7rV3575eN7qp4h2XrANoH95UsB72gOlKkF/e8LX5f1/W16Tv9dWU95yA71xy+1ogWFx6CtBzdeVfX9bT4eyTGof1ONOP1XWzEGmV7Qm3tfY7MYrfjcjTvs8Fm22euvrny89+b7H/L6q2x35aOtP7H63/ww4B3NgSa7D5JekH2/8+mnfLPXJ/o+6Cnf7J1vBnvpfsg7mgPhnTQgBAQIAQFCQIAQECAEBGhKgA4vzCQryAyEgAAhIEBNAB1e+KlKO3mys0b/HpzbP1ztdDprDBBnxP6w/JQV6ZfOuBoBWj23f7Ij0gMeUFCUEsurxzlpQPyMg3gCrzOuZoA2y87EDvT/fx+LsgGIJWosOLi5VLMutlteOutjvJmMRHZBDeiAJ4DtrGX6wLNWLkDFaOXvlNF4Y2nXaUHz27u4mncxmUBwfO1ntMSTBY6sFjSqSEE5B8o1SLOkgec5G1rNAY031mjHW6KDNMuyOLeUGk/zZY5blpyS51Zcem9jk4/ZdMb/6jUxzc8tn+Zj0KILAQFCQIBwuQMQAgKEgAAhIEAICBACAoSAAP0fsU5OVWz/1AoAAAAASUVORK5CYII=" /><!-- --></p>
 <p>Here is how to find these adjusted p values with <em>Rgof</em>:</p>
 <div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" tabindex="-1"></a>x<span class="ot">=</span><span class="fu">rnull</span>()</span>
-<span id="cb41-2"><a href="#cb41-2" tabindex="-1"></a><span class="co">#&gt; Error in rnull(): argument &quot;p&quot; is missing, with no default</span></span>
-<span id="cb41-3"><a href="#cb41-3" tabindex="-1"></a>Rgof<span class="sc">::</span><span class="fu">gof_test_adjusted_pvalue</span>(x, <span class="cn">NA</span>, pnull, rnull, </span>
-<span id="cb41-4"><a href="#cb41-4" tabindex="-1"></a>              <span class="at">B=</span><span class="fu">c</span>(<span class="dv">100</span>, <span class="dv">100</span>), <span class="at">maxProcessor =</span> <span class="dv">1</span>)</span>
-<span id="cb41-5"><a href="#cb41-5" tabindex="-1"></a><span class="co">#&gt; vector x is all integers but argument vals is missing. Is data discrete?</span></span>
-<span id="cb41-6"><a href="#cb41-6" tabindex="-1"></a><span class="co">#&gt; rnull should have no argument for simple hypothesis if data is continuous</span></span>
-<span id="cb41-7"><a href="#cb41-7" tabindex="-1"></a><span class="co">#&gt; Warning in pbinom(0:10, 10, p): NaNs produced</span></span>
-<span id="cb41-8"><a href="#cb41-8" tabindex="-1"></a><span class="co">#&gt; Warning in pbinom(0:10, 10, p): NaNs produced</span></span>
-<span id="cb41-9"><a href="#cb41-9" tabindex="-1"></a><span class="co">#&gt; Warning in rbinom(10000, 10, p): NAs produced</span></span>
-<span id="cb41-10"><a href="#cb41-10" tabindex="-1"></a><span class="co">#&gt; Warning in rbinom(10000, 10, p): NAs produced</span></span>
-<span id="cb41-11"><a href="#cb41-11" tabindex="-1"></a><span class="co">#&gt; Warning in rbinom(10000, 10, p): NAs produced</span></span>
-<span id="cb41-12"><a href="#cb41-12" tabindex="-1"></a><span class="co">#&gt; Warning in rbinom(10000, 10, p): NAs produced</span></span>
-<span id="cb41-13"><a href="#cb41-13" tabindex="-1"></a><span class="co">#&gt; Warning in rbinom(10000, 10, p): NAs produced</span></span>
-<span id="cb41-14"><a href="#cb41-14" tabindex="-1"></a><span class="co">#&gt; Warning in rbinom(10000, 10, p): NAs produced</span></span>
-<span id="cb41-15"><a href="#cb41-15" tabindex="-1"></a><span class="co">#&gt; Warning in rbinom(10000, 10, p): NAs produced</span></span>
-<span id="cb41-16"><a href="#cb41-16" tabindex="-1"></a><span class="co">#&gt; Warning in rbinom(10000, 10, p): NAs produced</span></span>
-<span id="cb41-17"><a href="#cb41-17" tabindex="-1"></a><span class="co">#&gt; Warning in rbinom(10000, 10, p): NAs produced</span></span>
-<span id="cb41-18"><a href="#cb41-18" tabindex="-1"></a><span class="co">#&gt; Warning in rbinom(10000, 10, p): NAs produced</span></span>
-<span id="cb41-19"><a href="#cb41-19" tabindex="-1"></a><span class="co">#&gt; Warning in rbinom(10000, 10, p): NAs produced</span></span>
-<span id="cb41-20"><a href="#cb41-20" tabindex="-1"></a><span class="co">#&gt; Warning in rbinom(10000, 10, p): NAs produced</span></span>
-<span id="cb41-21"><a href="#cb41-21" tabindex="-1"></a><span class="co">#&gt; Warning in rbinom(10000, 10, p): NAs produced</span></span>
-<span id="cb41-22"><a href="#cb41-22" tabindex="-1"></a><span class="co">#&gt; Warning in rbinom(10000, 10, p): NAs produced</span></span>
-<span id="cb41-23"><a href="#cb41-23" tabindex="-1"></a><span class="co">#&gt; Warning in rbinom(10000, 10, p): NAs produced</span></span>
-<span id="cb41-24"><a href="#cb41-24" tabindex="-1"></a><span class="co">#&gt; Warning in rbinom(10000, 10, p): NAs produced</span></span>
-<span id="cb41-25"><a href="#cb41-25" tabindex="-1"></a><span class="co">#&gt; Warning in rbinom(10000, 10, p): NAs produced</span></span>
-<span id="cb41-26"><a href="#cb41-26" tabindex="-1"></a><span class="co">#&gt; Warning in rbinom(10000, 10, p): NAs produced</span></span>
-<span id="cb41-27"><a href="#cb41-27" tabindex="-1"></a><span class="co">#&gt; Warning in rbinom(10000, 10, p): NAs produced</span></span>
-<span id="cb41-28"><a href="#cb41-28" tabindex="-1"></a><span class="co">#&gt; Warning in rbinom(10000, 10, p): NAs produced</span></span>
-<span id="cb41-29"><a href="#cb41-29" tabindex="-1"></a><span class="co">#&gt; Warning in rbinom(10000, 10, p): NAs produced</span></span>
-<span id="cb41-30"><a href="#cb41-30" tabindex="-1"></a><span class="co">#&gt; Warning in rbinom(10000, 10, p): NAs produced</span></span>
-<span id="cb41-31"><a href="#cb41-31" tabindex="-1"></a><span class="co">#&gt; Warning in rbinom(10000, 10, p): NAs produced</span></span>
-<span id="cb41-32"><a href="#cb41-32" tabindex="-1"></a><span class="co">#&gt; Warning in rbinom(10000, 10, p): NAs produced</span></span>
-<span id="cb41-33"><a href="#cb41-33" tabindex="-1"></a><span class="co">#&gt; Warning in rbinom(10000, 10, p): NAs produced</span></span>
-<span id="cb41-34"><a href="#cb41-34" tabindex="-1"></a><span class="co">#&gt; Warning in rbinom(10000, 10, p): NAs produced</span></span>
-<span id="cb41-35"><a href="#cb41-35" tabindex="-1"></a><span class="co">#&gt; Warning in rbinom(10000, 10, p): NAs produced</span></span>
-<span id="cb41-36"><a href="#cb41-36" tabindex="-1"></a><span class="co">#&gt; Warning in rbinom(10000, 10, p): NAs produced</span></span>
-<span id="cb41-37"><a href="#cb41-37" tabindex="-1"></a><span class="co">#&gt; Warning in rbinom(10000, 10, p): NAs produced</span></span>
-<span id="cb41-38"><a href="#cb41-38" tabindex="-1"></a><span class="co">#&gt; Warning in rbinom(10000, 10, p): NAs produced</span></span>
-<span id="cb41-39"><a href="#cb41-39" tabindex="-1"></a><span class="co">#&gt; Warning in rbinom(10000, 10, p): NAs produced</span></span>
-<span id="cb41-40"><a href="#cb41-40" tabindex="-1"></a><span class="co">#&gt; Warning in rbinom(10000, 10, p): NAs produced</span></span>
-<span id="cb41-41"><a href="#cb41-41" tabindex="-1"></a><span class="co">#&gt; Warning in rbinom(10000, 10, p): NAs produced</span></span>
-<span id="cb41-42"><a href="#cb41-42" tabindex="-1"></a><span class="co">#&gt; Warning in rbinom(10000, 10, p): NAs produced</span></span>
-<span id="cb41-43"><a href="#cb41-43" tabindex="-1"></a><span class="co">#&gt; Warning in rbinom(10000, 10, p): NAs produced</span></span>
-<span id="cb41-44"><a href="#cb41-44" tabindex="-1"></a><span class="co">#&gt; Warning in rbinom(10000, 10, p): NAs produced</span></span>
-<span id="cb41-45"><a href="#cb41-45" tabindex="-1"></a><span class="co">#&gt; Warning in rbinom(10000, 10, p): NAs produced</span></span>
-<span id="cb41-46"><a href="#cb41-46" tabindex="-1"></a><span class="co">#&gt; Warning in rbinom(10000, 10, p): NAs produced</span></span>
-<span id="cb41-47"><a href="#cb41-47" tabindex="-1"></a><span class="co">#&gt; Warning in rbinom(10000, 10, p): NAs produced</span></span>
-<span id="cb41-48"><a href="#cb41-48" tabindex="-1"></a><span class="co">#&gt; Warning in rbinom(10000, 10, p): NAs produced</span></span>
-<span id="cb41-49"><a href="#cb41-49" tabindex="-1"></a><span class="co">#&gt; Warning in rbinom(10000, 10, p): NAs produced</span></span>
-<span id="cb41-50"><a href="#cb41-50" tabindex="-1"></a><span class="co">#&gt; Warning in rbinom(10000, 10, p): NAs produced</span></span>
-<span id="cb41-51"><a href="#cb41-51" tabindex="-1"></a><span class="co">#&gt; Warning in rbinom(10000, 10, p): NAs produced</span></span>
-<span id="cb41-52"><a href="#cb41-52" tabindex="-1"></a><span class="co">#&gt; Warning in rbinom(10000, 10, p): NAs produced</span></span>
-<span id="cb41-53"><a href="#cb41-53" tabindex="-1"></a><span class="co">#&gt; Warning in rbinom(10000, 10, p): NAs produced</span></span>
-<span id="cb41-54"><a href="#cb41-54" tabindex="-1"></a><span class="co">#&gt; Warning in rbinom(10000, 10, p): NAs produced</span></span>
-<span id="cb41-55"><a href="#cb41-55" tabindex="-1"></a><span class="co">#&gt; Warning in rbinom(10000, 10, p): NAs produced</span></span>
-<span id="cb41-56"><a href="#cb41-56" tabindex="-1"></a><span class="co">#&gt; Warning in rbinom(10000, 10, p): NAs produced</span></span>
-<span id="cb41-57"><a href="#cb41-57" tabindex="-1"></a><span class="co">#&gt; Warning in rbinom(10000, 10, p): NAs produced</span></span>
-<span id="cb41-58"><a href="#cb41-58" tabindex="-1"></a><span class="co">#&gt; Warning in rbinom(10000, 10, p): NAs produced</span></span>
-<span id="cb41-59"><a href="#cb41-59" tabindex="-1"></a><span class="co">#&gt; Warning in rbinom(10000, 10, p): NAs produced</span></span>
-<span id="cb41-60"><a href="#cb41-60" tabindex="-1"></a><span class="co">#&gt; Warning in rbinom(10000, 10, p): NAs produced</span></span>
-<span id="cb41-61"><a href="#cb41-61" tabindex="-1"></a><span class="co">#&gt; Warning in rbinom(10000, 10, p): NAs produced</span></span>
-<span id="cb41-62"><a href="#cb41-62" tabindex="-1"></a><span class="co">#&gt; Warning in rbinom(10000, 10, p): NAs produced</span></span>
-<span id="cb41-63"><a href="#cb41-63" tabindex="-1"></a><span class="co">#&gt; Warning in rbinom(10000, 10, p): NAs produced</span></span>
-<span id="cb41-64"><a href="#cb41-64" tabindex="-1"></a><span class="co">#&gt; Warning in rbinom(10000, 10, p): NAs produced</span></span>
-<span id="cb41-65"><a href="#cb41-65" tabindex="-1"></a><span class="co">#&gt; Warning in rbinom(10000, 10, p): NAs produced</span></span>
-<span id="cb41-66"><a href="#cb41-66" tabindex="-1"></a><span class="co">#&gt; Warning in rbinom(10000, 10, p): NAs produced</span></span>
-<span id="cb41-67"><a href="#cb41-67" tabindex="-1"></a><span class="co">#&gt; Warning in rbinom(10000, 10, p): NAs produced</span></span>
-<span id="cb41-68"><a href="#cb41-68" tabindex="-1"></a><span class="co">#&gt; Warning in rbinom(10000, 10, p): NAs produced</span></span>
-<span id="cb41-69"><a href="#cb41-69" tabindex="-1"></a><span class="co">#&gt; Warning in rbinom(10000, 10, p): NAs produced</span></span>
-<span id="cb41-70"><a href="#cb41-70" tabindex="-1"></a><span class="co">#&gt; Warning in rbinom(10000, 10, p): NAs produced</span></span>
-<span id="cb41-71"><a href="#cb41-71" tabindex="-1"></a><span class="co">#&gt; Warning in rbinom(10000, 10, p): NAs produced</span></span>
-<span id="cb41-72"><a href="#cb41-72" tabindex="-1"></a><span class="co">#&gt; Warning in rbinom(10000, 10, p): NAs produced</span></span>
-<span id="cb41-73"><a href="#cb41-73" tabindex="-1"></a><span class="co">#&gt; Warning in rbinom(10000, 10, p): NAs produced</span></span>
-<span id="cb41-74"><a href="#cb41-74" tabindex="-1"></a><span class="co">#&gt; Warning in rbinom(10000, 10, p): NAs produced</span></span>
-<span id="cb41-75"><a href="#cb41-75" tabindex="-1"></a><span class="co">#&gt; Warning in rbinom(10000, 10, p): NAs produced</span></span>
-<span id="cb41-76"><a href="#cb41-76" tabindex="-1"></a><span class="co">#&gt; Warning in rbinom(10000, 10, p): NAs produced</span></span>
-<span id="cb41-77"><a href="#cb41-77" tabindex="-1"></a><span class="co">#&gt; Warning in rbinom(10000, 10, p): NAs produced</span></span>
-<span id="cb41-78"><a href="#cb41-78" tabindex="-1"></a><span class="co">#&gt; Warning in rbinom(10000, 10, p): NAs produced</span></span>
-<span id="cb41-79"><a href="#cb41-79" tabindex="-1"></a><span class="co">#&gt; Warning in rbinom(10000, 10, p): NAs produced</span></span>
-<span id="cb41-80"><a href="#cb41-80" tabindex="-1"></a><span class="co">#&gt; Warning in rbinom(10000, 10, p): NAs produced</span></span>
-<span id="cb41-81"><a href="#cb41-81" tabindex="-1"></a><span class="co">#&gt; Warning in rbinom(10000, 10, p): NAs produced</span></span>
-<span id="cb41-82"><a href="#cb41-82" tabindex="-1"></a><span class="co">#&gt; Warning in rbinom(10000, 10, p): NAs produced</span></span>
-<span id="cb41-83"><a href="#cb41-83" tabindex="-1"></a><span class="co">#&gt; Warning in rbinom(10000, 10, p): NAs produced</span></span>
-<span id="cb41-84"><a href="#cb41-84" tabindex="-1"></a><span class="co">#&gt; Warning in rbinom(10000, 10, p): NAs produced</span></span>
-<span id="cb41-85"><a href="#cb41-85" tabindex="-1"></a><span class="co">#&gt; Warning in rbinom(10000, 10, p): NAs produced</span></span>
-<span id="cb41-86"><a href="#cb41-86" tabindex="-1"></a><span class="co">#&gt; Warning in rbinom(10000, 10, p): NAs produced</span></span>
-<span id="cb41-87"><a href="#cb41-87" tabindex="-1"></a><span class="co">#&gt; Warning in rbinom(10000, 10, p): NAs produced</span></span>
-<span id="cb41-88"><a href="#cb41-88" tabindex="-1"></a><span class="co">#&gt; Warning in rbinom(10000, 10, p): NAs produced</span></span>
-<span id="cb41-89"><a href="#cb41-89" tabindex="-1"></a><span class="co">#&gt; Warning in rbinom(10000, 10, p): NAs produced</span></span>
-<span id="cb41-90"><a href="#cb41-90" tabindex="-1"></a><span class="co">#&gt; Warning in rbinom(10000, 10, p): NAs produced</span></span>
-<span id="cb41-91"><a href="#cb41-91" tabindex="-1"></a><span class="co">#&gt; Warning in rbinom(10000, 10, p): NAs produced</span></span>
-<span id="cb41-92"><a href="#cb41-92" tabindex="-1"></a><span class="co">#&gt; Warning in rbinom(10000, 10, p): NAs produced</span></span>
-<span id="cb41-93"><a href="#cb41-93" tabindex="-1"></a><span class="co">#&gt; Warning in rbinom(10000, 10, p): NAs produced</span></span>
-<span id="cb41-94"><a href="#cb41-94" tabindex="-1"></a><span class="co">#&gt; Warning in rbinom(10000, 10, p): NAs produced</span></span>
-<span id="cb41-95"><a href="#cb41-95" tabindex="-1"></a><span class="co">#&gt; Warning in rbinom(10000, 10, p): NAs produced</span></span>
-<span id="cb41-96"><a href="#cb41-96" tabindex="-1"></a><span class="co">#&gt; Warning in rbinom(10000, 10, p): NAs produced</span></span>
-<span id="cb41-97"><a href="#cb41-97" tabindex="-1"></a><span class="co">#&gt; Warning in rbinom(10000, 10, p): NAs produced</span></span>
-<span id="cb41-98"><a href="#cb41-98" tabindex="-1"></a><span class="co">#&gt; Warning in rbinom(10000, 10, p): NAs produced</span></span>
-<span id="cb41-99"><a href="#cb41-99" tabindex="-1"></a><span class="co">#&gt; Warning in rbinom(10000, 10, p): NAs produced</span></span>
-<span id="cb41-100"><a href="#cb41-100" tabindex="-1"></a><span class="co">#&gt; Warning in rbinom(10000, 10, p): NAs produced</span></span>
-<span id="cb41-101"><a href="#cb41-101" tabindex="-1"></a><span class="co">#&gt; Warning in rbinom(10000, 10, p): NAs produced</span></span>
-<span id="cb41-102"><a href="#cb41-102" tabindex="-1"></a><span class="co">#&gt; Warning in rbinom(10000, 10, p): NAs produced</span></span>
-<span id="cb41-103"><a href="#cb41-103" tabindex="-1"></a><span class="co">#&gt; Warning in rbinom(10000, 10, p): NAs produced</span></span>
-<span id="cb41-104"><a href="#cb41-104" tabindex="-1"></a><span class="co">#&gt; Warning in rbinom(10000, 10, p): NAs produced</span></span>
-<span id="cb41-105"><a href="#cb41-105" tabindex="-1"></a><span class="co">#&gt; Warning in rbinom(10000, 10, p): NAs produced</span></span>
-<span id="cb41-106"><a href="#cb41-106" tabindex="-1"></a><span class="co">#&gt; Warning in rbinom(10000, 10, p): NAs produced</span></span>
-<span id="cb41-107"><a href="#cb41-107" tabindex="-1"></a><span class="co">#&gt; Warning in rbinom(10000, 10, p): NAs produced</span></span>
-<span id="cb41-108"><a href="#cb41-108" tabindex="-1"></a><span class="co">#&gt; Warning in rbinom(10000, 10, p): NAs produced</span></span>
-<span id="cb41-109"><a href="#cb41-109" tabindex="-1"></a><span class="co">#&gt; Warning in pbinom(0:10, 10, p): NaNs produced</span></span>
-<span id="cb41-110"><a href="#cb41-110" tabindex="-1"></a><span class="co">#&gt; Warning in rbinom(10000, 10, p): NAs produced</span></span>
-<span id="cb41-111"><a href="#cb41-111" tabindex="-1"></a><span class="co">#&gt; Warning in pbinom(0:10, 10, p): NaNs produced</span></span>
-<span id="cb41-112"><a href="#cb41-112" tabindex="-1"></a><span class="co">#&gt; Warning in rbinom(10000, 10, p): NAs produced</span></span>
-<span id="cb41-113"><a href="#cb41-113" tabindex="-1"></a><span class="co">#&gt; Warning in rbinom(10000, 10, p): NAs produced</span></span>
-<span id="cb41-114"><a href="#cb41-114" tabindex="-1"></a><span class="co">#&gt; Warning in rbinom(10000, 10, p): NAs produced</span></span>
-<span id="cb41-115"><a href="#cb41-115" tabindex="-1"></a><span class="co">#&gt; Warning in rbinom(10000, 10, p): NAs produced</span></span>
-<span id="cb41-116"><a href="#cb41-116" tabindex="-1"></a><span class="co">#&gt; Warning in rbinom(10000, 10, p): NAs produced</span></span>
-<span id="cb41-117"><a href="#cb41-117" tabindex="-1"></a><span class="co">#&gt; Warning in rbinom(10000, 10, p): NAs produced</span></span>
-<span id="cb41-118"><a href="#cb41-118" tabindex="-1"></a><span class="co">#&gt; Warning in rbinom(10000, 10, p): NAs produced</span></span>
-<span id="cb41-119"><a href="#cb41-119" tabindex="-1"></a><span class="co">#&gt; Warning in rbinom(10000, 10, p): NAs produced</span></span>
-<span id="cb41-120"><a href="#cb41-120" tabindex="-1"></a><span class="co">#&gt; Warning in rbinom(10000, 10, p): NAs produced</span></span>
-<span id="cb41-121"><a href="#cb41-121" tabindex="-1"></a><span class="co">#&gt; Warning in rbinom(10000, 10, p): NAs produced</span></span>
-<span id="cb41-122"><a href="#cb41-122" tabindex="-1"></a><span class="co">#&gt; Warning in rbinom(10000, 10, p): NAs produced</span></span>
-<span id="cb41-123"><a href="#cb41-123" tabindex="-1"></a><span class="co">#&gt; Warning in rbinom(10000, 10, p): NAs produced</span></span>
-<span id="cb41-124"><a href="#cb41-124" tabindex="-1"></a><span class="co">#&gt; Warning in rbinom(10000, 10, p): NAs produced</span></span>
-<span id="cb41-125"><a href="#cb41-125" tabindex="-1"></a><span class="co">#&gt; Warning in rbinom(10000, 10, p): NAs produced</span></span>
-<span id="cb41-126"><a href="#cb41-126" tabindex="-1"></a><span class="co">#&gt; Warning in rbinom(10000, 10, p): NAs produced</span></span>
-<span id="cb41-127"><a href="#cb41-127" tabindex="-1"></a><span class="co">#&gt; Warning in rbinom(10000, 10, p): NAs produced</span></span>
-<span id="cb41-128"><a href="#cb41-128" tabindex="-1"></a><span class="co">#&gt; Warning in rbinom(10000, 10, p): NAs produced</span></span>
-<span id="cb41-129"><a href="#cb41-129" tabindex="-1"></a><span class="co">#&gt; Warning in rbinom(10000, 10, p): NAs produced</span></span>
-<span id="cb41-130"><a href="#cb41-130" tabindex="-1"></a><span class="co">#&gt; Warning in rbinom(10000, 10, p): NAs produced</span></span>
-<span id="cb41-131"><a href="#cb41-131" tabindex="-1"></a><span class="co">#&gt; Warning in rbinom(10000, 10, p): NAs produced</span></span>
-<span id="cb41-132"><a href="#cb41-132" tabindex="-1"></a><span class="co">#&gt; Warning in rbinom(10000, 10, p): NAs produced</span></span>
-<span id="cb41-133"><a href="#cb41-133" tabindex="-1"></a><span class="co">#&gt; Warning in rbinom(10000, 10, p): NAs produced</span></span>
-<span id="cb41-134"><a href="#cb41-134" tabindex="-1"></a><span class="co">#&gt; Warning in rbinom(10000, 10, p): NAs produced</span></span>
-<span id="cb41-135"><a href="#cb41-135" tabindex="-1"></a><span class="co">#&gt; Warning in rbinom(10000, 10, p): NAs produced</span></span>
-<span id="cb41-136"><a href="#cb41-136" tabindex="-1"></a><span class="co">#&gt; Warning in rbinom(10000, 10, p): NAs produced</span></span>
-<span id="cb41-137"><a href="#cb41-137" tabindex="-1"></a><span class="co">#&gt; Warning in rbinom(10000, 10, p): NAs produced</span></span>
-<span id="cb41-138"><a href="#cb41-138" tabindex="-1"></a><span class="co">#&gt; Warning in rbinom(10000, 10, p): NAs produced</span></span>
-<span id="cb41-139"><a href="#cb41-139" tabindex="-1"></a><span class="co">#&gt; Warning in rbinom(10000, 10, p): NAs produced</span></span>
-<span id="cb41-140"><a href="#cb41-140" tabindex="-1"></a><span class="co">#&gt; Warning in rbinom(10000, 10, p): NAs produced</span></span>
-<span id="cb41-141"><a href="#cb41-141" tabindex="-1"></a><span class="co">#&gt; Warning in rbinom(10000, 10, p): NAs produced</span></span>
-<span id="cb41-142"><a href="#cb41-142" tabindex="-1"></a><span class="co">#&gt; Warning in rbinom(10000, 10, p): NAs produced</span></span>
-<span id="cb41-143"><a href="#cb41-143" tabindex="-1"></a><span class="co">#&gt; Warning in rbinom(10000, 10, p): NAs produced</span></span>
-<span id="cb41-144"><a href="#cb41-144" tabindex="-1"></a><span class="co">#&gt; Warning in rbinom(10000, 10, p): NAs produced</span></span>
-<span id="cb41-145"><a href="#cb41-145" tabindex="-1"></a><span class="co">#&gt; Warning in rbinom(10000, 10, p): NAs produced</span></span>
-<span id="cb41-146"><a href="#cb41-146" tabindex="-1"></a><span class="co">#&gt; Warning in rbinom(10000, 10, p): NAs produced</span></span>
-<span id="cb41-147"><a href="#cb41-147" tabindex="-1"></a><span class="co">#&gt; Warning in rbinom(10000, 10, p): NAs produced</span></span>
-<span id="cb41-148"><a href="#cb41-148" tabindex="-1"></a><span class="co">#&gt; Warning in rbinom(10000, 10, p): NAs produced</span></span>
-<span id="cb41-149"><a href="#cb41-149" tabindex="-1"></a><span class="co">#&gt; Warning in rbinom(10000, 10, p): NAs produced</span></span>
-<span id="cb41-150"><a href="#cb41-150" tabindex="-1"></a><span class="co">#&gt; Warning in rbinom(10000, 10, p): NAs produced</span></span>
-<span id="cb41-151"><a href="#cb41-151" tabindex="-1"></a><span class="co">#&gt; Warning in rbinom(10000, 10, p): NAs produced</span></span>
-<span id="cb41-152"><a href="#cb41-152" tabindex="-1"></a><span class="co">#&gt; Warning in rbinom(10000, 10, p): NAs produced</span></span>
-<span id="cb41-153"><a href="#cb41-153" tabindex="-1"></a><span class="co">#&gt; Warning in rbinom(10000, 10, p): NAs produced</span></span>
-<span id="cb41-154"><a href="#cb41-154" tabindex="-1"></a><span class="co">#&gt; Warning in rbinom(10000, 10, p): NAs produced</span></span>
-<span id="cb41-155"><a href="#cb41-155" tabindex="-1"></a><span class="co">#&gt; Warning in rbinom(10000, 10, p): NAs produced</span></span>
-<span id="cb41-156"><a href="#cb41-156" tabindex="-1"></a><span class="co">#&gt; Warning in rbinom(10000, 10, p): NAs produced</span></span>
-<span id="cb41-157"><a href="#cb41-157" tabindex="-1"></a><span class="co">#&gt; Warning in rbinom(10000, 10, p): NAs produced</span></span>
-<span id="cb41-158"><a href="#cb41-158" tabindex="-1"></a><span class="co">#&gt; Warning in rbinom(10000, 10, p): NAs produced</span></span>
-<span id="cb41-159"><a href="#cb41-159" tabindex="-1"></a><span class="co">#&gt; Warning in rbinom(10000, 10, p): NAs produced</span></span>
-<span id="cb41-160"><a href="#cb41-160" tabindex="-1"></a><span class="co">#&gt; Warning in rbinom(10000, 10, p): NAs produced</span></span>
-<span id="cb41-161"><a href="#cb41-161" tabindex="-1"></a><span class="co">#&gt; Warning in rbinom(10000, 10, p): NAs produced</span></span>
-<span id="cb41-162"><a href="#cb41-162" tabindex="-1"></a><span class="co">#&gt; Warning in rbinom(10000, 10, p): NAs produced</span></span>
-<span id="cb41-163"><a href="#cb41-163" tabindex="-1"></a><span class="co">#&gt; Warning in rbinom(10000, 10, p): NAs produced</span></span>
-<span id="cb41-164"><a href="#cb41-164" tabindex="-1"></a><span class="co">#&gt; Warning in rbinom(10000, 10, p): NAs produced</span></span>
-<span id="cb41-165"><a href="#cb41-165" tabindex="-1"></a><span class="co">#&gt; Warning in rbinom(10000, 10, p): NAs produced</span></span>
-<span id="cb41-166"><a href="#cb41-166" tabindex="-1"></a><span class="co">#&gt; Warning in rbinom(10000, 10, p): NAs produced</span></span>
-<span id="cb41-167"><a href="#cb41-167" tabindex="-1"></a><span class="co">#&gt; Warning in rbinom(10000, 10, p): NAs produced</span></span>
-<span id="cb41-168"><a href="#cb41-168" tabindex="-1"></a><span class="co">#&gt; Warning in rbinom(10000, 10, p): NAs produced</span></span>
-<span id="cb41-169"><a href="#cb41-169" tabindex="-1"></a><span class="co">#&gt; Warning in rbinom(10000, 10, p): NAs produced</span></span>
-<span id="cb41-170"><a href="#cb41-170" tabindex="-1"></a><span class="co">#&gt; Warning in rbinom(10000, 10, p): NAs produced</span></span>
-<span id="cb41-171"><a href="#cb41-171" tabindex="-1"></a><span class="co">#&gt; Warning in rbinom(10000, 10, p): NAs produced</span></span>
-<span id="cb41-172"><a href="#cb41-172" tabindex="-1"></a><span class="co">#&gt; Warning in rbinom(10000, 10, p): NAs produced</span></span>
-<span id="cb41-173"><a href="#cb41-173" tabindex="-1"></a><span class="co">#&gt; Warning in rbinom(10000, 10, p): NAs produced</span></span>
-<span id="cb41-174"><a href="#cb41-174" tabindex="-1"></a><span class="co">#&gt; Warning in rbinom(10000, 10, p): NAs produced</span></span>
-<span id="cb41-175"><a href="#cb41-175" tabindex="-1"></a><span class="co">#&gt; Warning in rbinom(10000, 10, p): NAs produced</span></span>
-<span id="cb41-176"><a href="#cb41-176" tabindex="-1"></a><span class="co">#&gt; Warning in rbinom(10000, 10, p): NAs produced</span></span>
-<span id="cb41-177"><a href="#cb41-177" tabindex="-1"></a><span class="co">#&gt; Warning in rbinom(10000, 10, p): NAs produced</span></span>
-<span id="cb41-178"><a href="#cb41-178" tabindex="-1"></a><span class="co">#&gt; Warning in rbinom(10000, 10, p): NAs produced</span></span>
-<span id="cb41-179"><a href="#cb41-179" tabindex="-1"></a><span class="co">#&gt; Warning in rbinom(10000, 10, p): NAs produced</span></span>
-<span id="cb41-180"><a href="#cb41-180" tabindex="-1"></a><span class="co">#&gt; Warning in rbinom(10000, 10, p): NAs produced</span></span>
-<span id="cb41-181"><a href="#cb41-181" tabindex="-1"></a><span class="co">#&gt; Warning in rbinom(10000, 10, p): NAs produced</span></span>
-<span id="cb41-182"><a href="#cb41-182" tabindex="-1"></a><span class="co">#&gt; Warning in rbinom(10000, 10, p): NAs produced</span></span>
-<span id="cb41-183"><a href="#cb41-183" tabindex="-1"></a><span class="co">#&gt; Warning in rbinom(10000, 10, p): NAs produced</span></span>
-<span id="cb41-184"><a href="#cb41-184" tabindex="-1"></a><span class="co">#&gt; Warning in rbinom(10000, 10, p): NAs produced</span></span>
-<span id="cb41-185"><a href="#cb41-185" tabindex="-1"></a><span class="co">#&gt; Warning in rbinom(10000, 10, p): NAs produced</span></span>
-<span id="cb41-186"><a href="#cb41-186" tabindex="-1"></a><span class="co">#&gt; Warning in rbinom(10000, 10, p): NAs produced</span></span>
-<span id="cb41-187"><a href="#cb41-187" tabindex="-1"></a><span class="co">#&gt; Warning in rbinom(10000, 10, p): NAs produced</span></span>
-<span id="cb41-188"><a href="#cb41-188" tabindex="-1"></a><span class="co">#&gt; Warning in rbinom(10000, 10, p): NAs produced</span></span>
-<span id="cb41-189"><a href="#cb41-189" tabindex="-1"></a><span class="co">#&gt; Warning in rbinom(10000, 10, p): NAs produced</span></span>
-<span id="cb41-190"><a href="#cb41-190" tabindex="-1"></a><span class="co">#&gt; Warning in rbinom(10000, 10, p): NAs produced</span></span>
-<span id="cb41-191"><a href="#cb41-191" tabindex="-1"></a><span class="co">#&gt; Warning in rbinom(10000, 10, p): NAs produced</span></span>
-<span id="cb41-192"><a href="#cb41-192" tabindex="-1"></a><span class="co">#&gt; Warning in rbinom(10000, 10, p): NAs produced</span></span>
-<span id="cb41-193"><a href="#cb41-193" tabindex="-1"></a><span class="co">#&gt; Warning in rbinom(10000, 10, p): NAs produced</span></span>
-<span id="cb41-194"><a href="#cb41-194" tabindex="-1"></a><span class="co">#&gt; Warning in rbinom(10000, 10, p): NAs produced</span></span>
-<span id="cb41-195"><a href="#cb41-195" tabindex="-1"></a><span class="co">#&gt; Warning in rbinom(10000, 10, p): NAs produced</span></span>
-<span id="cb41-196"><a href="#cb41-196" tabindex="-1"></a><span class="co">#&gt; Warning in rbinom(10000, 10, p): NAs produced</span></span>
-<span id="cb41-197"><a href="#cb41-197" tabindex="-1"></a><span class="co">#&gt; Warning in rbinom(10000, 10, p): NAs produced</span></span>
-<span id="cb41-198"><a href="#cb41-198" tabindex="-1"></a><span class="co">#&gt; Warning in rbinom(10000, 10, p): NAs produced</span></span>
-<span id="cb41-199"><a href="#cb41-199" tabindex="-1"></a><span class="co">#&gt; Warning in rbinom(10000, 10, p): NAs produced</span></span>
-<span id="cb41-200"><a href="#cb41-200" tabindex="-1"></a><span class="co">#&gt; Warning in rbinom(10000, 10, p): NAs produced</span></span>
-<span id="cb41-201"><a href="#cb41-201" tabindex="-1"></a><span class="co">#&gt; Warning in rbinom(10000, 10, p): NAs produced</span></span>
-<span id="cb41-202"><a href="#cb41-202" tabindex="-1"></a><span class="co">#&gt; Warning in rbinom(10000, 10, p): NAs produced</span></span>
-<span id="cb41-203"><a href="#cb41-203" tabindex="-1"></a><span class="co">#&gt; Warning in rbinom(10000, 10, p): NAs produced</span></span>
-<span id="cb41-204"><a href="#cb41-204" tabindex="-1"></a><span class="co">#&gt; Warning in rbinom(10000, 10, p): NAs produced</span></span>
-<span id="cb41-205"><a href="#cb41-205" tabindex="-1"></a><span class="co">#&gt; Warning in rbinom(10000, 10, p): NAs produced</span></span>
-<span id="cb41-206"><a href="#cb41-206" tabindex="-1"></a><span class="co">#&gt; Warning in rbinom(10000, 10, p): NAs produced</span></span>
-<span id="cb41-207"><a href="#cb41-207" tabindex="-1"></a><span class="co">#&gt; Warning in rbinom(10000, 10, p): NAs produced</span></span>
-<span id="cb41-208"><a href="#cb41-208" tabindex="-1"></a><span class="co">#&gt; Warning in rbinom(10000, 10, p): NAs produced</span></span>
-<span id="cb41-209"><a href="#cb41-209" tabindex="-1"></a><span class="co">#&gt; Warning in rbinom(10000, 10, p): NAs produced</span></span>
-<span id="cb41-210"><a href="#cb41-210" tabindex="-1"></a><span class="co">#&gt; Warning in rbinom(10000, 10, p): NAs produced</span></span>
-<span id="cb41-211"><a href="#cb41-211" tabindex="-1"></a><span class="co">#&gt; Warning in pbinom(0:10, 10, p): NaNs produced</span></span>
-<span id="cb41-212"><a href="#cb41-212" tabindex="-1"></a><span class="co">#&gt; Error in while ((k &gt;= 3) &amp;&amp; ((min(E) &lt; minexpcount) || (k &gt; maxbins))) {: missing value where TRUE/FALSE needed</span></span></code></pre></div>
+<span id="cb41-2"><a href="#cb41-2" tabindex="-1"></a>Rgof<span class="sc">::</span><span class="fu">gof_test_adjusted_pvalue</span>(x, <span class="cn">NA</span>, pnull, rnull, </span>
+<span id="cb41-3"><a href="#cb41-3" tabindex="-1"></a>              <span class="at">B=</span><span class="fu">c</span>(<span class="dv">1000</span>,<span class="dv">500</span>), <span class="at">maxProcessor =</span> <span class="dv">1</span>)</span>
+<span id="cb41-4"><a href="#cb41-4" tabindex="-1"></a><span class="co">#&gt; p values of individual tests:</span></span>
+<span id="cb41-5"><a href="#cb41-5" tabindex="-1"></a><span class="co">#&gt; W :  0.304</span></span>
+<span id="cb41-6"><a href="#cb41-6" tabindex="-1"></a><span class="co">#&gt; ZC :  0.78</span></span>
+<span id="cb41-7"><a href="#cb41-7" tabindex="-1"></a><span class="co">#&gt; AD :  0.526</span></span>
+<span id="cb41-8"><a href="#cb41-8" tabindex="-1"></a><span class="co">#&gt; ES-s-P :  0.813</span></span>
+<span id="cb41-9"><a href="#cb41-9" tabindex="-1"></a><span class="co">#&gt; adjusted p value of combined tests: 0.6988</span></span></code></pre></div>
 </div>
 <div id="weighted-data" class="section level3">
 <h3>Weighted Data</h3>
@@ -1297,7 +1098,7 @@ a t distribution with 3 degrees of freedom:</p>
 <span id="cb42-4"><a href="#cb42-4" tabindex="-1"></a>w<span class="ot">=</span><span class="cf">function</span>(x) (<span class="fu">dnorm</span>(x)<span class="sc">/</span>(<span class="dv">2</span><span class="sc">*</span><span class="fu">pnorm</span>(<span class="dv">3</span>)<span class="sc">-</span><span class="dv">1</span>))<span class="sc">/</span>(<span class="fu">dt</span>(x,df)<span class="sc">/</span>(<span class="dv">2</span><span class="sc">*</span><span class="fu">pt</span>(<span class="dv">3</span>,df)<span class="sc">-</span><span class="dv">1</span>))</span>
 <span id="cb42-5"><a href="#cb42-5" tabindex="-1"></a>x<span class="ot">=</span><span class="fu">sort</span>(<span class="fu">rnull</span>())</span>
 <span id="cb42-6"><a href="#cb42-6" tabindex="-1"></a><span class="fu">plot</span>(x, <span class="fu">w</span>(x), <span class="at">type=</span><span class="st">&quot;l&quot;</span>, <span class="at">ylim=</span><span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">2</span><span class="sc">*</span><span class="fu">max</span>(<span class="fu">w</span>(x))))</span></code></pre></div>
-<p><img role="img" src="data:image/png;base64,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" /><!-- --></p>
+<p><img role="img" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASAAAAEgCAMAAAAjXV6yAAAAXVBMVEUAAAAAADoAAGYAOpAAZrY6AAA6ADo6AGY6kNtmAABmADpmAGZmOpBmZmZmtttmtv+QOgCQOmaQ2/+2ZgC2tv+2/7a2///bkDrb/9vb////tmb/25D//7b//9v///9masrzAAAACXBIWXMAAA7DAAAOwwHHb6hkAAAGg0lEQVR4nO2d7XrbJhhA3TXdmn3Vq7dpdW3f/2XOquI0SZEOSCCwfc6fOI+tF3QMCATIm5NMsqmdgdZREKAgQEGAggAFAQoCFAQoCFAQoCBAQYCCAAUBCgIUBCgIUBCgIEBBgIIABQEKAhQEKAhQEKAgQEGAggAFAQoCFAQoCFAQoCBAQYCCAAUBCgIUBCgIUBCgIEBBgIIABQEKAhQEKAhQEKAgQEGAggAFAQoCFAQoCFAQoCBAQYCCAAUBCgIUBCgIUBCgIEBBgIIABQEKAhQEKAhQEKAgQEGAgoDMgjZXQy1BecOVQ0GAgoBCgo7boQL/9G+WcBUpI6jbfBxe7C8vFoWrSRFBx+2zlu79l8XhqlJE0OHx0+XlfqSS3bcgSxDRbZ6KkG3QCIfH4So2Un4UtHa4cigIKC2o8yqWllzyILk2VjFAQUAhQd25En3rCtkGBenefT53hR5OCgozDDWO23M3UUEhLoPV3fsvCgrxPFjdPSgoyEXLeUimoCCX4fxxq6DC6dZGQYCCAAUBCgIUBCgIUBCgIEBBgIIABQEKAhQEOC8GWIIABQEKAmYI2j+1Ip8mPp0v3dqkCjo8bh6GV8ft+CLfjOnWJlHQ4beXTl7/Vybd2tgGAemCDn+vmm5tZgh6HFZmHv+a3wLdtKD+Kvapnxpc0ETftqCnnSojC6Bzp1ubWY10b2hRL+jGBXWbzZ/b8TXiPfe8HercVexr136qDbrr7VCH34eiM3EVczMLcMfboeKGGvdcguIGq4W2Q83Yzj5rC/yrAOkfjLndUWA71OszjDjjHz4yy9G1DFaD5zZuaeyNdEXXIWjqtF7XH6xNqYpm9YMe4uPnWAYcdU7x7UyaoRkl6Kl9efc5JZ1LlBkNZv4poqTU537w8LjSaL7EFFpCzHmC+kI0qwTNSLdIj6nAU29eV7FlduLTLTYDG9+Rio54ebGwbiWlW3KGOvYrmhHv6we4jl26iRM3PKLSLTseifyO5oXrpjvSo1s00tItPGDLm4e0q9hxC32l7P2VOcQkMEPQbrryDOzhnmyMoMicLSBnLl72pDO00pzuKjdEMmZj7bHYOjeMuBq3Kmi1G2rZMrKuoPVuOF6noDVvyNJtt+g4i3MSH27dJZ7XKChvWkSevKwoaPUZjyyZWU/Q+jNC1yWoxhrzqXvY0TGy5ITDVdAzmWprgmrtUVj+ha0jqN4ejtFvbGmAmYTDVdMznvbKgmDap6qghVm6+RI0knpTgur6aV9QZT/hWtaQoOp+luWqtKA2Nmn+mIlWBLXhJ5CPZgTlDT+fNgW1Un56NpP/Rh+XNRsN6Tm9/bZaENSWnzeGGhDUmp+Z314pQU0+hGHO15d2GtG7fVrUc3qZrTKConf7tKmnZ/Pmb/QBMUTv1WjXz3MhKiLojnf7xHHPu33i8MePCH/8aLV0a6MgoLQgH/qfmNyi7ZE1sIoBCgJqD1abp/JgtX2qDTWuhhKCIgarFDTvO7nDLf14RAmioLctKGKwSkFvXBAPVinorQtaHFRBEFRBEFRBEFRBEFRBN4eCAAUBCgIUBCgIUBCgIEBBgIIABQEKAhQEFBHUzXrg4NdfAjMl+6lQwSOepjfDN83Tc1ZCUL/0Y59sKPj0tD7MaKiR560dt+cDuuAT/WbkrICgw+PHiMfBvWUfmtAeJpp24VDBI0794w77uZfQAp05OSvVBqUK2m8+BiYjx8917Ijvb48VlEYEdemNUEjQz5/Db4we8cxu7L3EnJURtJ/zEziB0x2KwWhhmBA0NrWZnLNyVQwmF38kp6D9+FNXE3NWrB+UfhnLWMUmp8bTcpZXUPe9AzK0rynHJDbS4SOeQk5Vo+icfaNACRoyML1AJkTgiMnL/Gga3djzVOfkrEQV250r+YulMrGEMj7ZURw51a8fRpOekbMibVD/3Nz0HyoLnu7k2CAsqBtWoAQPS8+Zg1VAQYCCAAUBCgIUBCgIUBCgIEBBgIIABQEKAhQEKAhQEKAgQEGAggAFAQoCFAQoCFAQoCBAQYCCAAUBCgIUBLQuqF9d9m15cy1aF9Qvd5p+WFFhWhd02v/0z6/p+z7y0byg0258Re8atC+IfuK+MM0LOm7/SF4vm5PmBXXv/0tfMJuR1gX1jyZMX3KdkdYFDSubKzbTrQuqjoIABQEKAhQEKAhQEKAgQEGAggAFAQoCFAQoCFAQoCBAQYCCAAUBCgIUBCgIUBCgIOB/v9dc1Zj0xjcAAAAASUVORK5CYII=" /><!-- --></p>
 <div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" tabindex="-1"></a>ralt<span class="ot">=</span><span class="cf">function</span>(<span class="at">m=</span><span class="dv">0</span>) {x<span class="ot">=</span><span class="fu">rt</span>(<span class="dv">2000</span>,df)<span class="sc">+</span>m;x<span class="ot">=</span>x[<span class="fu">abs</span>(x)<span class="sc">&lt;</span><span class="dv">3</span>];<span class="fu">sort</span>(x[<span class="dv">1</span><span class="sc">:</span><span class="dv">1000</span>])}</span>
 <span id="cb43-2"><a href="#cb43-2" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">111</span>)</span>
 <span id="cb43-3"><a href="#cb43-3" tabindex="-1"></a>Rgof<span class="sc">::</span><span class="fu">gof_power</span>(pnull, <span class="cn">NA</span>, rnull, ralt, <span class="at">w=</span>w, <span class="at">param_alt =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="fl">0.2</span>), <span class="at">Range=</span><span class="fu">c</span>(<span class="sc">-</span><span class="dv">3</span>,<span class="dv">3</span>),<span class="at">B=</span>Bsim, <span class="at">maxProcessor =</span> <span class="dv">1</span>)</span>
